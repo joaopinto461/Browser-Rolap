@@ -1,0 +1,35 @@
+body
+{
+  background-color: #74828F;
+}
+
+div
+{
+  border-radius: 5px;
+}
+
+.left_col_elem, .right_col_elem
+{
+  height: 200px;
+  width: 300px;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 5px;
+}
+
+.center_col
+{
+  background-color: white;
+  height: 500px;
+  padding: 5px;
+}
+
+.left_col
+{
+  float: right;
+}
+
+.container_central
+{
+  margin-top: 100px;
+}
