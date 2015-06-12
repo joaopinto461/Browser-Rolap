@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+<?
+	include 'connection.php';
+?>
 <html>
 <head>
 	<title>DW Browser Rolap</title>
