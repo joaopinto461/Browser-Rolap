@@ -1,5 +1,5 @@
 <metadata>
-	<!-- Ligação à BD -->
+
 	<db>
 		<adapter></adapter>
 		<host>127.0.0.1</host>
@@ -8,7 +8,6 @@
 		<path></path>
 	</db>
 
-	<!-- Especificação do modelo fisico-->
 	<tables id="tables1">
 		<table id="table1" name="sales_fact_1997">
 			<columns>
@@ -33,9 +32,6 @@
 				<key id="fk2_table1" column_ref="column2_table1" table_ref="table3"/>
 			</foreign_key>		
 		</table>
-
-		<!--         -->
-
 		<table id="table2" name="product">
 			<columns>
 				<column id="column1_table2" name="product_id" type="int(11)"/>
@@ -63,8 +59,6 @@
 			</foreign_key>
 		</table>
 
-		<!--         -->
-
 		<table id="table4" name="product_class">
 			<columns>
 				<column id="column1_table4" name="product_class_id" type="int(11)"/>
@@ -75,8 +69,6 @@
 			<foreign_key id="fk_table4">
 			</foreign_key>
 		</table>
-
-		<!--         -->
 		
 		<table id="table3" name="time_by_day">
 			<columns>
@@ -97,8 +89,6 @@
 			<foreign_key id="fk_table3">
 			</foreign_key>
 		</table>
-
-		<!--         -->
 		
 		<table id="table5" name="store">
 			<columns>
@@ -127,7 +117,6 @@
 		</table>
 	</tables>
 
-	<!-- Especificação do modelo multidimensional-->
 	<cube id="cube1" name="Sales_1997" description="">
 		<fact_table id="fact_table1" ref="table1">
 
