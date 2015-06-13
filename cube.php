@@ -34,11 +34,12 @@
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
 	      </ul>
 	 
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div>
 	</nav>
 
 	<div class="container_central">
+
 	    <div class="row">
 
 		  <div class="col-md-3">
