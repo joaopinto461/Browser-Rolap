@@ -26,9 +26,7 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Data Set 1</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Data Set 2</a></li>
+                  
                 </ul>
               </div>
             </p>
