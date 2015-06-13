@@ -17,11 +17,18 @@ div
   padding: 5px;
 }
 
+ul
+{
+    list-style:none;
+    padding-left: 5px;
+}
+
 .center_col
 {
   background-color: white;
   height: 500px;
-  padding: 5px;
+  padding: 10px;
+  border: 2px solid black;
 }
 
 .left_col
@@ -32,4 +39,13 @@ div
 .container_central
 {
   margin-top: 100px;
+}
+
+.highlight {
+    border: 2px dashed red;    
+}
+
+h5
+{
+  padding-left: 5px;
 }

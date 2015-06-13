@@ -40,41 +40,52 @@
 
 	<div class="container_central">
 	    <div class="row">
+
 		  <div class="col-md-3">
+
 			  <div class="left_col">			 
 			  	<div class="left_col_elem">
-			  		<h5>Left Stuff</h5>
+			  		<h5>Active Dimensions</h5>
+			  		<hr>
+			  		<ul class="active_dimensions_list"></ul>
 			  	</div>
 			  	<div class="left_col_elem">
-			  		<h5>Left Stuff</h5>
+			  		<h5>Active Measures</h5>
+			  		<hr>
 			  	</div>
 			  </div>
+
 		  </div>
+
 		  <div class="col-md-6">
+
 		  	<div class="center_col">
+		  		<h4><? //echo $cube ?></h4>
+		  		<hr>
 		  		<table class="table">
 		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
   					<tr><td>Um</td><td>Dois</td><td>Três</td></tr>
   					<tr><td>Quatro</td><td>Cinco</td><td>Seis</td></tr>
 				</table>	
 		  	</div>
+
 		  </div>
+
 		  <div class="col-md-3">
-		  	<div class="right_col_elem">
-		  		<h5>Right Stuff</h5>
-		  		<ul>
-  					<li>Option</li>
-  					<li>Option</li>
-  					
-				</ul>
+		  
+			<div class="right_col_elem">
+		  		<h5>Dimensions</h5>
+		  		<hr>
+		  		<ul class="dimensions_list"></ul>
 		  	</div>
-		  	<div class="right_col_elem">
-		  		<h5>Right Stuff</h5>
-			</div>
-		  	<div class="right_col_elem">
-		  		<h5>Right Stuff</h5>
-			</div>
-		  </div>
+		  	
+			<div class="right_col_elem">
+		  		<h5>Measures</h5>
+		  		<hr>
+		  		<ul class="measures_list"></ul>
+		  	</div>
+
+		  </div>		  
 		</div>
 	</div>
 
