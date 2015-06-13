@@ -38,6 +38,12 @@
               <p>João Francisco Pinto (nº 41887)</p>
             </div>
           </div>
+
+
+          <form action="cube.php" method="post">
+          <input type="hidden" name="cube">
+          </form>
+
         </div>
       </div>
     </div>

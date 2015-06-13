@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
 	
-    $.get("main.php", function(data, status){
+    $.get("main.php", { cubes : "" }, function(data, status)
+    {
         //alert("Data: " + data + "\nStatus: " + status);
         var received = JSON.parse(data);
 
@@ -10,7 +11,8 @@ $(document).ready(function(){
         var counter = 0;
 		for(var x in received)
 		{	
-			$('.dropdown-menu').append('<li><a href="#" id="action-' + counter + '">' + received[x] + '</a></li>');
+			var rc = received[x];
+			$('.dropdown-menu').append('<li><a href="#" id="' + rc + '" onClick="reply_click(this.id)">' + rc + '</a></li>');
 			
 			if(counter < received.length-1)
 			{
@@ -19,18 +21,13 @@ $(document).ready(function(){
 
 			counter++;
 		}
-	
-	
-
-
-		
-
 
     });
 
-
-
-
-
-
 });
+
+function reply_click(clicked_id)
+{
+	$('input').attr({'value': clicked_id});
+	$('form').submit();
+}
