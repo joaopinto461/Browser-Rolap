@@ -7,6 +7,7 @@
     <script src="js/jQuery.js"></script>
     <script src="js/jQuery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/cubes.js"></script>
     <meta charset='utf-8'>
     <?
 		include 'main.php';    
