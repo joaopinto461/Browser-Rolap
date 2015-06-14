@@ -46,9 +46,9 @@
 
 			  <div class="left_col">			 
 			  	<div class="left_col_elem">
-			  		<h5>Active Dimensions</h5>
+			  		<h5>Active Levels</h5>
 			  		<hr>
-			  		<ul class="active_dimensions_list"></ul>
+			  		<ul class="active_levels_list"></ul>
 			  	</div>
 			  	<div class="left_col_elem">
 			  		<h5>Active Measures</h5>
@@ -61,7 +61,6 @@
 		  <div class="col-md-6">
 
 		  	<div class="center_col">
-		  		<h4><? //echo $cube ?></h4>
 		  		<hr>
 		  		<table class="table">
 		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
@@ -74,10 +73,10 @@
 
 		  <div class="col-md-3">
 		  
-			<div class="right_col_elem">
+			<div class="right_col_elem" id="dimensions_square">
 		  		<h5>Dimensions</h5>
-		  		<hr>
-		  		<ul class="dimensions_list"></ul>
+		  		<hr>		  		  	
+	  			<ul class="dimensions_list"></ul>		  		  		
 		  	</div>
 		  	
 			<div class="right_col_elem">

@@ -2,11 +2,12 @@ $(document).ready(function()
 {	   
 	fillDimensions();
 	fillMeasures();
+	fillLevels();
 
 	$('.center_col').droppable
 	(
 	   {
-	   		accept: 'li',
+	   		accept: '.level',
 	   		hoverClass: "highlight",
 		    drop: function(event, ui)
 		    {
@@ -20,7 +21,7 @@ $(document).ready(function()
 		        else if(ui.draggable.attr('class').localeCompare("dimension") > -1)
 		        {
 		        	var nd = ui.draggable.attr('id');
-		        	active_dimensions[nd] = nd;
+		        	active_levels[nd] = nd;
 		        	fillActiveDimensions();		        	
 		        }	        
 		    }
@@ -34,18 +35,19 @@ $(document).ready(function()
 		    helper: "clone"		    
 		}
 	);
-	
+
 });
 
 var active_measures = {};
-var active_dimensions = {};
+var active_levels = {};
 
 var dimensions = ["Product Dimension", "Time Dimension", "Store Dimension"];
-var measures = ["Units Ordered", "Sales", "Cost"];	
+var measures = ["Units Ordered", "Sales", "Cost"];
+var levels = ["Level 1", "Level 2"];
 
 function deleteElem(clicked_id)
 {
-	delete active_dimensions[clicked_id];
+	delete active_levels[clicked_id];
 	fillActiveDimensions();
 }
 
@@ -54,17 +56,25 @@ function fillDimensions()
 	for(var x in dimensions)
 	{
 		var d = dimensions[x];
-		$('.dimensions_list').append('<li class="dimension" id="' + d + '">' + '<i class="glyphicon glyphicon-list"></i> ' + d + '</li>');
+		$('.dimensions_list').append('<li onClick="toggleDimension(this.id)" class="dimension" id="' + d + '">' + '<i class="glyphicon glyphicon-list"></i> ' + d + '<ul style="display: none;"></ul></li>');
+	}
+}
+
+function fillLevels()
+{
+	for(var l in levels)
+	{
+		$('.dimension ul').append('<li class="level" + id="' + levels[l] + '">' + levels[l] +'</li>')
 	}
 }
 
 function fillActiveDimensions()
 {
-	$('.active_dimensions_list').html("");		        	
-	for(var x in active_dimensions)
+	$('.active_levels_list').html("");		        	
+	for(var x in active_levels)
 	{
-		var ad = active_dimensions[x];			
-		$('.active_dimensions_list').append('<li class="active_dimension" id="' + ad + '">' + '<i onClick="deleteElem(this.id)" class="active_dimension glyphicon glyphicon-remove" id="' + ad + '"></i> ' + ad + '</li>');
+		var ad = active_levels[x];			
+		$('.active_levels_list').append('<li class="active_level" id="' + ad + '">' + '<i onClick="deleteElem(this.id)" class="active_level glyphicon glyphicon-remove" id="' + ad + '"></i> ' + ad + '</li>');
 	}
 }
 
@@ -80,4 +90,10 @@ function fillMeasures()
 function fillActiveMeasures()
 {
 	
+}
+
+function toggleDimension(clicked_id)
+{
+	var x = document.getElementById(clicked_id);
+	$(x).children('ul').toggle();
 }

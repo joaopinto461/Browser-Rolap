@@ -34,7 +34,7 @@ li
   background-color: white;
   height: 500px;
   padding: 10px;
-  
+  border: 2px solid black;
 }
 
 .left_col
@@ -55,4 +55,9 @@ li
 h5
 {
   padding-left: 5px;
+}
+
+#dimensions_square
+{
+  height: 300px;
 }
