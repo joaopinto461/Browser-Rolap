@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata
+			xmlns="http://www.w3schools.com"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="metadata.xsd">
+	<description content="jsfasgf"/>
+	<database>
+			<connection hostServer="utkk8d82218e.tmdsantos.koding.io" port="3306" instanceName="FoodMart" userName="tds" passwd="dwrolap"/>
+			<tables>
+				<table id="tab_account" name="account">
+					<columns>
+						<column id="tab_account_col_account_id" name="account_id" type="integer"/>
+						<column id="tab_account_col_account_parent" name="account_parent" type="integer"/>
+						<column id="tab_account_col_account_description" name="account_description" type="string"/>
+						<column id="tab_account_col_account_type" name="account_type" type="string"/>
+						<column id="tab_account_col_account_rollup" name="account_rollup" type="string"/>
+						<column id="tab_account_col_Custom_Members" name="Custom_Members" type="string"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_account_col_account_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_account" description="Foreign key over Account Parent">
+							<keyref column_src="tab_account_col_account_parent" column_ref="tab_account_col_account_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+				<table id="tab_customer" name="customer">
+					<columns>
+						<column id="tab_customer_col_customer_id" name="customer_id" type="integer"/>
+						<column id="tab_customer_col_city" name="city" type="string"/>
+						<column id="tab_customer_col_state_province" name="state_province" type="string"/>
+						<column id="tab_customer_col_postal_code" name="postal_code" type="string"/>
+						<column id="tab_customer_col_country" name="country" type="string"/>
+						<column id="tab_customer_col_customer_region_id" name="customer_region_id" type="integer"/>
+						<column id="tab_customer_col_marital_status" name="marital_status" type="string"/>
+						<column id="tab_customer_col_gender" name="gender" type="string"/>
+						<column id="tab_customer_col_occupation" name="occupation" type="string"/>
+						<column id="tab_customer_col_education" name="education" type="string"/>
+						<column id="tab_customer_col_fullname" name="fullname" type="string"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_customer_col_customer_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_region" description="Foreign key over Region">
+							<keyref column_src="tab_customer_col_customer_region_id" column_ref="tab_region_col_region_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+				<table id="tab_region" name="region">
+					<columns>
+						<column id="tab_region_col_region_id" name="region_id" type="integer"/>
+						<column id="tab_region_col_sales_city" name="sales_city" type="string"/>
+						<column id="tab_region_col_sales_state_province" name="sales_state_province" type="string"/>
+						<column id="tab_region_col_sales_district" name="sales_district" type="string"/>
+						<column id="tab_region_col_sales_region" name="sales_region" type="string"/>
+						<column id="tab_region_col_sales_country" name="sales_country" type="string"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_region_col_region_id"/>
+					</primary_key>
+				</table>
+				<table id="tab_product" name="product">
+					<columns>
+						<column id="tab_product_col_product_class_id" name="product_class_id" type="integer"/>
+						<column id="tab_product_col_product_id" name="product_id" type="integer"/>
+						<column id="tab_product_col_brand_name" name="brand_name" type="integer"/>
+						<column id="tab_product_col_product_name" name="product_name" type="integer"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_product_col_product_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_product_class" description="Foreign key over Product Class">
+							<keyref column_src="tab_product_col_product_class_id" column_ref="tab_product_class_col_product_class_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+				<table id="tab_promotion" name="promotion">
+					<columns>
+						<column id="tab_promotion_col_promotion_id" name="promotion_id" type="integer"/>
+						<column id="tab_promotion_col_promotion_district_id" name="promotion_district_id" type="integer"/>
+						<column id="tab_promotion_col_promotion_name" name="promotion_name" type="integer"/>
+						<column id="tab_promotion_col_media_type" name="media_type" type="string"/>
+						<column id="tab_promotion_col_cost" name="cost" type="double"/>
+						<column id="tab_promotion_col_start_date" name="start_date" type="datetime"/>
+						<column id="tab_promotion_col_end_date" name="end_date" type="datetime"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_promotion_col_promotion_district_id"/>
+					</primary_key>
+				</table>
+				<table id="tab_store" name="store">
+					<columns>
+						<column id="tab_store_col_store_id" name="store_id" type="integer"/>
+						<column id="tab_store_col_store_type" name="store_type" type="integer"/>
+						<column id="tab_store_col_region_id" name="region_id" type="integer"/>
+						<column id="tab_store_col_store_name" name="store_name" type="string"/>
+						<column id="tab_store_col_store_number" name="store_number" type="integer"/>
+						<column id="tab_store_col_store_city" name="store_city" type="string"/>
+						<column id="tab_store_col_store_state" name="store_state" type="string"/>
+						<column id="tab_store_col_store_postal_code" name="store_postal_code" type="string"/>
+						<column id="tab_store_col_store_country" name="store_country" type="string"/>
+						<column id="tab_store_col_store_manager" name="store_manager" type="string"/>
+						<column id="tab_store_col_store_sqft" name="store_sqft" type="integer"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_store_col_store_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_region" description="Foreign key over Region">
+							<keyref column_src="tab_store_col_region_id" column_ref="tab_region_col_region_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+				<table id="tab_product_class" name="product_class">
+					<columns>
+						<column id="tab_product_class_col_product_class_id" name="product_class_id" type="integer"/>
+						<column id="tab_product_class_col_product_subcategory" name="product_subcategory" type="string"/>
+						<column id="tab_product_class_col_product_category" name="product_category" type="string"/>
+						<column id="tab_product_class_col_product_department" name="product_department" type="string"/>
+						<column id="tab_product_class_col_product_family" name="product_family" type="string"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_product_class_col_product_class_id"/>
+					</primary_key>
+				</table>
+				<table id="tab_time_by_day" name="time_by_day">
+					<columns>
+						<column id="tab_time_by_day_col_time_id" name="time_id" type="integer"/>
+						<column id="tab_time_by_day_col_the_date" name="the_date" type="datetime"/>
+						<column id="tab_time_by_day_col_the_day" name="the_day" type="string"/>
+						<column id="tab_time_by_day_col_the_month" name="the_month" type="string"/>
+						<column id="tab_time_by_day_col_the_year" name="the_year" type="integer"/>
+						<column id="tab_time_by_day_col_day_of_month" name="day_of_month" type="integer"/>
+						<column id="tab_time_by_day_col_week_of_year" name="week_of_year" type="integer"/>
+						<column id="tab_time_by_day_col_month_of_year" name="month_of_year" type="integer"/>
+						<column id="tab_time_by_day_col_quarter" name="quarter" type="string"/>
+						<column id="tab_time_by_day_col_fiscal_period" name="fiscal_period" type="string"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_time_by_day_col_time_id"/>
+					</primary_key>
+				</table>
+
+				<!-- fact tables -->
+
+				<table id="tab_sales_fact_1997" name="sales_fact_1997">
+					<columns>
+						<column id="tab_sales_fact_1997_col_product_id" name="product_id" type="integer"/>
+						<column id="tab_sales_fact_1997_col_time_id" name="time_id" type="integer"/>
+						<column id="tab_sales_fact_1997_col_customer_id" name="customer_id" type="integer"/>
+						<column id="tab_sales_fact_1997_col_promotion_id" name="promotion_id" type="integer"/>
+						<column id="tab_sales_fact_1997_col_store_id" name="store_id" type="integer"/>
+						<column id="tab_sales_fact_1997_col_store_sales" name="store_sales" type="double"/>
+						<column id="tab_sales_fact_1997_col_store_cost" name="store_cost" type="double"/>
+						<column id="tab_sales_fact_1997_col_unit_sales" name="unit_sales" type="double"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_sales_fact_1997_col_product_id"/>
+						<key column_ref="tab_sales_fact_1997_col_time_id"/>
+						<key column_ref="tab_sales_fact_1997_col_customer_id"/>
+						<key column_ref="tab_sales_fact_1997_col_promotion_id"/>
+						<key column_ref="tab_sales_fact_1997_col_store_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_product" description="Foreign key over Product">
+							<keyref column_src="tab_sales_fact_1997_col_product_id" column_ref="tab_product_col_product_id"/>
+						</foreign_key>
+						<foreign_key target="tab_time_by_day" description="Foreign key over Time By Day">
+							<keyref column_src="tab_sales_fact_1997_col_time_id" column_ref="tab_time_by_day_col_time_id"/>
+						</foreign_key>
+						<foreign_key target="tab_customer" description="Foreign key over Costumer">
+							<keyref column_src="tab_sales_fact_1997_col_customer_id" column_ref="tab_customer_col_customer_id"/>
+						</foreign_key>
+						<foreign_key target="tab_promotion" description="Foreign key over Promotions">
+							<keyref column_src="tab_sales_fact_1997_col_promotion_id" column_ref="tab_promotion_col_promotion_id"/>
+						</foreign_key>
+						<foreign_key target="tab_store" description="Foreign key over Store">
+							<keyref column_src="tab_sales_fact_1997_col_store_id" column_ref="tab_store_col_store_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+
+				<table id="tab_sales_fact_1998" name="sales_fact_1998">
+					<columns>
+						<column id="tab_sales_fact_1998_col_product_id" name="product_id" type="integer"/>
+						<column id="tab_sales_fact_1998_col_time_id" name="time_id" type="integer"/>
+						<column id="tab_sales_fact_1998_col_customer_id" name="customer_id" type="integer"/>
+						<column id="tab_sales_fact_1998_col_promotion_id" name="promotion_id" type="integer"/>
+						<column id="tab_sales_fact_1998_col_store_id" name="store_id" type="integer"/>
+						<column id="tab_sales_fact_1998_col_store_sales" name="store_sales" type="double"/>
+						<column id="tab_sales_fact_1998_col_store_cost" name="store_cost" type="double"/>
+						<column id="tab_sales_fact_1998_col_unit_sales" name="unit_sales" type="double"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_sales_fact_1998_col_product_id"/>
+						<key column_ref="tab_sales_fact_1998_col_time_id"/>
+						<key column_ref="tab_sales_fact_1998_col_customer_id"/>
+						<key column_ref="tab_sales_fact_1998_col_promotion_id"/>
+						<key column_ref="tab_sales_fact_1998_col_store_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_product" description="Foreign key over Product">
+							<keyref column_src="tab_sales_fact_1998_col_product_id" column_ref="tab_product_col_product_id"/>
+						</foreign_key>
+						<foreign_key target="tab_time_by_day" description="Foreign key over Time By Day">
+							<keyref column_src="tab_sales_fact_1998_col_time_id" column_ref="tab_time_by_day_col_time_id"/>
+						</foreign_key>
+						<foreign_key target="tab_customer" description="Foreign key over Costumer">
+							<keyref column_src="tab_sales_fact_1998_col_customer_id" column_ref="tab_customer_col_customer_id"/>
+						</foreign_key>
+						<foreign_key target="tab_promotion" description="Foreign key over Promotions">
+							<keyref column_src="tab_sales_fact_1998_col_promotion_id" column_ref="tab_promotion_col_promotion_id"/>
+						</foreign_key>
+						<foreign_key target="tab_store" description="Foreign key over Store">
+							<keyref column_src="tab_sales_fact_1998_col_store_id" column_ref="tab_store_col_store_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+
+				<table id="tab_sales_fact_dec_1998" name="sales_fact_dec_1998">
+					<columns>
+						<column id="tab_sales_fact_dec_1998_col_product_id" name="product_id" type="integer"/>
+						<column id="tab_sales_fact_dec_1998_col_time_id" name="time_id" type="integer"/>
+						<column id="tab_sales_fact_dec_1998_col_customer_id" name="customer_id" type="integer"/>
+						<column id="tab_sales_fact_dec_1998_col_promotion_id" name="promotion_id" type="integer"/>
+						<column id="tab_sales_fact_dec_1998_col_store_id" name="store_id" type="integer"/>
+						<column id="tab_sales_fact_dec_1998_col_store_sales" name="store_sales" type="double"/>
+						<column id="tab_sales_fact_dec_1998_col_store_cost" name="store_cost" type="double"/>
+						<column id="tab_sales_fact_dec_1998_col_unit_sales" name="unit_sales" type="double"/>
+					</columns>
+					<primary_key>
+						<key column_ref="tab_sales_fact_dec_1998_col_product_id"/>
+						<key column_ref="tab_sales_fact_dec_1998_col_time_id"/>
+						<key column_ref="tab_sales_fact_dec_1998_col_customer_id"/>
+						<key column_ref="tab_sales_fact_dec_1998_col_promotion_id"/>
+						<key column_ref="tab_sales_fact_dec_1998_col_store_id"/>
+					</primary_key>
+					<foreign_keys>
+						<foreign_key target="tab_product" description="Foreign key over Product">
+							<keyref column_src="tab_sales_fact_dec_1998_col_product_id" column_ref="tab_product_col_product_id"/>
+						</foreign_key>
+						<foreign_key target="tab_time_by_day" description="Foreign key over Time By Day">
+							<keyref column_src="tab_sales_fact_dec_1998_col_time_id" column_ref="tab_time_by_day_col_time_id"/>
+						</foreign_key>
+						<foreign_key target="tab_customer" description="Foreign key over Costumer">
+							<keyref column_src="tab_sales_fact_dec_1998_col_customer_id" column_ref="tab_customer_col_customer_id"/>
+						</foreign_key>
+						<foreign_key target="tab_promotion" description="Foreign key over Promotions">
+							<keyref column_src="tab_sales_fact_dec_1998_col_promotion_id" column_ref="tab_promotion_col_promotion_id"/>
+						</foreign_key>
+						<foreign_key target="tab_store" description="Foreign key over Store">
+							<keyref column_src="tab_sales_fact_dec_1998_col_store_id" column_ref="tab_store_col_store_id"/>
+						</foreign_key>
+					</foreign_keys>
+				</table>
+
+
+			</tables>
+	</database>
+	<multidimensionalModel>
+		<dimensions>
+			<dimension id="dim_time" displayName="Time Dimension" baseLevel="dim_time_lvl_date">
+				<levels>
+					<level id="dim_time_lvl_date" groupAttr="tab_time_by_day_col_the_date" displayAttr="tab_time_by_day_col_the_date" sortAttr="tab_time_by_day_col_the_date" table="tab_time_by_day">
+						<property id="dim_time_lvl_date_attr_the_date" colRef="tab_time_by_day_col_the_date" displayName="Date of Time"/>
+						<property id="dim_time_lvl_date_attr_the_day" colRef="tab_time_by_day_col_the_day" displayName="Day Month's of Time"/>
+						<property id="dim_time_lvl_date_attr_week_of_year" colRef="tab_time_by_day_col_week_of_year" displayName="Week Year's of Time"/>
+						<property id="dim_time_lvl_date_attr_the_month" colRef="tab_time_by_day_col_the_month" displayName="Month Year's of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_day" groupAttr="tab_time_by_day_col_the_day" displayAttr="tab_time_by_day_col_the_day" sortAttr="tab_time_by_day_col_the_day" table="tab_time_by_day">
+						<property id="dim_time_lvl_day_attr_the_day" colRef="tab_time_by_day_col_the_day" displayName="Day Month's of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_month" groupAttr="tab_time_by_day_col_the_month" displayAttr="tab_time_by_day_col_the_month" sortAttr="tab_time_by_day_col_the_month" table="tab_time_by_day">
+						<property id="dim_time_lvl_month_attr_the_month" colRef="tab_time_by_day_col_the_month" displayName="Month Year's of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_quarter" groupAttr="tab_time_by_day_col_quarter" displayAttr="tab_time_by_day_col_quarter" sortAttr="tab_time_by_day_col_quarter" table="tab_time_by_day">
+						<property id="dim_time_lvl_quarter_attr_quarter" colRef="tab_time_by_day_col_quarter" displayName="Quarter Year's of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_year" groupAttr="tab_time_by_day_col_the_year" displayAttr="tab_time_by_day_col_the_year" sortAttr="tab_time_by_day_col_the_year" table="tab_time_by_day">
+						<property id="dim_time_lvl_year_attr_the_year" colRef="tab_time_by_day_col_the_year" displayName="Year of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_week" groupAttr="tab_time_by_day_col_week_of_year" displayAttr="tab_time_by_day_col_week_of_year" sortAttr="tab_time_by_day_col_week_of_year" table="tab_time_by_day">
+						<property id="dim_time_lvl_week_attr_week_of_year" colRef="tab_time_by_day_col_week_of_year" displayName="Week's Year of Time"/>
+					</level>
+
+					<level id="dim_time_lvl_fiscal_period" groupAttr="tab_time_by_day_col_fiscal_period" displayAttr="tab_time_by_day_col_fiscal_period" sortAttr="tab_time_by_day_col_fiscal_period" table="tab_time_by_day">
+						<property id="dim_time_lvl_fiscal_period_attr_week_of_year" colRef="tab_time_by_day_col_fiscal_period" displayName="Fiscal Year of Time"/>
+					</level>
+
+				</levels>
+
+				<hierarchies>
+					<hierarchy id="h_time_date_all" displayName="Hierarchy Time">
+						<hierarchyLevel levelRef="dim_time_lvl_date"/>
+						<hierarchyLevel levelRef="dim_time_lvl_day"/>
+						<hierarchyLevel levelRef="dim_time_lvl_month"/>
+						<hierarchyLevel levelRef="dim_time_lvl_quarter"/>
+						<hierarchyLevel levelRef="dim_time_lvl_year"/>
+					</hierarchy>
+
+					<hierarchy id="h_time_date_summary" displayName="Hierarchy Time Fiscal">
+						<hierarchyLevel levelRef="dim_time_lvl_date"/>
+						<hierarchyLevel levelRef="dim_time_lvl_week"/>
+						<hierarchyLevel levelRef="dim_time_lvl_quarter"/>
+						<hierarchyLevel levelRef="dim_time_lvl_fiscal_period"/>
+					</hierarchy>
+				</hierarchies>
+			</dimension>
+			<dimension id="dim_product" displayName="Product Dimension" baseLevel="dim_product_lvl_product">
+				<levels>
+					<level id="dim_product_lvl_product" groupAttr="tab_product_col_product_name" displayAttr="tab_product_col_product_name" sortAttr="tab_product_col_product_name" table="tab_product">
+						<property id="dim_product_lvl_product_attr_product_name" colRef="tab_product_col_product_name" displayName="Product Name"/>
+					</level>
+
+					
+					<level id="dim_product_lvl_product_brand" groupAttr="tab_product_col_brand_name" displayAttr="tab_product_col_brand_name" sortAttr="tab_product_col_brand_name" table="tab_product">
+						<property id="dim_product_lvl_product_brand_attr_product_brand" colRef="tab_product_col_brand_name" displayName="Product Brand Name"/>
+					</level>
+
+					<level id="dim_product_lvl_product_subcategory" groupAttr="tab_product_class_col_product_subcategory" displayAttr="tab_product_class_col_product_subcategory" sortAttr="tab_product_class_col_product_subcategory" table="tab_product_class" downLevel="dim_product_lvl_product">
+						<property id="dim_product_lvl_product_subcategory_attr_product_subcategory" colRef="tab_product_class_col_product_subcategory" displayName="Product Subcategory"/>
+					</level>
+
+					<level id="dim_product_lvl_product_category" groupAttr="tab_product_class_col_product_category" displayAttr="tab_product_class_col_product_category" sortAttr="tab_product_class_col_product_category" table="tab_product_class" downLevel="dim_product_lvl_product_subcategory">
+						<property id="dim_product_lvl_product_category_attr_product_name" colRef="tab_product_class_col_product_category" displayName="Product Category"/>
+					</level>
+
+					<level id="dim_product_lvl_product_department" groupAttr="tab_product_class_col_product_department" displayAttr="tab_product_class_col_product_department" sortAttr="tab_product_class_col_product_department" table="tab_product_class" downLevel="dim_product_lvl_product">
+						<property id="dim_product_lvl_product_department_attr_product_department" colRef="tab_product_class_col_product_department" displayName="Product Department"/>
+					</level>
+
+					<level id="dim_product_lvl_product_family" groupAttr="tab_product_class_col_product_family" displayAttr="tab_product_class_col_product_family" sortAttr="tab_product_class_col_product_family" table="tab_product_class" downLevel="dim_product_lvl_product">
+						<property id="dim_product_lvl_product_family_attr_product_family" colRef="tab_product_class_col_product_family" displayName="Product Family"/>
+					</level>
+					
+
+				</levels>
+
+				<hierarchies>
+					<hierarchy id="h_product_structure" displayName="Hierarchy Product">
+						<hierarchyLevel levelRef="dim_product_lvl_product"/>
+						<hierarchyLevel levelRef="dim_product_lvl_product_brand"/>
+						<hierarchyLevel levelRef="dim_product_lvl_product_subcategory"/>
+						<hierarchyLevel levelRef="dim_product_lvl_product_category"/>
+						<hierarchyLevel levelRef="dim_product_lvl_product_department"/>
+						<hierarchyLevel levelRef="dim_product_lvl_product_family"/>
+					</hierarchy>
+				</hierarchies>
+			</dimension>
+			<dimension id="dim_store" displayName="Store Dimension" baseLevel="dim_store_lvl_store_name">
+				<levels>
+					<level id="dim_store_lvl_store_name" groupAttr="tab_store_col_store_name" displayAttr="tab_store_col_store_name" sortAttr="tab_store_col_store_name" table="tab_store">
+						<property id="dim_store_lvl_store_name_attr_store_name" colRef="tab_store_col_store_name" displayName="Store Name"/>
+						<property id="dim_store_lvl_store_name_attr_store_sqft" colRef="tab_store_col_store_sqft" displayName="Store Square feet"/>
+					</level>
+					<level id="dim_store_lvl_store_type" groupAttr="tab_store_col_store_type" displayAttr="tab_store_col_store_type" sortAttr="tab_store_col_store_type" table="tab_store">
+						<property id="dim_store_lvl_store_type_attr_store_type" colRef="tab_store_col_store_type" displayName="Store Type"/>
+					</level>
+					<level id="dim_store_lvl_store_manager" groupAttr="tab_store_col_store_manager" displayAttr="tab_store_col_store_manager" sortAttr="tab_store_col_store_manager" table="tab_store">
+						<property id="dim_store_lvl_store_manager_attr_store_manager" colRef="tab_store_col_store_manager" displayName="Store Manager"/>
+					</level>
+					<level id="dim_store_lvl_store_city" groupAttr="tab_region_col_sales_city" displayAttr="tab_region_col_sales_city" sortAttr="tab_region_col_sales_city" table="tab_region" downLevel="dim_store_lvl_store_name">
+						<property id="dim_store_lvl_store_city_attr_store_city" colRef="tab_store_col_store_city" displayName="Store City"/>
+					</level>
+					<level id="dim_store_lvl_store_district" groupAttr="tab_region_col_sales_district" displayAttr="tab_region_col_sales_district" sortAttr="tab_region_col_sales_district" table="tab_region" downLevel="dim_store_lvl_store_city">
+						<property id="dim_store_lvl_store_district_attr_store_district" colRef="tab_region_col_sales_district" displayName="Store District"/>
+					</level>
+					<level id="dim_store_lvl_store_region" groupAttr="tab_region_col_sales_region" displayAttr="tab_region_col_sales_region" sortAttr="tab_region_col_sales_region" table="tab_region" downLevel="dim_store_lvl_store_district">
+						<property id="dim_store_lvl_store_region_attr_store_region" colRef="tab_region_col_sales_region"  displayName="Store Region" />
+					</level>
+
+					<level id="dim_store_lvl_store_country" groupAttr="tab_region_col_sales_country" displayAttr="tab_region_col_sales_country" sortAttr="tab_region_col_sales_country" table="tab_region_col_sales_country" downLevel="dim_store_lvl_store_region">
+						<property id="dim_store_lvl_store_country_attr_store_country" colRef="tab_region_col_sales_country"  displayName="Store Country" />
+					</level>
+				</levels>
+
+				<hierarchies>
+					<hierarchy id="h_store_location" displayName="Hierarchy Store Location">
+						<hierarchyLevel levelRef="dim_store_lvl_store_city"/>
+						<hierarchyLevel levelRef="dim_store_lvl_store_district"/>
+						<hierarchyLevel levelRef="dim_store_lvl_store_region"/>
+						<hierarchyLevel levelRef="dim_store_lvl_store_country"/>
+					</hierarchy>
+					<hierarchy id="h_store_info" displayName="Hierarchy Store Info">
+						<hierarchyLevel levelRef="dim_store_lvl_store_name"/>
+						<hierarchyLevel levelRef="dim_store_lvl_store_type"/>
+						<hierarchyLevel levelRef="dim_store_lvl_store_manager"/>
+					</hierarchy>
+				</hierarchies>
+
+			</dimension>
+			<dimension id="dim_customer" displayName="Costumer Dimension" baseLevel="dim_customer_lvl_costumer_name">
+				<levels>
+					<!-- este esta aqui para servir de mau exemplo , pois dara origem a muitos tuplos-->
+					<level id="dim_customer_lvl_costumer_name" groupAttr="tab_customer_col_fullname" displayAttr="tab_customer_col_fullname" sortAttr="tab_customer_col_fullname" table="tab_customer">
+						<property id="dim_customer_lvl_costumer_name_attr_fullname" colRef="tab_customer_col_fullname"  displayName="Full Customer Name" />
+						<property id="dim_customer_lvl_costumer_name_attr_marital_status" colRef="tab_customer_col_marital_status"  displayName="Marital Status" />
+						<property id="dim_customer_lvl_costumer_name_attr_gender" colRef="tab_customer_col_gender"  displayName="Gender" />
+					</level>
+					<level id="dim_customer_lvl_costumer_postal_code" groupAttr="tab_customer_col_postal_code" displayAttr="tab_customer_col_postal_code" sortAttr="tab_customer_col_postal_code" table="tab_customer">
+						<property id="dim_customer_lvl_costumer_name_attr_postal_code" colRef="tab_customer_col_postal_code"  displayName="Customer's Postal Code" />
+					</level>
+					<level id="dim_customer_lvl_costumer_education" groupAttr="tab_customer_col_education" displayAttr="tab_customer_col_education" sortAttr="tab_customer_col_education" table="tab_customer">
+						<property id="dim_customer_lvl_costumer_name_attr_education" colRef="tab_customer_col_education"  displayName="Customer's Education" />
+					</level>
+					<level id="dim_customer_lvl_costumer_occupation" groupAttr="tab_customer_col_occupation" displayAttr="tab_customer_col_occupation" sortAttr="tab_customer_col_occupation" table="tab_customer">
+						<property id="dim_customer_lvl_costumer_name_attr_occupation" colRef="tab_customer_col_occupation"  displayName="Customer's Occupation" />
+					</level>
+
+					<level id="dim_customer_lvl_costumer_city" groupAttr="tab_region_col_sales_city" displayAttr="tab_region_col_sales_city" sortAttr="tab_region_col_sales_city" table="tab_region" downLevel="dim_customer_lvl_costumer_name">
+						<property id="dim_customer_lvl_costumer_city_attr_city" colRef="dim_customer_lvl_costumer_city"  displayName="Customer's City" />
+					</level>
+
+					<level id="dim_customer_lvl_costumer_district" groupAttr="tab_region_col_sales_district" displayAttr="tab_region_col_sales_district" sortAttr="tab_region_col_sales_district" table="tab_region" downLevel="dim_customer_lvl_costumer_city">
+						<property id="dim_customer_lvl_costumer_city_attr_district" colRef="tab_region_col_sales_district"  displayName="Customer's District" />
+					</level>
+
+					<level id="dim_customer_lvl_costumer_region" groupAttr="tab_region_col_sales_region" displayAttr="tab_region_col_sales_region" sortAttr="tab_region_col_sales_region" table="tab_region" downLevel="dim_customer_lvl_costumer_district">
+						<property id="dim_customer_lvl_costumer_city_attr_region" colRef="tab_region_col_sales_region"  displayName="Customer's Region" />
+					</level>
+
+					<level id="dim_customer_lvl_costumer_country" groupAttr="tab_region_col_sales_country" displayAttr="tab_region_col_sales_country" sortAttr="tab_region_col_sales_country" table="tab_region" downLevel="dim_customer_lvl_costumer_region">
+						<property id="dim_customer_lvl_costumer_city_attr_country" colRef="tab_region_col_sales_country"  displayName="Customer's Country" />
+					</level>
+				</levels>
+
+				<hierarchies>
+					<hierarchy id="h_customer_location" displayName="Hierarchy Customer Location">
+						<hierarchyLevel levelRef="dim_customer_lvl_costumer_city"/>
+						<hierarchyLevel levelRef="dim_customer_lvl_costumer_district"/>
+						<hierarchyLevel levelRef="dim_customer_lvl_costumer_region"/>
+						<hierarchyLevel levelRef="dim_customer_lvl_costumer_country"/>
+					</hierarchy>
+				</hierarchies>
+
+			</dimension>
+			<!--<dimension id="dim_promotion" displayName="Promotion Dimension" baseLevel="">
+			</dimension>-->
+		</dimensions>
+
+		<cubes>
+			<cube id="cube_sales_1998" displayName="Cube's Sales of 1998" table="tab_sales_fact_1998" description="Cube's Sales of 1998">
+				<facts>
+					<fact id="cube_sales_1998_fact_store_sales" displayName="Store Sales" colRef="tab_sales_fact_dec_1998_col_store_sales" />
+					<fact id="cube_sales_1998_fact_store_cost" displayName="Store Cost" colRef="tab_sales_fact_dec_1998_col_store_cost" />
+					<fact id="cube_sales_1998_fact_store_unit_sales" displayName="Store Unit Sales" colRef="tab_sales_fact_dec_1998_col_unit_sales" />
+				</facts>
+
+				<cubeDimensions dimensionsRef="dim_time dim_product dim_store dim_customer"/>
+
+				<measures>
+					<measure id="cube_sales_1998_measure_sum" displayName="Sum" operator="SUM" />
+					<measure id="cube_sales_1998_measure_avg" displayName="Avg" operator="AVG"/>
+					<measure id="cube_sales_1998_measure_min" displayName="Min" operator="MIN"/>
+					<measure id="cube_sales_1998_measure_max" displayName="Max" operator="MAX"/>
+					<measure id="cube_sales_1998_measure_median" displayName="Median" operator="median"/>
+					<measure id="cube_sales_1998_measure_mode" displayName="Mode" operator="stats_mode"/>
+
+				</measures>
+
+			</cube>
+		</cubes>
+
+	</multidimensionalModel>
+</metadata>

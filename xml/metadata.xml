@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="MyDef" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="MyDef file:/Applications/oxygen/metadataDW.xsd">
+ <database>
+  <db_connection adapter="" host="localhost" username="" password="" path=""/>
+  <tables>
+   <table id="table_sales_fact_1997" name="sales_fact_1997">
+    <columns>
+     <column id="table_sales_fact_1997_column_product_id" name="product_id" type="integer"/>
+     <column id="table_sales_fact_1997_column_time_id" name="time_id" type="integer"/>
+     <column id="table_sales_fact_1997_column_customer_id" name="customer_id" type="integer"/>
+     <column id="table_sales_fact_1997_column_promotion_id" name="promotion_id" type="integer"/>
+     <column id="table_sales_fact_1997_column_store_id" name="store_id" type="integer"/>
+     <column id="table_sales_fact_1997_column_store_sales" name="store_sales" type="double"/>
+     <column id="table_sales_fact_1997_column_store_cost" name="store_cost" type="double"/>
+     <column id="table_sales_fact_1997_column_unit_sales" name="unit_sales" type="double"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_sales_fact_1997_column_product_id"/>
+     <key column_src="table_sales_fact_1997_column_time_id"/>
+     <key column_src="table_sales_fact_1997_column_customer_id"/>
+     <key column_src="table_sales_fact_1997_column_promotion_id"/>
+     <key column_src="table_sales_fact_1997_column_store_id"/>
+    </primary_key>
+    <foreign_keys>
+     <key_ref column_ref_src="table_sales_fact_1997_column_product_id" 
+      table_ref_src="table_sales_fact_1997" table_ref="table_product" 
+      column_ref="table_product_column_product_id"/>
+     <key_ref column_ref_src="table_sales_fact_1997_column_time_id" 
+      table_ref_src="table_sales_fact_1997" table_ref="table_time_by_day"
+      column_ref="table_time_by_day_column_time_id"/>
+     <key_ref column_ref_src="table_sales_fact_1997_column_customer_id" 
+      table_ref_src="table_sales_fact_1997" table_ref="table_customer"
+      column_ref="table_customer_column_customer_id"/>
+     <key_ref column_ref_src="table_sales_fact_1997_column_promotion_id" 
+      table_ref_src="table_sales_fact_1997" 
+      table_ref="table_promotion" 
+      column_ref="table_promotion_column_promotion_id"/>
+     <key_ref column_ref_src="table_sales_fact_1997_column_store_id" 
+      table_ref_src="table_sales_fact_1997" 
+      table_ref="table_store" 
+      column_ref="table_store_column_store_id"/>
+    </foreign_keys>
+   </table>
+   <table id="table_product" name="product">
+    <columns>
+     <column id="table_product_column_product_id" name="product_id" type="integer"/>
+     <column id="table_product_column_product_class_id" name="product_class_id" type="integer"/>
+     <column id="table_product_column_brand_name" name="brand_name" type="string"/>
+     <column id="table_product_column_product_name" name="product_name" type="integer"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_product_column_product_id"/>
+    </primary_key>
+    <foreign_keys>
+     <key_ref column_ref_src="table_product_column_product_class_id" 
+      table_ref_src="table_product" table_ref="table_product_class" 
+      column_ref="table_product_class_id"/>
+    </foreign_keys>
+   </table>
+   <table id="table_product_class" name="product_class">
+    <columns>
+     <column id="table_product_class_id" name="product_class_id" type="integer"/>
+     <column id="table_product_subcategory" name="product_subcategory" type="string"/>
+     <column id="table_product_category" name="product_category" type="string"/>
+     <column id="table_product_department" name="product_department" type="string"/>
+     <column id="table_product_family" name="product_family" type="string"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_product_class_id"/>
+    </primary_key>
+   </table>
+   <table id="table_time_by_day" name="time_by_day">
+    <columns>
+     <column id="table_time_by_day_column_time_id" name="time_id" type="integer"/>
+     <column id="table_time_by_day_column_the_date" name="the_date" type="datetime"/>
+     <column id="table_time_by_day_column_the_day" name="the_day" type="string"/>
+     <column id="table_time_by_day_column_the_month" name="the_month" type="string"/>
+     <column id="table_time_by_day_column_the_year" name="the_year" type="integer"/>
+     <column id="table_time_by_day_column_day_of_month" name="day_of_month" type="integer"/>
+     <column id="table_time_by_day_column_week_of_year" name="week_of_year" type="integer"/>
+     <column id="table_time_by_day_column_month_of_year" name="month_of_year" type="integer"/>
+     <column id="table_time_by_day_column_quarter" name="quarter" type="string"/>
+     <column id="table_time_by_day_column_fiscal_period" name="fiscal_period" type="string"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_time_by_day_column_time_id"/>
+    </primary_key>
+   </table>
+   <table id="table_customer" name="customer">
+    <columns>
+     <column id="table_customer_column_customer_id" name="customer_id" type="integer"/>
+     <column id="table_customer_column_city" name="city" type="string"/>
+     <column id="table_customer_column_state_province" name="state_province" type="string"/>
+     <column id="table_customer_column_postal_code" name="postal_code" type="string"/>
+     <column id="table_customer_column_country" name="country" type="string"/>
+     <column id="table_customer_column_customer_region_id" name="customer_region_id" type="integer"/>
+     <column id="table_customer_column_marital_status" name="marital_status" type="string"/>
+     <column id="table_customer_column_gender" name="gender" type="string"/>
+     <column id="table_customer_column_occupation" name="occupation" type="string"/>
+     <column id="table_customer_column_education" name="education" type="string"/>
+     <column id="table_customer_column_fullname" name="fullname" type="string"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_customer_column_customer_id"/>
+    </primary_key>
+    <foreign_keys>
+     <key_ref column_ref_src="table_customer_column_customer_region_id"
+      table_ref_src="table_customer" table_ref="table_region" 
+      column_ref="table_region_column_region_id"/>
+    </foreign_keys>
+   </table>
+   <table id="table_region" name="region">
+    <columns>
+     <column id="table_region_column_region_id" name="region_id" type="integer"/>
+     <column id="table_region_column_sales_city" name="sales_city" type="string"/>
+     <column id="table_region_column_sales_state_province" name="sales_state_province" type="string"/>
+     <column id="table_region_column_sales_district" name="sales_district" type="string"/>
+     <column id="table_region_column_sales_region" name="sales_region" type="string"/>
+     <column id="table_region_column_sales_country" name="sales_country" type="string"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_region_column_region_id"/>
+    </primary_key>
+   </table>
+   <table id="table_promotion" name="promotion">
+    <columns>
+     <column id="table_promotion_column_promotion_id" name="promotion_id" type="integer"/>
+     <column id="table_promotion_column_promotion_district_id" name="promotion_district_id" type="integer"/>
+     <column id="table_promotion_column_promotion_name" name="promotion_name" type="string"/>
+     <column id="table_promotion_column_media_type" name="media_type" type="string"/>
+     <column id="table_promotion_column_cost" name="cost" type="double"/>
+     <column id="table_promotion_column_start_date" name="start_date" type="datetime"/>
+     <column id="table_promotion_column_end_date" name="end_date" type="datetime"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_promotion_column_promotion_id"/>
+    </primary_key>
+   </table>
+   <table id="table_store" name="store">
+    <columns>
+     <column id="table_store_column_store_id" name="store_id" type="integer"/>
+     <column id="table_store_column_store_type" name="store_type" type="string"/>
+     <column id="table_store_column_region_id" name="region_id" type="integer"/>
+     <column id="table_store_column_store_name" name="store_name" type="string"/>
+     <column id="table_store_column_store_number" name="store_number" type="integer"/>
+     <column id="table_store_column_store_city" name="store_city" type="string"/>
+     <column id="table_store_column_store_state" name="store_state" type="string"/>
+     <column id="table_store_column_store_postal_code" name="store_postal_code" type="string"/>
+     <column id="table_store_column_store_country" name="store_country" type="string"/>
+     <column id="table_store_column_store_manager" name="store_manager" type="string"/>
+     <column id="table_store_column_store_sqft" name="store_sqft" type="integer"/>
+    </columns>
+    <primary_key>
+     <key column_src="table_store_column_store_id"/>
+    </primary_key>
+    <foreign_keys>
+     <key_ref column_ref_src="table_store_column_region_id" 
+      table_ref_src="table_store" table_ref="table_region" 
+      column_ref="table_region_column_region_id"/>
+    </foreign_keys>
+   </table>
+  </tables>
+ </database>
+ <multidimensionalmodel>
+  <cubes>
+   <cube id="cube_sales_1997" name="Cube Sales 1997" table_ref="table_sales_fact_1997">
+    <fact_table>
+     <fact id="cube_sales_1997_fact_store_sales" display_name="Store Sales" 
+      column_ref="table_sales_fact_1997_column_store_sales"/>
+     <fact id="cube_sales_1997_fact_store_cost" display_name="Store Cost" 
+      column_ref="table_sales_fact_1997_column_store_cost"/>
+     <fact id="cube_sales_1997_fact_unit_sales" display_name="Store Unit Sales" 
+      column_ref="table_sales_fact_1997_column_unit_sales"/>
+    </fact_table>
+    <cube_dimensions>
+     <cube_dimension id="cube_dimension_time" dimension_ref="dimension_time"/>
+    </cube_dimensions>
+    <cube_measures>
+     <measure id="cube_sales_1997_measure_sum" display_name="Sum" operation="SUM"/>
+     <measure id="cube_sales_1997_measure_avg" display_name="Average" operation="AVG"/>
+     <measure id="cube_sales_1997_measure_max" display_name="Max" operation="MAX"/>
+     <measure id="cube_sales_1997_measure_min" display_name="Min" operation="MIN"/>
+    </cube_measures>
+   </cube>
+  </cubes>
+  <dimensions>
+   <dimension id="dimension_time" display_name="Time Dimension" base_level="dimension_time_level_date">
+    <hierarchies>
+     <hierarchy id="dimension_time_hierarchy_time" display_name="Hierarchy time">
+      <hierarchy_level level_ref="dimension_time_level_date"/>
+      <hierarchy_level level_ref="dimension_time_level_day"/>
+      <hierarchy_level level_ref="dimension_time_level_month"/>
+      <hierarchy_level level_ref="dimension_time_level_quarter"/>
+      <hierarchy_level level_ref="dimension_time_level_year"/>
+     </hierarchy>
+     <hierarchy id="dimension_time_hierarchy_fiscal_time" display_name="Hierarchy Fiscal Time">
+      <hierarchy_level level_ref="dimension_time_level_date"/>
+      <hierarchy_level level_ref="dimension_time_level_week"/>
+      <hierarchy_level level_ref="dimension_time_level_quarter"/>
+      <hierarchy_level level_ref="dimension_time_level_fiscal_period"/>
+     </hierarchy>
+    </hierarchies>
+    <levels>
+     <level id="dimension_time_level_date" group_by="table_time_by_day_column_the_date" 
+      sort_by="table_time_by_day_column_the_date" 
+      display_by="table_time_by_day_column_the_date" 
+      table_ref="table_time_by_day">
+      <property id="dimension_time_level_date_property_date" column_ref="table_time_by_day_column_the_date" display_name="Date"/>
+      <property id="dimension_time_level_date_property_day" column_ref="table_time_by_day_column_the_day" display_name="Month of Day"/>
+      <property id="dimension_time_level_date_property_week_of_year" column_ref="table_time_by_day_column_week_of_year" display_name="Week of Year"/>
+      <property id="dimension_time_level_date_property_month" column_ref="table_time_by_day_column_the_month" display_name="Month of Year"/>
+     </level>
+     <level id="dimension_time_level_day" group_by="table_time_by_day_column_the_day" 
+      sort_by="table_time_by_day_column_the_day" display_by="table_time_by_day_column_the_day" 
+      table_ref="table_time_by_day">
+      <property id="dimension_time_level_day_property_day" column_ref="table_time_by_day_column_the_day" display_name="Month's day of Year"/>
+     </level>
+     <level id="dimension_time_level_month" group_by="table_time_by_day_column_month_of_year" 
+      sort_by="table_time_by_day_column_month_of_year" display_by="table_time_by_day_column_month_of_year" 
+      table_ref="table_time_by_day">
+      <property id="dimension_time_level_month_property_month" column_ref="table_time_by_day_column_month_of_year" display_name="Year's Month"/>
+     </level>
+     <level id="dimension_time_level_quarter" group_by="table_time_by_day_column_quarter" sort_by="table_time_by_day_column_quarter" 
+      display_by="table_time_by_day_column_quarter" table_ref="table_time_by_day">
+      <property id="dimension_time_level_month_property_quarter" column_ref="table_time_by_day_column_quarter" display_name="Quarter of Year"/>
+     </level>
+     <level id="dimension_time_level_year" group_by="table_time_by_day_column_the_year" sort_by="table_time_by_day_column_the_year" 
+      display_by="table_time_by_day_column_the_year" table_ref="table_time_by_day">
+      <property id="dimension_time_level_month_property_year" column_ref="table_time_by_day_column_the_year" display_name="Year"/>
+     </level>
+     <level id="dimension_time_level_week" group_by="table_time_by_day_column_week_of_year" sort_by="table_time_by_day_column_week_of_year" 
+      display_by="table_time_by_day_column_week_of_year" table_ref="table_time_by_day">
+      <property id="dimension_time_level_month_property_week" column_ref="table_time_by_day_column_week_of_year" display_name="Week's Year"/>
+     </level>
+     <level id="dimension_time_level_fiscal_period" group_by="table_time_by_day_column_fiscal_period" sort_by="table_time_by_day_column_fiscal_period" 
+      display_by="table_time_by_day_column_fiscal_period" table_ref="table_time_by_day">
+      <property id="dimension_time_level_month_property_fiscal_period" column_ref="table_time_by_day_column_fiscal_period" display_name="Fiscal Period of Year"/>
+     </level>
+    </levels>
+   </dimension>
+  </dimensions>
+ </multidimensionalmodel>
+</metadata>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1" targetNamespace="MyDef" xmlns="MyDef">
+    <xs:element name="metadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="database" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="multidimensionalmodel" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="database">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="db_connection" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="tables" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="db_connection">
+        <xs:complexType>
+            <xs:attribute name="adapter" type="xs:string" use="required"/>
+            <xs:attribute name="host" type="xs:string" use="required"/>
+            <xs:attribute name="username" type="xs:string" use="required"/>
+            <xs:attribute name="password" type="xs:string" use="required"/>
+            <xs:attribute name="path" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tables">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="table" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="table">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="columns" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="primary_key" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="foreign_keys" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="columns">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="column" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="column">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="type" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="primary_key">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="key" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="key">
+        <xs:complexType>
+            <xs:attribute name="column_src" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="foreign_keys">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="key_ref" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="key_ref">
+        <xs:complexType>
+            <xs:attribute name="column_ref_src" type="xs:IDREF" use="required"/>
+            <xs:attribute name="table_ref_src" type="xs:IDREF" use="required"/>
+            <xs:attribute name="table_ref" type="xs:IDREF" use="required"/>
+            <xs:attribute name="column_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="multidimensionalmodel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="cubes" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="dimensions" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cubes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="cube" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cube">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fact_table" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="cube_dimensions" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="cube_measures" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="table_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fact_table">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fact" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fact">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="display_name" type="xs:string" use="required"/>
+            <xs:attribute name="column_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cube_dimensions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="cube_dimension" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cube_dimension">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="dimension_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cube_measures">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="measure" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="measure">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="display_name" type="xs:string" use="required"/>
+            <xs:attribute name="operation" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dimensions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dimension" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dimension">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="hierarchies" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="levels" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="display_name" type="xs:string" use="required"/>
+            <xs:attribute name="base_level" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hierarchies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="hierarchy" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hierarchy">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="hierarchy_level" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="display_name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hierarchy_level">
+        <xs:complexType>
+            <xs:attribute name="level_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="levels">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="level" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="level">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="property" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="group_by" type="xs:IDREF" use="required"/>
+            <xs:attribute name="sort_by" type="xs:IDREF" use="required"/>
+            <xs:attribute name="display_by" type="xs:IDREF" use="required"/>
+            <xs:attribute name="table_ref" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="property">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="column_ref" type="xs:IDREF" use="required"/>
+            <xs:attribute name="display_name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

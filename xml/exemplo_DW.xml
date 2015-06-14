@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <metadata>
 
 	<db>
@@ -8,7 +9,7 @@
 		<path></path>
 	</db>
 
-	<tables id="tables1">
+	<tables id="ter">
 		<table id="table1" name="sales_fact_1997">
 			<columns>
 				<column id="column1_table1" name="product_id" type="int(11)"/>
