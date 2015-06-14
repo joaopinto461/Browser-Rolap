@@ -76,7 +76,7 @@
 			<div class="right_col_elem" id="dimensions_square">
 		  		<h5>Dimensions</h5>
 		  		<hr>		  		  	
-	  			<ul class="dimensions_list"></ul>		  		  		
+	  			<ul class="dimensions_list sub"></ul>
 		  	</div>
 		  	
 			<div class="right_col_elem">

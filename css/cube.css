@@ -29,6 +29,12 @@ li
   margin-bottom: 5px;
 }
 
+li .level
+{
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
 .center_col
 {
   background-color: white;

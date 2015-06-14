@@ -28,13 +28,15 @@ $(document).ready(function()
 		}
 	);
 
-	$('li').draggable
+	$('.level').draggable
 	(
 		{
 		    revert: true,
 		    helper: "clone"		    
 		}
 	);
+
+	$('.sub').accordion();
 
 });
 
@@ -56,7 +58,7 @@ function fillDimensions()
 	for(var x in dimensions)
 	{
 		var d = dimensions[x];
-		$('.dimensions_list').append('<li onClick="toggleDimension(this.id)" class="dimension" id="' + d + '">' + '<i class="glyphicon glyphicon-list"></i> ' + d + '<ul style="display: none;"></ul></li>');
+		$('.dimensions_list').append('<li class="dimension accordion" id="' + d + '">' + '<h5><i class="glyphicon glyphicon-list"></i> ' + d + '</h5><ul class="sub" style="display: none;"></ul></li>');
 	}
 }
 
@@ -64,7 +66,7 @@ function fillLevels()
 {
 	for(var l in levels)
 	{
-		$('.dimension ul').append('<li class="level" + id="' + levels[l] + '">' + levels[l] +'</li>')
+		$('.dimension ul').append('<li class="level" + id="' + levels[l] + '">' + '<i class="glyphicon glyphicon-move"></i> ' + levels[l] +'</li>')
 	}
 }
 
@@ -90,10 +92,4 @@ function fillMeasures()
 function fillActiveMeasures()
 {
 	
-}
-
-function toggleDimension(clicked_id)
-{
-	var x = document.getElementById(clicked_id);
-	$(x).children('ul').toggle();
 }
