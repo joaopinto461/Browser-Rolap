@@ -10,7 +10,7 @@
     <script src="js/cubes.js"></script>
     <meta charset='utf-8'>
     <?
-		include 'main.php';    
+		include 'main.php';
 	?>
   </head>
 
@@ -77,13 +77,31 @@
 			<div class="right_col_elem" id="dimensions_square">
 		  		<h5>Dimensions</h5>
 		  		<hr>		  		  	
-	  			<ul class="dimensions_list sub"></ul>
+	  			<ul class="dimensions_list sub">
+	  				
+	  			<?php foreach ($dim_info as $dim_id => $dim_data) :?>
+	  				<li class="dimension accordion" id="<? print $dim_id ?>">
+	  					<h5><i class="glyphicon glyphicon-list"></i> <? print $dim_data["name_dimension"] ?> </h5>
+	  					<ul class="sub" style="display: none;">	  					
+	  					<?php foreach ($dim_data["levels"] as $level_id=>$level) :?>
+	  						<?php foreach ($level as $l):?>
+	  							<li class="level" id="<? print $level_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $l ?></li>
+	  						<?php endforeach;?>
+	  					<?php endforeach ?>
+	  					</ul>
+	  				</li>
+	  			<?php endforeach ?>
+
+	  			</ul>
 		  	</div>
 		  	
 			<div class="right_col_elem">
 		  		<h5>Measures</h5>
 		  		<hr>
 		  		<ul class="measures_list"></ul>
+		  		<?php foreach ($measure_info as $m):?>
+		  			<li><? var_dump($m); ?></li>
+		  		<?php endforeach ?>
 		  	</div>
 
 		  </div>		  

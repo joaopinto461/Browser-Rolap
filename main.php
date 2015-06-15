@@ -107,6 +107,6 @@
         }
 
         /* Array c dimensions e measures */
-        $dimensions_measures = json_encode(["dimensions" => $dim_info, "measures" => $measure_info]);
+        $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
 	}
 ?>

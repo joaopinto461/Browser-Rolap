@@ -1,8 +1,8 @@
 $(document).ready(function()
 {	   
-	fillDimensions();
+	// fillDimensions();
 	fillMeasures();
-	fillLevels();
+	// fillLevels();
 
 	$('.center_col').droppable
 	(
