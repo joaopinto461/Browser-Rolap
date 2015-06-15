@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.w3schools.com"
-    xmlns="http://www.w3schools.com"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    targetNamespace="MyDef" xmlns="MyDef">
     <xs:element name="metadata">
         <xs:complexType>
             <xs:sequence>
@@ -25,7 +24,7 @@
             <xs:attribute name="host" type="xs:string" use="required"/>
             <xs:attribute name="username" type="xs:string" use="required"/>
             <xs:attribute name="password" type="xs:string" use="required"/>
-            <xs:attribute name="path" type="xs:string" use="required"/>
+            <xs:attribute name="instance" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="tables">

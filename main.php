@@ -109,4 +109,14 @@
         /* Array c dimensions e measures */
         $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
 	}
+
+    function extractXmlDataBd($doc){
+        $db_connection = $doc->getElementsByTagName('db_connection');
+
+        $db_host = $db_connection->getElementById('host');
+        $db_username = $db_connection->getElementById('username');
+        $db_pass = $db_connection->getElementById('password');
+        $db_instance = $db_connection->getElementById('instance');
+        $db = ["host" => $db_host, "username" => $db_username, "pass" => $db_pass, "instance" => $db_instance];
+    }
 ?>
