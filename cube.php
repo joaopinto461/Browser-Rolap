@@ -38,7 +38,7 @@
 	  </div>
 	</nav>
 
-	<div class="container">
+	<div class="container-fluid">
 	<div class="container_central">
 	    
 	    <div class="row">
