@@ -1,4 +1,5 @@
 <?
+include "bd/connection.php";
     function libxml_display_error($error)
     {
         $return = "<br/>\n";
@@ -120,4 +121,37 @@
         $db = ["host" => $db_host, "username" => $db_username, "pass" => $db_pass, "instance" => $db_instance];
         return $db;
     }
+
+    function generateQuery ($data) {
+        return "...";
+    }
+
+    function getResultsByLevel($levelid) {
+        $db_data = extractXmlDataBd($doc);
+        $db = db($db_data);
+        $query = generateQuery($levelid);
+        $results = execQuery($query);
+        return json_encode($results);
+    }
+
+    function getResultsByMeasure($measureid) {
+        $db_data = extractXmlDataBd($doc);
+        $db = db($db_data);
+        $query = generateQuery($measureid);
+        $results = execQuery($query);
+        return json_encode($results);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

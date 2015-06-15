@@ -8,18 +8,49 @@ $(document).ready(function()
 		    drop: function(event, ui)
 		    {
 		        ui.draggable.data('dropped', true);		        
-
+		        // Dropping measure
 		        if(ui.draggable.attr('class').localeCompare("measure") > -1)
 		        {
-		        	var nm = ui.draggable.text();
-		        	active_measures[nm] = nm;	
-		        	fillActiveMeasures();		        	        
-		        }	
+		        		$.ajax({
+		        		method: "POST",
+		        		url: "ajax.php",
+		        		data: {
+		        			"measure_id": ui.draggable.attr('id'),
+		        			"action": "measure",
+		        		},
+		        		success: function(data) {
+			        		$('#table').dynatable({
+				        		dataset: {
+				        			records: JSON.parse(data)
+				        		}
+			        		});
+				        	var nm = ui.draggable.text();
+				        	active_measures[nm] = nm;
+				        	fillActiveMeasures();		        	        			        		
+		        		}
+		        	});
+		        }
+		        // Dropping level
 		        else if(ui.draggable.attr('class').localeCompare("dimension") > -1)
 		        {
-		        	var nd = ui.draggable.text();
-		        	active_levels[nd] = nd;
-		        	fillActiveDimensions();		        	
+		        	$.ajax({
+		        		method: "POST",
+		        		url: "ajax.php",
+		        		data: {
+		        			"level_id": ui.draggable.attr('id'),
+		        			"action": "level",
+		        		},
+		        		success: function(data) {
+			        		$('#table').dynatable({
+				        		dataset: {
+				        			records: JSON.parse(data)
+				        		}
+			        		});
+			        		var nd = ui.draggable.text();
+				        	active_levels[nd] = nd;
+				        	fillActiveDimensions();
+		        		}
+		        	});
 		        }	        
 		    }
 		}
@@ -36,7 +67,7 @@ $(document).ready(function()
 	$('.sub').accordion({ collapsible: true, active: false });
 	
 	$.dynatableSetup({features: { pushState: false, search: false, perPageSelect: false }});
-	$('#my-table').dynatable();
+	// $('#table').dynatable();
 
 
 });

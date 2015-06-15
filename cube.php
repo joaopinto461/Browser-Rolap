@@ -13,9 +13,6 @@
     <meta charset='utf-8'>
     <?
 		include 'main.php';
-		// $db_data = extractXmlDataBd($doc);
-		// include 'bd/connection.php';
-		// $DBH = startDBconnection($db_data);
 	?>
   </head>
 
@@ -68,107 +65,14 @@
 
 		  	<div class="center_col">
 		  		<h3><? echo $cube_name;?></h3>
-		  		  <table id="my-table" class="table" style="width:100%; text-align:left;">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Hobby</th>
-                  <th>Favorite Music</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-                <tr>
-                  <td>Fred</td>
-                  <td>Roller Skating</td>
-                  <td>Disco</td>
-                </tr>
-                <tr>
-                  <td>Helen</td>
-                  <td>Rock Climbing</td>
-                  <td>Alternative</td>
-                </tr>
-                <tr>
-                  <td>Glen</td>
-                  <td>Traveling</td>
-                  <td>Classical</td>
-                </tr>
-              </tbody>
-            </table>	
+		  		  	<table id="table" class="table" style="width:100%; text-align:left;">
+		              <thead>
+		              <th>Nome</th>
+		              <th>Idade</th>
+		              </thead>
+		              <tbody>
+		              </tbody>
+            		</table>	
 		  	</div>
 		  </div>
 
