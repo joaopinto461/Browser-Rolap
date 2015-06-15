@@ -4,10 +4,12 @@
     <title>Data Warehousing</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/cube.css" rel="stylesheet">
+    <link href="css/jquery.dynatable.css" rel="stylesheet">
     <script src="js/jQuery.js"></script>
     <script src="js/jQuery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/cubes.js"></script>
+    <script src="js/jquery.dynatable.js"></script>
     <meta charset='utf-8'>
     <?
 		include 'main.php';
@@ -66,11 +68,107 @@
 
 		  	<div class="center_col">
 		  		<h3><? echo $cube_name;?></h3>
-		  		<table class="table">
-		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
-  					<tr><td>Um</td><td>Dois</td><td>Três</td></tr>
-  					<tr><td>Quatro</td><td>Cinco</td><td>Seis</td></tr>
-				</table>	
+		  		  <table id="my-table" class="table" style="width:100%; text-align:left;">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Hobby</th>
+                  <th>Favorite Music</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+                <tr>
+                  <td>Fred</td>
+                  <td>Roller Skating</td>
+                  <td>Disco</td>
+                </tr>
+                <tr>
+                  <td>Helen</td>
+                  <td>Rock Climbing</td>
+                  <td>Alternative</td>
+                </tr>
+                <tr>
+                  <td>Glen</td>
+                  <td>Traveling</td>
+                  <td>Classical</td>
+                </tr>
+              </tbody>
+            </table>	
 		  	</div>
 		  </div>
 

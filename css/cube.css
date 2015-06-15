@@ -38,7 +38,7 @@ li .level
 .center_col
 {
   background-color: white;
-  height: 500px;
+  height: 540px;
   padding: 10px;
   border: 2px solid black;
 }
@@ -50,7 +50,7 @@ li .level
 
 .container_central
 {
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 .highlight {
@@ -65,5 +65,5 @@ h5
 
 #dimensions_square
 {
-  height: 400px;
+  height: 320px;
 }
