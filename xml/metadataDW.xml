@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata xmlns="MyDef" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="MyDef file:/Applications/oxygen/metadataDW.xsd">
+<metadata
+ xmlns="http://www.w3schools.com"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="metadata.xsd">
  <database>
   <db_connection adapter="" host="localhost" username="" password="" path=""/>
   <tables>
@@ -48,7 +49,7 @@
      <column id="table_product_column_product_id" name="product_id" type="integer"/>
      <column id="table_product_column_product_class_id" name="product_class_id" type="integer"/>
      <column id="table_product_column_brand_name" name="brand_name" type="string"/>
-     <column id="table_product_column_product_name" name="product_name" type="integer"/>
+     <column id="table_product_column_product_name" name="product_name" type="string"/>
     </columns>
     <primary_key>
      <key column_src="table_product_column_product_id"/>
@@ -56,19 +57,19 @@
     <foreign_keys>
      <key_ref column_ref_src="table_product_column_product_class_id" 
       table_ref_src="table_product" table_ref="table_product_class" 
-      column_ref="table_product_class_id"/>
+      column_ref="table_product_class_column_class_id"/>
     </foreign_keys>
    </table>
    <table id="table_product_class" name="product_class">
     <columns>
-     <column id="table_product_class_id" name="product_class_id" type="integer"/>
-     <column id="table_product_subcategory" name="product_subcategory" type="string"/>
-     <column id="table_product_category" name="product_category" type="string"/>
-     <column id="table_product_department" name="product_department" type="string"/>
-     <column id="table_product_family" name="product_family" type="string"/>
+     <column id="table_product_class_column_class_id" name="product_class_id" type="integer"/>
+     <column id="table_product_class_column_subcategory" name="product_subcategory" type="string"/>
+     <column id="table_product_class_column_category" name="product_category" type="string"/>
+     <column id="table_product_class_column_department" name="product_department" type="string"/>
+     <column id="table_product_class_column_family" name="product_family" type="string"/>
     </columns>
     <primary_key>
-     <key column_src="table_product_class_id"/>
+     <key column_src="table_product_class_column_class_id"/>
     </primary_key>
    </table>
    <table id="table_time_by_day" name="time_by_day">
@@ -176,6 +177,7 @@
     </fact_table>
     <cube_dimensions>
      <cube_dimension id="cube_dimension_time" dimension_ref="dimension_time"/>
+     <cube_dimension id="cube_dimension_product" dimension_ref="dimension_product"/>
     </cube_dimensions>
     <cube_measures>
      <measure id="cube_sales_1997_measure_sum" display_name="Sum" operation="SUM"/>
@@ -237,6 +239,39 @@
      <level id="dimension_time_level_fiscal_period" group_by="table_time_by_day_column_fiscal_period" sort_by="table_time_by_day_column_fiscal_period" 
       display_by="table_time_by_day_column_fiscal_period" table_ref="table_time_by_day">
       <property id="dimension_time_level_month_property_fiscal_period" column_ref="table_time_by_day_column_fiscal_period" display_name="Fiscal Period of Year"/>
+     </level>
+    </levels>
+   </dimension>
+   <dimension id="dimension_product" display_name="Product Dimension" base_level="dimension_product_level_product_name">
+    <hierarchies>
+     <hierarchy id="dimension_product_hierarchy_" display_name="Product Hierarchy">
+      <hierarchy_level level_ref="dimension_product_level_product_name"/>
+     </hierarchy>
+    </hierarchies>
+    <levels>
+     <level id="dimension_product_level_product_name" group_by="table_product_column_product_name" 
+      sort_by="table_product_column_product_name" display_by="table_product_column_product_name" table_ref="table_product">
+      <property id="dimension_product_level_product_property_product_name" column_ref="table_product_column_product_name" display_name="Product Name"/>
+     </level>
+     <level id="dimension_product_level_product_brand" group_by="table_product_column_brand_name" sort_by="table_product_column_brand_name" 
+      display_by="table_product_column_brand_name" table_ref="table_product">
+      <property id="dimension_product_level_product_property_product_brand" column_ref="table_product_column_brand_name" display_name="Product Brand"/>
+     </level>
+     <level id="dimension_product_level_product_subcategory" group_by="table_product_class_column_subcategory" sort_by="table_product_class_column_subcategory" 
+      display_by="table_product_class_column_subcategory" table_ref="table_product_class">
+      <property id="dimension_product_level_product_subcategory_property_subcategory" column_ref="table_product_class_column_subcategory" display_name="Product Subcategory"/>
+     </level>
+     <level id="dimension_product_level_product_category" group_by="table_product_class_column_category" sort_by="table_product_class_column_category" 
+      display_by="table_product_class_column_category" table_ref="table_product_class">
+      <property id="dimension_product_level_product_category_property_category" column_ref="table_product_class_column_category" display_name="Product Category"/>
+     </level>
+     <level id="dimension_product_level_product_department" group_by="table_product_class_column_department" sort_by="table_product_class_column_department" 
+      display_by="table_product_class_column_department" table_ref="table_product_class">
+      <property id="dimension_product_level_product_department_property_department" column_ref="table_product_class_column_department" display_name="Product Department"/>
+     </level>
+     <level id="dimension_product_level_product_family" group_by="table_product_class_column_family" sort_by="table_product_class_column_family" 
+      display_by="table_product_class_column_family" table_ref="table_product_class">
+      <property id="dimension_product_level_product_category_property_family" column_ref="table_product_class_column_family" display_name="Product Family"/>
      </level>
     </levels>
    </dimension>
