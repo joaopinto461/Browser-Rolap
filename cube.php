@@ -62,6 +62,7 @@
 		  <div class="col-md-6">
 
 		  	<div class="center_col">
+		  	<h3><? echo $cube ?></h3>
 		  		<table class="table">
 		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
   					<tr><td>Um</td><td>Dois</td><td>Três</td></tr>

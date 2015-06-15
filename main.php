@@ -45,12 +45,23 @@
 	    libxml_display_errors();
 	}
 	
-    // echo $doc->getElementById('table_sales_fact_1997_column_product_id')->getAttribute('type');
+    //echo $doc->getElementById('table_sales_fact_1997_column_product_id')->getAttribute('type')."<br>";
+        
 
 	if(isset($_GET['cubes']))
 	{
-		$array = array("Cube 1", "Cube 2", "Cube 3");
-		echo json_encode($array);
+        $xml_cubes = $doc->getElementsByTagName('cube');
+        $cubes = [];
+        $counter = 0;
+        
+        foreach ($xml_cubes as $xc)
+        {
+            $data = $xc -> getAttribute('id');
+            $cubes[$counter] = $data;
+            $counter++;
+        }
+
+		echo json_encode($cubes);
 	}
 
 	if(isset($_POST['cube']))
