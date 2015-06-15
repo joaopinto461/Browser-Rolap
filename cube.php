@@ -11,10 +11,9 @@
     <meta charset='utf-8'>
     <?
 		include 'main.php';
-		$db_data = extractXmlDataBd($doc);
-		include 'bd/connection.php';
-		$DBH = startDBconnection($db_data);
-
+		// $db_data = extractXmlDataBd($doc);
+		// include 'bd/connection.php';
+		// $DBH = startDBconnection($db_data);
 	?>
   </head>
 
@@ -58,31 +57,28 @@
 			  	<div class="left_col_elem">
 			  		<h5>Active Measures</h5>
 			  		<hr>
+			  		<ul class="active_measures_list"></ul>
 			  	</div>
 			  </div>
-
 		  </div>
 
 		  <div class="col-md-6">
 
 		  	<div class="center_col">
-		  	<h3><? echo $cube_name;?></h3>
+		  		<h3><? echo $cube_name;?></h3>
 		  		<table class="table">
 		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
   					<tr><td>Um</td><td>Dois</td><td>Três</td></tr>
   					<tr><td>Quatro</td><td>Cinco</td><td>Seis</td></tr>
 				</table>	
 		  	</div>
-
 		  </div>
 
 		  <div class="col-md-3">
-		  
 			<div class="right_col_elem" id="dimensions_square">
 		  		<h5>Dimensions</h5>
 		  		<hr>		  		  	
-	  			<ul class="dimensions_list sub">
-	  				
+	  			<ul class="dimensions_list sub">		
 	  			<?php foreach ($dim_info as $dim_id => $dim_data) :?>
 	  				<li class="dimension accordion" id="<? print $dim_id ?>">
 	  					<h5><i class="glyphicon glyphicon-list"></i> <? print $dim_data["name_dimension"] ?> </h5>
@@ -95,21 +91,21 @@
 	  					</ul>
 	  				</li>
 	  			<?php endforeach ?>
-
 	  			</ul>
 		  	</div>
 		  	
 			<div class="right_col_elem">
 		  		<h5>Measures</h5>
 		  		<hr>
-		  		<ul class="measures_list"></ul>		  		
+		  		<ul class="measures_list">
+			  		<?php foreach ($measure_info as $measure_id => $measure_data) :?>
+			  			<li class="measure" id="<? print $measure_id ?>"><i class="glyphicon glyphicon-tasks"></i> <? print $measure_data ?></li>
+			  		<?php endforeach ?>		  		
+		  		</ul>
 		  	</div>
-
 		  </div>		  
 		</div>
-
 	</div>
 	</div>
-
   </body>
 </html>

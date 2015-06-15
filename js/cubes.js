@@ -1,13 +1,9 @@
 $(document).ready(function()
 {	   
-	// fillDimensions();
-	fillMeasures();
-	// fillLevels();
-
 	$('.center_col').droppable
 	(
 	   {
-	   		accept: '.level',
+	   		accept: '.level, .measure',
 	   		hoverClass: "highlight",
 		    drop: function(event, ui)
 		    {
@@ -15,8 +11,9 @@ $(document).ready(function()
 
 		        if(ui.draggable.attr('class').localeCompare("measure") > -1)
 		        {
-		        	var nm = ui.draggable.attr('id');
-		        	active_measures[nm] = nm;		        	
+		        	var nm = ui.draggable.text();
+		        	active_measures[nm] = nm;	
+		        	fillActiveMeasures();		        	        
 		        }	
 		        else if(ui.draggable.attr('class').localeCompare("dimension") > -1)
 		        {
@@ -28,7 +25,7 @@ $(document).ready(function()
 		}
 	);
 
-	$('.level').draggable
+	$('.level, .measure').draggable
 	(
 		{
 		    revert: true,
@@ -43,12 +40,12 @@ $(document).ready(function()
 var active_measures = {};
 var active_levels = {};
 
-var measures = ["Units Ordered", "Sales", "Cost"];
-
 function deleteElem(clicked_id)
 {
 	delete active_levels[clicked_id];
+	delete active_measures[clicked_id];
 	fillActiveDimensions();
+	fillActiveMeasures();
 }
 
 function fillActiveDimensions()
@@ -61,16 +58,12 @@ function fillActiveDimensions()
 	}
 }
 
-function fillMeasures()
-{
-	for(var x in measures)
-	{
-		var m = measures[x];
-		$('.measures_list').append('<li class="measure" id="' + m + '">' + '<i class="glyphicon glyphicon-tasks"></i> ' + m + '</li>');
-	}
-}
-
 function fillActiveMeasures()
 {
-	
+	$('.active_measures_list').html("");		        	
+	for(var y in active_measures)
+	{
+		var am = active_measures[y];			
+		$('.active_measures_list').append('<li class="active_measure" id="' + am + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + am + '"></i> ' + am + '</li>');
+	}
 }
