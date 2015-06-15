@@ -44,29 +44,69 @@
 	    print '<b>DOMDocument::schemaValidate() ::Generated Errors!</b>';
 	    libxml_display_errors();
 	}
-	
-    //echo $doc->getElementById('table_sales_fact_1997_column_product_id')->getAttribute('type')."<br>";
-        
 
 	if(isset($_GET['cubes']))
 	{
-        $xml_cubes = $doc->getElementsByTagName('cube');
+        $xml_cubes = $doc -> getElementsByTagName('cube');
         $cubes = [];
-        $counter = 0;
-        
+
         foreach ($xml_cubes as $xc)
         {
-            $data = $xc -> getAttribute('id');
-            $cubes[$counter] = $data;
-            $counter++;
+            $data_name = $xc -> getAttribute('name');
+            $data_id = $xc -> getAttribute('id');
+            $cubes[$data_id] = $data_name;
         }
-
 		echo json_encode($cubes);
 	}
 
-	if(isset($_POST['cube']))
+	else if(isset($_POST['cube']))
 	{
-		$cube = $_POST['cube'];
-		//echo $cube;
+		$cube_selected_id = $_POST['cube'];
+        $dom_cube = $doc->getElementById($cube_selected_id);
+        $cube_name = $dom_cube->getAttribute('name');
+        
+        $dimension_ref_dom = $dom_cube->getElementsByTagName('cube_dimension');
+        $dim_info = [];
+
+        foreach ($dimension_ref_dom as $dim_ref_dom)
+        {
+            $ref_dim = $dim_ref_dom->getAttribute('dimension_ref'); // ID dimension
+            $dom_dim = $doc->getElementById($ref_dim);
+            $dimension_name = $dom_dim->getAttribute('display_name'); // Name dimension
+            $dom_dim_hierarchies = $dom_dim->getElementsByTagName('hierarchy');
+
+            foreach ($dom_dim_hierarchies as $dom_hierarchy)
+            {
+                $dom_hierarchies_levels = $dom_hierarchy->getElementsByTagName('hierarchy_level');
+                $levels = [];
+
+                foreach ($dom_hierarchies_levels as $hierarchy_level)
+                {
+                    $hierarchy_level_ref = $hierarchy_level->getAttribute('level_ref');// ID level
+                    $properties = $doc->getElementById($hierarchy_level_ref)->getElementsByTagName('property');
+                    $prop_names = [];
+                    
+                    foreach ($properties as $p)
+                    {
+                        $prop_names[] = $p -> getAttribute('display_name');
+                    }
+                    $levels[$hierarchy_level_ref] = $prop_names;
+                }
+            }
+            
+            $dim_info[$dom_dim->getAttribute('id')] = ["name_dimension" => $dom_dim->getAttribute('display_name'), "levels" => $levels];
+        }
+        //echo json_encode($dim_info);
+
+        $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
+        $measure_info = [];
+
+        foreach ($measure_ref_dom as $m)
+        {
+            $measure_info[$m->getAttribute('id')] = $m->getAttribute('display_name');
+        }
+
+        /* Array c dimensions e measures */
+        $dimensions_measures = json_encode(["dimensions" => $dim_info, "measures" => $measure_info]);
 	}
 ?>

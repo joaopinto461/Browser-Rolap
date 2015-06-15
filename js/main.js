@@ -9,10 +9,10 @@ $(document).ready(function(){
         
         /* Add text (cubes) to dropdown in home */
         var counter = 0;
-		for(var x in received)
+		for(var id in received)
 		{	
-			var rc = received[x];
-			$('.dropdown-menu').append('<li><a href="#" id="' + rc + '" onClick="reply_click(this.id)">' + rc + '</a></li>');
+			var rc = received[id];
+			$('.dropdown-menu').append('<li><a href="#" id="' + id + '" onClick="reply_click(this.id)">' + rc + '</a></li>');
 			
 			if(counter < received.length-1)
 			{

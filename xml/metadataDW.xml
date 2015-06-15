@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata
- xmlns="http://www.w3schools.com"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="metadata.xsd">
+<metadata xmlns="http://www.w3schools.com"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="metadata.xsd">
  <database>
   <db_connection adapter="" host="localhost" username="" password="" path=""/>
   <tables>
@@ -246,6 +245,11 @@
     <hierarchies>
      <hierarchy id="dimension_product_hierarchy_" display_name="Product Hierarchy">
       <hierarchy_level level_ref="dimension_product_level_product_name"/>
+      <hierarchy_level level_ref="dimension_product_level_product_brand"/>
+      <hierarchy_level level_ref="dimension_product_level_product_subcategory"/>
+      <hierarchy_level level_ref="dimension_product_level_product_category"/>
+      <hierarchy_level level_ref="dimension_product_level_product_department"/>
+      <hierarchy_level level_ref="dimension_product_level_product_family"/>
      </hierarchy>
     </hierarchies>
     <levels>
