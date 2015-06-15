@@ -38,8 +38,9 @@
 	  </div>
 	</nav>
 
+	<div class="container">
 	<div class="container_central">
-
+	    
 	    <div class="row">
 
 		  <div class="col-md-3">
@@ -61,7 +62,6 @@
 		  <div class="col-md-6">
 
 		  	<div class="center_col">
-		  		<hr>
 		  		<table class="table">
 		  			<th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th>
   					<tr><td>Um</td><td>Dois</td><td>Três</td></tr>
@@ -87,6 +87,8 @@
 
 		  </div>		  
 		</div>
+
+	</div>
 	</div>
 
   </body>
