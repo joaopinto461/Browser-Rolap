@@ -20,7 +20,7 @@ $(document).ready(function()
 		        }	
 		        else if(ui.draggable.attr('class').localeCompare("dimension") > -1)
 		        {
-		        	var nd = ui.draggable.attr('id');
+		        	var nd = ui.draggable.text();
 		        	active_levels[nd] = nd;
 		        	fillActiveDimensions();		        	
 		        }	        
@@ -43,31 +43,12 @@ $(document).ready(function()
 var active_measures = {};
 var active_levels = {};
 
-var dimensions = ["Product Dimension", "Time Dimension", "Store Dimension"];
 var measures = ["Units Ordered", "Sales", "Cost"];
-var levels = ["Level 1", "Level 2"];
 
 function deleteElem(clicked_id)
 {
 	delete active_levels[clicked_id];
 	fillActiveDimensions();
-}
-
-function fillDimensions()
-{
-	for(var x in dimensions)
-	{
-		var d = dimensions[x];
-		$('.dimensions_list').append('<li class="dimension accordion" id="' + d + '">' + '<h5><i class="glyphicon glyphicon-list"></i> ' + d + '</h5><ul class="sub" style="display: none;"></ul></li>');
-	}
-}
-
-function fillLevels()
-{
-	for(var l in levels)
-	{
-		$('.dimension ul').append('<li class="level" + id="' + levels[l] + '">' + '<i class="glyphicon glyphicon-move"></i> ' + levels[l] +'</li>')
-	}
 }
 
 function fillActiveDimensions()

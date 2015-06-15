@@ -98,10 +98,7 @@
 			<div class="right_col_elem">
 		  		<h5>Measures</h5>
 		  		<hr>
-		  		<ul class="measures_list"></ul>
-		  		<?php foreach ($measure_info as $m):?>
-		  			<li><? var_dump($m); ?></li>
-		  		<?php endforeach ?>
+		  		<ul class="measures_list"></ul>		  		
 		  	</div>
 
 		  </div>		  
