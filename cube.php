@@ -11,8 +11,10 @@
     <meta charset='utf-8'>
     <?
 		include 'main.php';
-		//echo $doc;
-		//$db_data = extractXmlDataBd();
+		$db_data = extractXmlDataBd($doc);
+		include 'bd/connection.php';
+		$DBH = startDBconnection($db_data);
+
 	?>
   </head>
 

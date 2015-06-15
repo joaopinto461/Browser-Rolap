@@ -2,11 +2,18 @@
 
 	class MySQL {
 
-		private $db_host = "127.0.0.1";
-		private $db_user = "";
-		private $db_pass = "";
-		private $db_name = "teste";
+		private $db_host;
+		private $db_user;
+		private $db_pass;
+		private $db_name;
 
+		public function MySQL($db_data)
+		{
+			$this->db_host = $db_data['host'];
+			$this->db_user = $db_data['username'];
+			$this->db_pass = $db_data['pass'];
+			$this->db_name = $db_data['instance'];
+		}
 		private function Connection() {
 
 			try {

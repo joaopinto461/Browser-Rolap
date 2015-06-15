@@ -1,6 +1,9 @@
 <?php
 include 'PDO.php';
-$SQL = new MySQL();
-$DBH = $SQL->Manager(); 
 
+function startDBconnection($db_data){
+	$SQL = new MySQL($db_data);
+	$DBH = $SQL->Manager(); 
+	return $DBH;
+}
 ?>

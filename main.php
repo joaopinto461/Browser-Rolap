@@ -110,14 +110,14 @@
         $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
 	}
 
-    // function extractXmlDataBd($doc){
-    //     $db_connection = $doc->getElementsByTagName('db_connection');
+    function extractXmlDataBd($doc){
+        $db_connection = $doc->getElementsByTagName('db_connection')->item(0);
 
-    //     $db_host = $db_connection->getElementById('host');
-    //     $db_username = $db_connection->getElementById('username');
-    //     $db_pass = $db_connection->getElementById('password');
-    //     $db_instance = $db_connection->getElementById('instance');
-    //     $db = ["host" => $db_host, "username" => $db_username, "pass" => $db_pass, "instance" => $db_instance];
-    //     return $db;
-    // }
+        $db_host = $db_connection->getAttribute('host');
+        $db_username = $db_connection->getAttribute('username');
+        $db_pass = $db_connection->getAttribute('password');
+        $db_instance = $db_connection->getAttribute('instance');
+        $db = ["host" => $db_host, "username" => $db_username, "pass" => $db_pass, "instance" => $db_instance];
+        return $db;
+    }
 ?>
