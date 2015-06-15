@@ -11,6 +11,8 @@
     <meta charset='utf-8'>
     <?
 		include 'main.php';
+		//echo $doc;
+		//$db_data = extractXmlDataBd();
 	?>
   </head>
 

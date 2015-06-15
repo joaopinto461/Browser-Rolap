@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata xmlns="http://www.w3schools.com"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="metadata.xsd">
+ xsi:schemaLocation="metadataDW.xsd">
  <database>
-  <db_connection adapter="" host="127.0.0.1" username="" password="" instance="DW"/>
+  <db_connection adapter="" host="localhost" username="" password="" instance=""/>
   <tables>
    <table id="table_sales_fact_1997" name="sales_fact_1997">
     <columns>
