@@ -159,25 +159,25 @@ include "bd/connection.php";
 
         $query_result = "select ".$display_by_name." from ".$fact_table_name." inner join ".
             $table_level_name." on ".$fact_table_name.".".$pk_name." = ".$table_level_name.".".$fk_name." group by ".$group_by_name.";";
-
-        var_dump($query_result);
         return $query_result;
     }
 
     function getResultsByLevel($levelid, $cubeid) {
+        $doc = initializeDOM();
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
-
-        $query = generateQuery($levelid, $cubeid);
-        $results = execQuery($query);
+        $query = generateQuery($levelid, $cubeid, $doc);
+        $results = execQuery($query, $db);
         return json_encode($results);
     }
 
     function getResultsByMeasure($measureid) {
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
-        $query = generateQuery($measureid);
+        $doc = $initializeDOM();
+        //$query = generateQuery($measureid, $doc);
         $results = execQuery($query);
+
         return json_encode($results);
     }
 
@@ -195,6 +195,8 @@ include "bd/connection.php";
 
         return $doc;
     }
+
     $doc = initializeDOM();
-    generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
+    echo getResultsByLevel("dimension_product_level_product_name", "cube_sales_1997");
+    //generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
 ?>
