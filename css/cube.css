@@ -10,17 +10,11 @@ div
 
 .left_col_elem, .right_col_elem
 {
-  height: 200px;
+  
   width: 200px;
   margin-bottom: 30px;
   background-color: white;
   padding: 5px;
-}
-
-.slice-button
-{
-  width: 200px;
-  margin-bottom: 30px;
 }
 
 ul
@@ -44,7 +38,7 @@ li .level
 .center_col
 {
   background-color: white;
-  height: 540px;
+ 
   padding: 10px;
   border: 2px solid black;
 }
@@ -67,11 +61,6 @@ li .level
 h5
 {
   padding-left: 5px;
-}
-
-#dimensions_square
-{
-  height: 320px;
 }
 
 .cube_title

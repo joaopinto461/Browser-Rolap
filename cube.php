@@ -56,7 +56,7 @@
 			  		<ul class="active_levels_list"></ul>
 			  	</div>
 			  	<div class="left_col_elem">
-			  		<h5>Active Measures</h5>
+			  		<h5><i class="glyphicon glyphicon-check"></i> Active Measures</h5>
 			  		<hr>
 			  		<ul class="active_measures_list"></ul>
 			  	</div>
@@ -108,12 +108,12 @@
 
 		  <div class="col-md-3">
 			<div class="right_col_elem" id="dimensions_square">
-		  		<h5>Dimensions</h5>
+		  		<h5><i class="glyphicon glyphicon-list"></i> Dimensions</h5>
 		  		<hr>		  		  	
 	  			<ul class="dimensions_list sub">		
 	  			<?php foreach ($dim_info as $dim_id => $dim_data) :?>
 	  				<li class="dimension accordion" id="<? print $dim_id ?>">
-	  					<h5><i class="glyphicon glyphicon-list"></i> <? print $dim_data["name_dimension"] ?> </h5>
+	  					<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $dim_data["name_dimension"] ?> </h5>
 	  					<ul class="sub" style="display: none;">	  					
 	  					<?php foreach ($dim_data["levels"] as $level_id=>$level) :?>
 	  						<?php foreach ($level as $l):?>

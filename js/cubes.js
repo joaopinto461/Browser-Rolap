@@ -44,6 +44,14 @@ $(document).ready(function()
 
 	$('.sub').accordion({ collapsible: true, active: false });
 	
+	$( ".sub" ).accordion({
+	    beforeActivate: function( event, ui )
+	    {
+	        $(ui.newHeader).find('i').toggleClass('glyphicon glyphicon-chevron-right glyphicon glyphicon-chevron-down');
+	        $(ui.oldHeader).find('i').toggleClass('glyphicon glyphicon-chevron-right glyphicon glyphicon-chevron-down');
+	    }
+	});
+	
 	$.dynatableSetup({features: { pushState: false, search: false, perPageSelect: false }});
 
 	$( ".level" ).dblclick(function()
