@@ -3,7 +3,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="metadataDW.xsd">
  <database>
-  <db_connection adapter="" host="localhost" username="" password="" instance="DW"/>
+  <db_connection adapter="" host="localhost" username="root" password="" instance="DW"/>
   <tables>
    <table id="table_sales_fact_1997" name="sales_fact_1997">
     <columns>

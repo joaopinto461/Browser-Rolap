@@ -126,24 +126,10 @@ include "bd/connection.php";
         $dom_cube = $doc->getElementById($cubeid);
         $fact_table_id = $dom_cube->getAttribute('table_ref');
 
-
-        $fact_table_name = $doc->getElementById($fact_table_id)->getAttribute('name'); // nome tabela de factos sql
-
         $element_level = $doc->getElementById($level_id);
 
         $table_level = $element_level->getAttribute('table_ref'); //id da tabela que o level referencia
-        $table_level_name = $doc->getElementById($table_level)->getAttribute('name'); // nome tabela sql do level
 
-        // $level_upper_level = $element_level->getAttribute('upper_level');
-
-        // if($level_upper_level != null)
-        // {
-        //     $new_elem_level = $doc->getElementById($level_upper_level);
-        //     $new_elem_level_table= $new_elem_level->getAttribute('table_ref'); //id da tabela
-        //     $property_new_level = $new_elem_level->getElementsByTagName('property')[0]->getAttribute('column_ref'); //id da coluna
-
-        // }
-        // $foreign_keys = getForeignKeyFromTable();
         
         $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
         $level_group_by = $element_level -> getAttribute('group_by');
@@ -151,27 +137,10 @@ include "bd/connection.php";
 
         $group_by_name = $doc->getElementById($level_group_by)->getAttribute('name'); // nome do atributo sql p group by
         $display_by_name = $doc->getElementById($level_display)->getAttribute('name'); // nome atributo sql para display
-        
-        $fact_foreign_keys = $doc->getElementById($fact_table_id)->getElementsByTagName('key_ref');
 
-        foreach ($fact_foreign_keys as $ffk)
-        {
-            $r = $ffk -> getAttribute('table_ref');
-
-            if($r == $table_level)
-            {
-                $cr_s = $ffk -> getAttribute('column_ref_src'); // fact table column foreign key
-                $cr = $ffk -> getAttribute('column_ref'); // primary key
-                break;
-            }      
-        }
-
-        $fk_name = $doc->getElementById($cr_s)->getAttribute('name');
-        $pk_name = $doc->getElementById($cr)->getAttribute('name');
-
-        $query_result = "select ".$display_by_name." from ".$fact_table_name." inner join ".
-            $table_level_name." on ".$fact_table_name.".".$pk_name." = ".$table_level_name.".".$fk_name." group by ".$group_by_name.";";
-        
+        $from_section = generateFromSectionQuery($level_id, $cubeid, $doc);
+        $query_result = "SELECT ".$display_by_name.$from_section."  GROUP BY ".$group_by_name.";";
+        //var_dump($query_result);
         return $query_result;
     }
 
@@ -227,7 +196,7 @@ include "bd/connection.php";
         }     
         return $fks;    
     }
-    function generateForSectionQuery($level_id, $cubeid, $doc)
+    function generateFromSectionQuery($level_id, $cubeid, $doc)
     {
         $fact_table_name = $doc->getElementById($cubeid)->getAttribute('table_ref');
         $level_dom_element = $doc->getElementById($level_id);
@@ -259,7 +228,7 @@ include "bd/connection.php";
         }
 
         $path_to_fact_table = $tmp; 
-        $from_query= "FROM ";
+        $from_query= " FROM ";
         $state = 0;
         foreach ($path_to_fact_table as $section_of_path) 
         {   if($state == 0)
@@ -272,7 +241,7 @@ include "bd/connection.php";
         } 
         return $from_query;    
     }
-    $doc = initializeDOM();
-    generateForSectionQuery("dimension_product_level_product_subcategory", "cube_sales_1997", $doc);
-    //generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
+    //$doc = initializeDOM();
+    //generateFromSectionQuery("dimension_product_level_product_subcategory", "cube_sales_1997", $doc);
+    generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
 ?>
