@@ -42,14 +42,16 @@
 
 	<div class="container-fluid">
 	<div class="container_central">
-	    
+	    <h2 class="cube_title text-uppercase" id="<? print $cube_selected_id; ?>"><? print $cube_name;?></h2>
 	    <div class="row">
 
 		  <div class="col-md-3">
 
-			  <div class="left_col">			 
+			  <div class="left_col">
+
+			  	
 			  	<div class="left_col_elem">
-			  		<h5>Active Levels</h5>
+			  		<h5><i class="glyphicon glyphicon-check"></i> Active Levels</h5>
 			  		<hr>
 			  		<ul class="active_levels_list"></ul>
 			  	</div>
@@ -58,13 +60,42 @@
 			  		<hr>
 			  		<ul class="active_measures_list"></ul>
 			  	</div>
+
 			  </div>
 		  </div>
 
 		  <div class="col-md-6">
 
+		 	<div class="modal fade" id="myModal">
+				<div class="modal-dialog">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			       			<h4 class="modal-title">Slice</h4>
+			      		</div>
+			      	<div class="modal-body">
+			        	<!-- Slice things -->
+			        	<p>Please choose the value to use in the slice:</p>
+			        	<div class="dropdown">
+						    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="modal_button_attribute">Adsd</span>
+						    <span class="caret"></span></button>
+						    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">January</a></li>
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">February</a></li>
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">March</a></li>
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">April</a></li>
+						    </ul>
+						</div>
+			      	</div>
+			      	<div class="modal-footer">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	<button type="button" class="btn btn-primary">Apply</button>
+			      	</div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
 		  	<div class="center_col">
-		  		<h3 class="cube_title" id="<? print $cube_selected_id; ?>"><? print $cube_name;?></h3>
 		  		  	<table id="table" class="table" style="width:100%; text-align:left;">
 		              <thead id="table_head">
 		              <tr></tr>

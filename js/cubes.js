@@ -46,6 +46,12 @@ $(document).ready(function()
 	
 	$.dynatableSetup({features: { pushState: false, search: false, perPageSelect: false }});
 
+	$( ".level" ).dblclick(function()
+	{
+  		$('#myModal .modal_button_attribute').html($('#' + this.id).text());
+  		$('#myModal').modal('toggle');
+	});
+
 });
 
 var active_measures = {};
@@ -78,8 +84,6 @@ function fillActiveMeasures()
 		$('.active_measures_list').append('<li class="active_measure" id="' + am + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + am + '"></i> ' + am + '</li>');
 	}
 }
-
-
 
 function addColumns(columns)
 {

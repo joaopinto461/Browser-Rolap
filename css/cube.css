@@ -17,6 +17,12 @@ div
   padding: 5px;
 }
 
+.slice-button
+{
+  width: 200px;
+  margin-bottom: 30px;
+}
+
 ul
 {
     list-style:none;
@@ -66,4 +72,11 @@ h5
 #dimensions_square
 {
   height: 320px;
+}
+
+.cube_title
+{
+  text-align: center;
+  color: white;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
