@@ -3,7 +3,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="metadataDW.xsd">
  <database>
-  <db_connection adapter="" host="localhost" username="root" password="" instance="DW"/>
+  <db_connection adapter="" host="localhost" username="" password="" instance="DW"/>
   <tables>
    <table id="table_sales_fact_1997" name="sales_fact_1997">
     <columns>
@@ -262,19 +262,19 @@
       <property id="dimension_product_level_product_property_product_brand" column_ref="table_product_column_brand_name" display_name="Product Brand"/>
      </level>
      <level id="dimension_product_level_product_subcategory" group_by="table_product_class_column_subcategory" sort_by="table_product_class_column_subcategory" 
-      display_by="table_product_class_column_subcategory" table_ref="table_product_class">
+      display_by="table_product_class_column_subcategory" table_ref="table_product_class" upper_level="dimension_product_level_product_name">
       <property id="dimension_product_level_product_subcategory_property_subcategory" column_ref="table_product_class_column_subcategory" display_name="Product Subcategory"/>
      </level>
      <level id="dimension_product_level_product_category" group_by="table_product_class_column_category" sort_by="table_product_class_column_category" 
-      display_by="table_product_class_column_category" table_ref="table_product_class">
+      display_by="table_product_class_column_category" table_ref="table_product_class" upper_level="dimension_product_level_product_name">
       <property id="dimension_product_level_product_category_property_category" column_ref="table_product_class_column_category" display_name="Product Category"/>
      </level>
      <level id="dimension_product_level_product_department" group_by="table_product_class_column_department" sort_by="table_product_class_column_department" 
-      display_by="table_product_class_column_department" table_ref="table_product_class">
+      display_by="table_product_class_column_department" table_ref="table_product_class" upper_level="dimension_product_level_product_name">
       <property id="dimension_product_level_product_department_property_department" column_ref="table_product_class_column_department" display_name="Product Department"/>
      </level>
      <level id="dimension_product_level_product_family" group_by="table_product_class_column_family" sort_by="table_product_class_column_family" 
-      display_by="table_product_class_column_family" table_ref="table_product_class">
+      display_by="table_product_class_column_family" table_ref="table_product_class" upper_level="dimension_product_level_product_name">
       <property id="dimension_product_level_product_category_property_family" column_ref="table_product_class_column_family" display_name="Product Family"/>
      </level>
     </levels>
