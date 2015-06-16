@@ -3,63 +3,40 @@ $(document).ready(function()
 	$('.center_col').droppable
 	(
 	   {
-	   		accept: '.level, .measure',
+	   		accept: '.level',
 	   		hoverClass: "highlight",
 		    drop: function(event, ui)
 		    {
 		        ui.draggable.data('dropped', true);		        
-		        // Dropping measure
-		        if(ui.draggable.attr('class').localeCompare("measure") > -1)
-		        {
-		        		$.ajax({
-		        		method: "POST",
-		        		url: "ajax.php",
-		        		data: {
-		        			"measure_id": ui.draggable.attr('id'),
-		        			"action": "measure",
-		        		},
-		        		success: function(data) {
-			        		$('#table').dynatable({
-				        		dataset: {
-				        			records: JSON.parse(data)
-				        		}
-			        		});
-				        	var nm = ui.draggable.text();
-				        	active_measures[nm] = nm;
-				        	fillActiveMeasures();		        	        			        		
-		        		}
-		        	});
-		        }
-		        // Dropping level
-		        else if(ui.draggable.attr('class').localeCompare("dimension") > -1)
-		        {
-		        	$.ajax({
-		        		method: "POST",
-		        		url: "ajax.php",
-		        		data: {
-		        			"level_id": ui.draggable.attr('id'),
-		        			"action": "level",
-		        		},
-		        		success: function(data) {
-			        		$('#table').dynatable({
-				        		dataset: {
-				        			records: JSON.parse(data)
-				        		}
-			        		});
-			        		var nd = ui.draggable.text();
-				        	active_levels[nd] = nd;
-				        	fillActiveDimensions();
-		        		}
-		        	});
-		        }	        
+	        	$.ajax({
+	        		method: "POST",
+	        		async: false,
+	        		url: "ajax.php",
+	        		data: {
+	        			"level_id": ui.draggable.attr('id'),
+	        			"action": "level",
+	        		},
+	        		success: function(data) {
+	        			var data_json = JSON.parse(data);
+	        			addColumns(data_json[0]);
+		        		$('#table').dynatable({
+			        		dataset: {
+			        			records: data_json
+			        		}
+		        		});
+		        		var nd = ui.draggable.text();
+			        	active_levels[nd] = nd;
+			        	fillActiveDimensions();
+	        		}
+	        	});
 		    }
 		}
 	);
-
+	
 	$('.level, .measure').draggable
 	(
 		{
-		    revert: true,
+		    revert: false,
 		    helper: "clone"		    
 		}
 	);
@@ -102,3 +79,50 @@ function fillActiveMeasures()
 		$('.active_measures_list').append('<li class="active_measure" id="' + am + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + am + '"></i> ' + am + '</li>');
 	}
 }
+
+
+
+function addColumns(columns)
+{
+	$("#table_head>tr").html('');
+	for(var col in columns) 
+	{
+		col = col.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){return str.toUpperCase();})
+		$("#table_head>tr").append('<th id="id1">'+col+'</th>');
+	}
+	// Dynamic content
+	$("#table_head>tr>th").droppable({
+		accept: ".measure", 
+		hoverClass: "highlight",
+		drop: function(event, ui)
+		    {
+		    		ui.draggable.data('dropped', true);
+	        		$.ajax({
+	        		method: "POST",
+	        		url: "ajax.php",
+	        		data: {
+	        			"measure_id": ui.draggable.attr('id'),
+	        			"chosen_attr": event.target.id,
+	        			"action": "measure",
+	        		},
+	        		success: function(data) {
+	        			var data_json = JSON.parse(data);
+	        			addColumns(data_json[0]);
+		        		$('#table').dynatable({
+			        		dataset: {
+			        			records: data_json
+			        		}
+		        		});
+			        	var nm = ui.draggable.text();
+			        	active_measures[nm] = nm;
+			        	fillActiveMeasures();		        	        			        		
+	        		}
+	        	});
+		    }
+		});
+
+}
+
+
+
+

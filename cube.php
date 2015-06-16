@@ -66,9 +66,8 @@
 		  	<div class="center_col">
 		  		<h3><? echo $cube_name;?></h3>
 		  		  	<table id="table" class="table" style="width:100%; text-align:left;">
-		              <thead>
-		              <th>Nome</th>
-		              <th>Idade</th>
+		              <thead id="table_head">
+		              <tr></tr>
 		              </thead>
 		              <tbody>
 		              </tbody>
