@@ -241,7 +241,4 @@ include "bd/connection.php";
         } 
         return $from_query;    
     }
-    //$doc = initializeDOM();
-    //generateFromSectionQuery("dimension_product_level_product_subcategory", "cube_sales_1997", $doc);
-    generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
 ?>
