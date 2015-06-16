@@ -7,7 +7,7 @@ $(document).ready(function()
 	   		hoverClass: "highlight",
 		    drop: function(event, ui)
 		    {
-		        ui.draggable.data('dropped', true);		        
+		        ui.draggable.data('dropped', true);		
 	        	$.ajax({
 	        		method: "POST",
 	        		async: false,
@@ -15,6 +15,7 @@ $(document).ready(function()
 	        		data: {
 	        			"level_id": ui.draggable.attr('id'),
 	        			"action": "level",
+	        			"cube_id": $('.cube_title').attr('id')
 	        		},
 	        		success: function(data) {
 	        			var data_json = JSON.parse(data);
@@ -44,8 +45,6 @@ $(document).ready(function()
 	$('.sub').accordion({ collapsible: true, active: false });
 	
 	$.dynatableSetup({features: { pushState: false, search: false, perPageSelect: false }});
-	// $('#table').dynatable();
-
 
 });
 
@@ -120,9 +119,4 @@ function addColumns(columns)
 	        	});
 		    }
 		});
-
 }
-
-
-
-

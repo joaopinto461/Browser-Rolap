@@ -64,7 +64,7 @@
 		  <div class="col-md-6">
 
 		  	<div class="center_col">
-		  		<h3><? echo $cube_name;?></h3>
+		  		<h3 class="cube_title" id="<? print $cube_selected_id; ?>"><? print $cube_name;?></h3>
 		  		  	<table id="table" class="table" style="width:100%; text-align:left;">
 		              <thead id="table_head">
 		              <tr></tr>

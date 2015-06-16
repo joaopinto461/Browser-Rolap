@@ -122,14 +122,53 @@ include "bd/connection.php";
         return $db;
     }
 
-    function generateQuery ($data) {
-        return "...";
+    function generateQuery ($level_id, $cubeid, $doc) {
+        $dom_cube = $doc->getElementById($cubeid);
+        $fact_table_id = $dom_cube->getAttribute('table_ref');
+
+
+        $fact_table_name = $doc->getElementById($fact_table_id)->getAttribute('name'); // nome sql
+
+        $element_level = $doc->getElementById($level_id);
+        $table_level = $element_level->getAttribute('table_ref');
+        $table_level_name = $doc->getElementById($table_level)->getAttribute('name'); // tabela sql p join
+
+        $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
+        $level_group_by = $element_level -> getAttribute('group_by');
+        $level_display = $element_level -> getAttribute('display_by');
+
+        $group_by_name = $doc->getElementById($level_group_by)->getAttribute('name'); // nome do atributo sql p group by
+        $display_by_name = $doc->getElementById($level_display)->getAttribute('name'); // nome atributo sql para display
+        
+        $fact_foreign_keys = $doc->getElementById($fact_table_id)->getElementsByTagName('key_ref');
+
+        foreach ($fact_foreign_keys as $ffk)
+        {
+            $r = $ffk -> getAttribute('table_ref');
+            
+            if($r == $table_level)
+            {
+                $cr_s = $ffk -> getAttribute('column_ref_src'); // fact table column foreign key
+                $cr = $ffk -> getAttribute('column_ref'); // primary key
+                break;
+            }      
+        }
+
+        $fk_name = $doc->getElementById($cr_s)->getAttribute('name');
+        $pk_name = $doc->getElementById($cr)->getAttribute('name');
+
+        $query_result = "select ".$display_by_name." from ".$fact_table_name." inner join ".
+            $table_level_name." on ".$fact_table_name.".".$pk_name." = ".$table_level_name.".".$fk_name." group by ".$group_by_name.";";
+
+        var_dump($query_result);
+        return $query_result;
     }
 
-    function getResultsByLevel($levelid) {
+    function getResultsByLevel($levelid, $cubeid) {
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
-        $query = generateQuery($levelid);
+
+        $query = generateQuery($levelid, $cubeid);
         $results = execQuery($query);
         return json_encode($results);
     }
@@ -140,18 +179,22 @@ include "bd/connection.php";
         $query = generateQuery($measureid);
         $results = execQuery($query);
         return json_encode($results);
-
     }
 
+    function initializeDOM()
+    {
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument;
+        $doc->load('xml/metadataDW.xml');
 
+        if (!$doc->schemaValidate('xml/metadataDW.xsd'))
+        {
+            print '<b>DOMDocument::schemaValidate() ::Generated Errors!</b>';
+            libxml_display_errors();
+        }
 
-
-
-
-
-
-
-
-
-
+        return $doc;
+    }
+    $doc = initializeDOM();
+    generateQuery("dimension_product_level_product_name", "cube_sales_1997", $doc);
 ?>
