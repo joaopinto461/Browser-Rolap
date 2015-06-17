@@ -26,30 +26,7 @@ $(document).ready(function()
 		        
 	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
 
-	        	$.ajax(
-	        	{
-	        		method: "POST",
-	        		async: false,
-	        		url: "ajax.php",
-	        		data:
-	        		{
-	        			"json": active_json,
-	        			"action": "level",
-	        			"cube_id": $('.cube_title').attr('id')
-	        		},
-	        		success: function(data)
-	        		{
-	        			var data_json = JSON.parse(data);
-	        			addColumns(data_json[0]);
-		        		var t = $('#table').dynatable().data('dynatable');
-		        		console.log(t);
-		        		t.records.updateFromJson({records: data_json});
-		        		t.domColumns.init();
-		        		t.sortsHeaders.init();
-		        		t.records.init();
-		        		t.process();
-	        		}
-	        	});
+	        	updateTableData();
 		    }
 		}
 	);
@@ -136,6 +113,7 @@ function deleteElem(clicked_id)
 	fillActiveLevels();
 	fillActiveMeasures();
 	fillActiveSlices();
+	updateTableData();
 }
 
 function fillActiveSlices()
@@ -183,4 +161,33 @@ function addColumns(columns)
 		col = col.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){return str.toUpperCase();})
 		$("#table_head>tr").append('<th data-dynatable-column="'+slug+'">'+col+'</th>');
 	}
+}
+
+function updateTableData()
+{
+	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
+	$.ajax(
+	{
+		method: "POST",
+		async: false,
+		url: "ajax.php",
+		data:
+		{
+			"json": active_json,
+			"action": "level",
+			"cube_id": $('.cube_title').attr('id')
+		},
+		success: function(data)
+		{
+			var data_json = JSON.parse(data);
+			addColumns(data_json[0]);
+    		var t = $('#table').dynatable().data('dynatable');
+    		console.log(t);
+    		t.records.updateFromJson({records: data_json});
+    		t.domColumns.init();
+    		t.sortsHeaders.init();
+    		t.records.init();
+    		t.process();
+		}
+	});
 }
