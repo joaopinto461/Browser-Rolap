@@ -42,7 +42,6 @@ $(document).ready(function()
 	        		{
 	        			var data_json = JSON.parse(data);
 	        			addColumns(data_json[0]);
-	        			console.log(data);
 		        		$('#table').dynatable(
 		        		{
 			        		dataset:
