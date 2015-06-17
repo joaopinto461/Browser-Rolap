@@ -1,5 +1,6 @@
 $(document).ready(function()
 {	   
+	 $('.selectpicker').selectpicker();
 	$('.center_col').droppable
 	(
 	   {
@@ -81,14 +82,15 @@ $(document).ready(function()
         			var obj = slice_json[i];
         			
         			for(var key in obj)
-        			{            			            			
-            			$('#slice-dropdown').append('<li onClick="applySlice(this)" id="' + property_id + '" role="presentation"><a role="menuitem" tabindex="-1" href="#">' + obj[key] + '</a></li>');
+        			{                  				  			            			
+            			$('#slice-dropdown').append('<option id="' + property_id + '">' + obj[key] +'</option>');
         			}
-    			}    			
+    			} 
+
+    			$('.selectpicker').selectpicker('refresh');   			
     		}
     	});
 
-  		$('#myModal .modal_button_attribute').html($('#' + this.id).text());
   		$('#myModal').modal('toggle');
 	});
 
@@ -98,10 +100,11 @@ var active_measures = {};
 var active_levels = {};
 var active_slices = {};
 
-function applySlice(obj)
+function applySlice()
 {
-	active_slices[obj.id] = obj.textContent;
+	active_slices[$('.selectpicker option').attr('id')] = $('.selectpicker').val();
 	fillActiveSlices();
+	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
 }
 
 function deleteElem(clicked_id)
@@ -113,7 +116,13 @@ function deleteElem(clicked_id)
 	fillActiveLevels();
 	fillActiveMeasures();
 	fillActiveSlices();
-	updateTableData();
+	
+	if(Object.keys(active_levels).length == 0 && Object.keys(active_measures).length == 0 && Object.keys(active_slices).length == 0)
+	{
+		alert("Nenhuma opção activada.");
+	}
+	else
+		updateTableData();
 }
 
 function fillActiveSlices()
@@ -182,7 +191,6 @@ function updateTableData()
 			var data_json = JSON.parse(data);
 			addColumns(data_json[0]);
     		var t = $('#table').dynatable().data('dynatable');
-    		console.log(t);
     		t.records.updateFromJson({records: data_json});
     		t.domColumns.init();
     		t.sortsHeaders.init();

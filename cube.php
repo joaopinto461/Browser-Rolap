@@ -5,11 +5,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/cube.css" rel="stylesheet">
     <link href="css/jquery.dynatable.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
     <script src="js/jQuery.js"></script>
     <script src="js/jQuery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/cubes.js"></script>
     <script src="js/jquery.dynatable.js"></script>
+    <script src="js/bootstrap-select.js"></script>
     <meta charset='utf-8'>
     <?
 		include 'main.php';
@@ -81,31 +83,30 @@
 			      	<div class="modal-body">
 			        	<!-- Slice things -->
 			        	<p>Please choose the value to use in the slice:</p>
-			        	<div class="dropdown">
-						    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="modal_button_attribute">Adsd</span>
-						    <span class="caret"></span></button>
-						    <ul class="dropdown-menu" id="slice-dropdown" role="menu" aria-labelledby="menu1">
-						      
-						    </ul>
+			        	<div>						   						   
+						    <select id="slice-dropdown" name="named[]" class="selectpicker" multiple>
+								  
+							</select>					    
 						</div>
 			      	</div>
-			      	<div class="modal-footer">
+			      	<div class="modal-footer">			        	
 			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	<button type="button" onClick="applySlice()" id="applySliceButton" class="btn btn-primary" data-dismiss="modal">Apply</button>
 			      	</div>
 			    </div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 
 		  	<div class="center_col row">
-		  	<div class="col-lg-12" style="overflow:auto">
+			  	<div class="col-lg-12" style="overflow:auto">		  
 		  		  	<table id="table" class="table" style="text-align:left;">
 		              <thead id="table_head">
 		              <tr></tr>
 		              </thead>
 		              <tbody>
 		              </tbody>
-            		</table>	
-            		</div>
+	        		</table>	
+	        	</div>
 		  	</div>
 		  </div>
 
