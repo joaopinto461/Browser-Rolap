@@ -153,16 +153,7 @@ include "bd/connection.php";
             
             }  
         }
-
-        // Limpa duplicados nos atributos a meter no select
-        foreach ($array_levels as $key => $v) {
-            foreach ($array_measures as $k =>$value) 
-            {
-                if($v == $value)
-                    unset($array_levels[$key]);
-            }
-        }
-
+        
         $arrays_FROM = array();
 
         foreach ($array_levels as $key => $value) {
@@ -174,13 +165,6 @@ include "bd/connection.php";
             // $table_level = $level_parent_property->getAttribute('table_ref');
             // var_dump($table_level);
 
-            $arrays_FROM[] = generateArrayFromSectionQuery($level_id_property_parent, $cubeid, $doc);
-        }
-
-        foreach ($array_measures as $key => $value) {
-            $element_level_property = $doc->getElementById($value);
-            $level_parent_property = $element_level_property->parentNode;
-            $level_id_property_parent = $level_parent_property->getAttribute('id');
             $arrays_FROM[] = generateArrayFromSectionQuery($level_id_property_parent, $cubeid, $doc);
         }
         
@@ -196,15 +180,7 @@ include "bd/connection.php";
         //echo $from;
 
         $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
-        // echo $select.$from;
-        // echo "<br>";
-        // var_dump(json_encode($arrays_FROM));
-
-
-        // $element_level = $doc->getElementById($level_id);
-
-        // $table_level = $element_level->getAttribute('table_ref'); //id da tabela que o level referencia
-
+        echo $select.$from;
         
         // $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
         // $level_group_by = $element_level -> getAttribute('group_by');
@@ -240,8 +216,7 @@ include "bd/connection.php";
         foreach ($array_measures as $key => $value) 
         {
             $op_name = $doc->getElementById($key)->getAttribute('operation');
-            $column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
-            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+            $column_name = $doc->getElementById($value)->getAttribute('name');
             $select = $select.$op_name."(".$column_name.")";
             if(++$i != $num_items_measures)
                 $select = $select.", ";
@@ -354,13 +329,13 @@ include "bd/connection.php";
     // getParent($doc, "dimension_time_level_day_property_day")
     $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
 "dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
-    "measures": {"cube_sales_1997_measure_avg": "dimension_time_level_date_property_date"
+    "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
     }
 }';
 
  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
     "measures": {
-        "cube_sales_1997_measure_avg": "dimension_time_level_date_property_date"
+        "cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
     }
 }';
 
