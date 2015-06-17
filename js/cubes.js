@@ -22,7 +22,7 @@ $(document).ready(function()
 	        		url: "ajax.php",
 	        		data:
 	        		{
-	        			"level_id": ui.draggable.attr('id'),
+	        			"level_id": active_json,
 	        			"action": "level",
 	        			"cube_id": $('.cube_title').attr('id')
 	        		},
@@ -132,7 +132,7 @@ function addColumns(columns)
         		url: "ajax.php",
         		data:
         		{
-        			"measure_id": ui.draggable.attr('id'),
+        			"measure_id": active_json,
         			"chosen_attr": event.target.id,
         			"action": "measure",
         		},
