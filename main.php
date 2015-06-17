@@ -173,7 +173,10 @@ include "bd/connection.php";
                     $array_slices[$k] = $value;
             }    
         }
-        //var_dump(json_encode($array_slices));
+        // $having_query = "";
+        // if(count($array_slices) > 0)
+        //     $having_query = getHavingSectionQuery($array_slices, $doc);
+
         $arrays_FROM = array();
 
         foreach ($array_levels as $key => $value) {
@@ -209,6 +212,20 @@ include "bd/connection.php";
         return $final_query;
     }
 
+    function getHavingSectionQuery($array_slices, $doc)
+    {
+        // $query = "HAVING ";
+        // $operator = " IN "
+
+        // foreach ($array_slices as $key => $value) 
+        // {
+        //     var_dump($key);
+        //     var_dump($value);
+        //     $table_column_id = $doc->getElementById($key)->getAttribute('column_ref');
+        //     $doc->getElementById($table_column_id)->getAttribute('name');
+        // }
+    }
+
     function generateGroupBy($array_levels, $doc)
     {
         $num_items = count($array_levels);
@@ -235,8 +252,9 @@ include "bd/connection.php";
 
         foreach ($array_levels as $key => $value) 
         {
-            $column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
-            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+            //$column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
+            $column_ref_property = $doc->getElementById($value)->getAttribute('column_ref');
+            $column_name = $doc->getElementById($column_ref_property)->getAttribute('name');
 
             $select = $select.$column_name;
             if(++$i != $num_items)
