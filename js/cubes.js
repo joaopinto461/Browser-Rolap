@@ -79,6 +79,34 @@ $(document).ready(function()
 
 	$( ".level" ).dblclick(function()
 	{
+		$.ajax(
+    	{
+    		method: "POST",
+    		async: false,
+    		url: "ajax.php",
+    		data:
+    		{
+    			"property": this.id,
+    			"action": "slice",
+    			"cube_id": $('.cube_title').attr('id')
+    		},
+    		success: function(data)
+    		{    			
+    			var slice_json = JSON.parse(data);
+    			$('#slice-dropdown').html("");
+
+    			for(var i=0; i < slice_json.length; i++)
+    			{
+        			var obj = slice_json[i];
+        			
+        			for(var key in obj)
+        			{            			            			
+            			$('#slice-dropdown').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + obj[key] + '</a></li>');
+        			}
+    			}    			
+    		}
+    	});
+
   		$('#myModal .modal_button_attribute').html($('#' + this.id).text());
   		$('#myModal').modal('toggle');
 	});

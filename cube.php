@@ -79,11 +79,8 @@
 			        	<div class="dropdown">
 						    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="modal_button_attribute">Adsd</span>
 						    <span class="caret"></span></button>
-						    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">January</a></li>
-						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">February</a></li>
-						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">March</a></li>
-						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">April</a></li>
+						    <ul class="dropdown-menu" id="slice-dropdown" role="menu" aria-labelledby="menu1">
+						      
 						    </ul>
 						</div>
 			      	</div>
