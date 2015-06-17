@@ -24,7 +24,7 @@ $(document).ready(function()
 		        	fillActiveMeasures();	
 		        }
 		        
-	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures});
+	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
 	        	console.log(active_json);
 
 	        	$.ajax(
@@ -78,6 +78,7 @@ $(document).ready(function()
 
 	$( ".level" ).dblclick(function()
 	{
+		var property_id = this.id;
 		$.ajax(
     	{
     		method: "POST",
@@ -100,7 +101,7 @@ $(document).ready(function()
         			
         			for(var key in obj)
         			{            			            			
-            			$('#slice-dropdown').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + obj[key] + '</a></li>');
+            			$('#slice-dropdown').append('<li onClick="applySlice(this)" id="' + property_id + '" role="presentation"><a role="menuitem" tabindex="-1" href="#">' + obj[key] + '</a></li>');
         			}
     			}    			
     		}
@@ -114,6 +115,12 @@ $(document).ready(function()
 
 var active_measures = {};
 var active_levels = {};
+var active_slices = {};
+
+function applySlice(obj)
+{
+	active_slices[obj.id] = obj.textContent;
+}
 
 function deleteElem(clicked_id)
 {
