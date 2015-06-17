@@ -209,14 +209,14 @@
       display_by="table_time_by_day_column_the_date" 
       table_ref="table_time_by_day">
       <property id="dimension_time_level_date_property_date" column_ref="table_time_by_day_column_the_date" display_name="Date"/>
-      <property id="dimension_time_level_date_property_day" column_ref="table_time_by_day_column_the_day" display_name="Month of Day"/>
+      <property id="dimension_time_level_date_property_day" column_ref="table_time_by_day_column_the_day" display_name="Day of Week"/>
       <property id="dimension_time_level_date_property_week_of_year" column_ref="table_time_by_day_column_week_of_year" display_name="Week of Year"/>
       <property id="dimension_time_level_date_property_month" column_ref="table_time_by_day_column_the_month" display_name="Month of Year"/>
      </level>
      <level id="dimension_time_level_day" group_by="table_time_by_day_column_the_day" 
       sort_by="table_time_by_day_column_the_day" display_by="table_time_by_day_column_the_day" 
       table_ref="table_time_by_day">
-      <property id="dimension_time_level_day_property_day" column_ref="table_time_by_day_column_the_day" display_name="Month's day of Year"/>
+      <property id="dimension_time_level_day_property_day" column_ref="table_time_by_day_column_the_day" display_name="Day of Week"/>
      </level>
      <level id="dimension_time_level_month" group_by="table_time_by_day_column_month_of_year" 
       sort_by="table_time_by_day_column_month_of_year" display_by="table_time_by_day_column_month_of_year" 

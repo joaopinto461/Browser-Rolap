@@ -96,7 +96,7 @@ include "bd/connection.php";
             }
             $dim_info[$dom_dim->getAttribute('id')] = ["name_dimension" => $dom_dim->getAttribute('display_name'), "levels" => $levels];
         }
-
+        var_dump(json_encode($dim_info));
         $facts = $dom_cube->getElementsByTagName('fact');
         $facts_array = array();
         $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
