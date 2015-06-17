@@ -89,15 +89,13 @@ include "bd/connection.php";
                     
                     foreach ($properties as $p)
                     {
-                        $prop_names[] = $p -> getAttribute('display_name');
+                        $prop_names[$p->getAttribute('id')] = $p -> getAttribute('display_name');
                     }
                     $levels[$hierarchy_level_ref] = $prop_names;
                 }
             }
-            
             $dim_info[$dom_dim->getAttribute('id')] = ["name_dimension" => $dom_dim->getAttribute('display_name'), "levels" => $levels];
         }
-        //echo json_encode($dim_info);
 
         $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
         $measure_info = [];
@@ -140,7 +138,6 @@ include "bd/connection.php";
 
         $from_section = generateFromSectionQuery($level_id, $cubeid, $doc);
         $query_result = "SELECT ".$display_by_name.$from_section."  GROUP BY ".$group_by_name.";";
-        //var_dump($query_result);
         return $query_result;
     }
 
@@ -241,4 +238,14 @@ include "bd/connection.php";
         } 
         return $from_query;    
     }
+
+    function getParent($doc, $id)
+    {
+        $elem = $doc->getElementById($id);
+        $parent = $elem->parentNode;
+        $id_parent = $parent->getAttribute('id');
+        var_dump($id_parent);
+    }
+    $doc = initializeDOM();
+    getParent($doc, "dimension_time_level_day_property_day")
 ?>

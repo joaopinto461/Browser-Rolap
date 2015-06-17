@@ -116,8 +116,8 @@
 	  					<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $dim_data["name_dimension"] ?> </h5>
 	  					<ul class="sub" style="display: none;">	  					
 	  					<?php foreach ($dim_data["levels"] as $level_id=>$level) :?>
-	  						<?php foreach ($level as $l):?>
-	  							<li class="level" id="<? print $level_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $l ?></li>
+	  						<?php foreach ($level as $p_id => $p_value):?>
+	  							<li class="level" id="<? print $p_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $p_value ?></li>
 	  						<?php endforeach;?>
 	  					<?php endforeach ?>
 	  					</ul>
