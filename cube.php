@@ -127,12 +127,20 @@
 		  	</div>
 		  	
 			<div class="right_col_elem">
-		  		<h5>Measures</h5>
+		  		<h5><i class="glyphicon glyphicon-tasks"></i> Measures</h5>
 		  		<hr>
-		  		<ul class="measures_list">
-			  		 <?php foreach ($measure_info as $measure_id => $measure_data) :?>
-			  			<li class="measure" id="<? print $measure_id ?>"><i class="glyphicon glyphicon-tasks"></i> <? print $measure_data ?></li>
-			  		<?php endforeach ?>		  		
+		  		
+		  		<ul class="measures_list sub">
+		  			<?php foreach ($measure_info as $measure_id => $measure_values) :?>
+			  			<li class="measure" id="<? print $measure_id ?>">
+			  				<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $measure_values[0] ?></h5>
+			  				<ul>
+		  					<?php foreach (array_slice($measure_values, 1) as $m_id => $m_name):?>
+  								<li class="measure" id="<? print $m_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $m_name ?></li>
+  							<?php endforeach;?>
+			  				</ul>
+			  			</li>
+			  		<?php endforeach  ?>	  		
 		  		</ul>
 		  	</div>
 		  </div>		  
