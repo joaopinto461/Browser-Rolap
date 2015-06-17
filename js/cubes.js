@@ -20,7 +20,7 @@ $(document).ready(function()
 		        else
 		        {
 		        	var nm = ui.draggable.attr('id');		      		        			        	
-		        	active_measures[nm] = ui.draggable.closest('.measure_name').attr('id');
+		        	active_measures[ui.draggable.closest('.measure_name').attr('id')] = nm;
 		        	fillActiveMeasures();	
 		        }
 		        
@@ -112,8 +112,8 @@ function fillActiveMeasures()
 	$('.active_measures_list').html("");		        	
 	for(var y in active_measures)
 	{
-		var amid = active_measures[y];
-		var amtext = $('#' + active_measures[y] + ' h5').text();
+		var amid = y;
+		var amtext = $('#' + active_measures[y]).text();
 		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + amid + '"></i> ' + amtext + '</li>');
 	}
 }
