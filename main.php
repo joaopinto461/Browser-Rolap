@@ -208,9 +208,9 @@ include "bd/connection.php";
         $group_by = generateGroupBy($array_levels, $doc);
 
         $final_query = $select.$from.$group_by;
-        echo "<br><br>";
-        echo $final_query;
-        echo "<br><br>";
+        // echo "<br><br>";
+        // echo $final_query;
+        // echo "<br><br>";
         return $final_query;
     }
 
@@ -300,7 +300,7 @@ include "bd/connection.php";
         $db = db($db_data);
         $query = generateQuery($json, $cubeid, $doc);
         $results = execQuery($query, $db);
-        echo json_encode($results);
+        // echo json_encode($results);
         return json_encode($results);
     }
 
