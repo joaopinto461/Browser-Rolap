@@ -1,6 +1,7 @@
 $(document).ready(function()
 {	   
-	 $('.selectpicker').selectpicker();
+	$('.selectpicker').selectpicker();
+	$('.filterpicker').selectpicker();
 	$('.center_col').droppable
 	(
 	   {
@@ -50,8 +51,10 @@ $(document).ready(function()
 	    }
 	});
 	
-	$.dynatableSetup({
-		features: { 
+	$.dynatableSetup(
+	{
+		features:
+		{ 
 			pushState: false, 
 			search: false, 
 			perPageSelect: false 
@@ -91,20 +94,65 @@ $(document).ready(function()
     		}
     	});
 
-  		$('#myModal').modal('toggle');
+  		$('#sliceModal').modal('toggle');
 	});
 
+	$( ".measure" ).dblclick(function()
+	{
+		var measure_id = this.id;
+		$.ajax(
+    	{
+    		method: "POST",
+    		async: false,
+    		url: "ajax.php",
+    		data:
+    		{
+    			"measure": this.id,
+    			"action": "filter",
+    			"cube_id": $('.cube_title').attr('id')
+    		},
+    		success: function(data)
+    		{    			
+    			var slice_json = JSON.parse(data);
+    			$('#slice-dropdown').html("");
+
+    			for(var i=0; i < slice_json.length; i++)
+    			{
+        			var obj = slice_json[i];
+        			
+        			for(var key in obj)
+        			{                  				  			            			
+            			$('#slice-dropdown').append('<option id="' + property_id + '">' + obj[key] +'</option>');
+        			}
+    			} 
+
+    			$('.selectpicker').selectpicker('refresh');   			
+    		}
+    	});
+
+		$('#filterModal').modal('toggle');
+	});
 });
 
 var active_measures = {};
 var active_levels = {};
 var active_slices = {};
+var active_filters = {};
 
 function applySlice()
 {
 	active_slices[$('.selectpicker option').attr('id')] = $('.selectpicker').val();
 	fillActiveSlices();
-	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
+	active_json = JSON.stringify({ levels: active_levels, measures: active_measures, slices: active_slices });
+	updateTableData();
+}
+
+function applyFilter()
+{
+	var filterOperator = $('.filterpicker').val());
+	var filterValue = $('#filtervalueinput').val();
+
+	
 }
 
 function deleteElem(clicked_id)
@@ -175,6 +223,10 @@ function addColumns(columns)
 function updateTableData()
 {
 	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
+	
+	console.log("Sent AJAX request for following JSON:");
+	console.log(active_json);
+
 	$.ajax(
 	{
 		method: "POST",

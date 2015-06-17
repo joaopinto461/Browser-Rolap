@@ -73,7 +73,7 @@
 
 		  <div class="col-md-6">
 
-		 	<div class="modal fade" id="myModal">
+		 	<div class="modal fade" id="sliceModal">
 				<div class="modal-dialog">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
@@ -92,6 +92,33 @@
 			      	<div class="modal-footer">			        	
 			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			        	<button type="button" onClick="applySlice()" id="applySliceButton" class="btn btn-primary" data-dismiss="modal">Apply</button>
+			      	</div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
+			<div class="modal fade" id="filterModal">
+				<div class="modal-dialog">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			       			<h4 class="modal-title">Filter</h4>
+			      		</div>
+			      	<div class="modal-body">
+			        	<!-- Filter things -->
+			        	<p>Please choose the options to use in the filter:</p>
+			        	<div class="input-group">
+				        	<select class="filterpicker">
+							    <option>=</option>
+							    <option>></option>
+							    <option><</option>
+							</select>
+							<input type="text" id="filtervalueinput" class="form-control" placeholder="Insert value" aria-describedby="basic-addon1">
+						</div>
+			      	</div>
+			      	<div class="modal-footer">			        	
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	<button type="button" onClick="applyFilter()" id="applyFilterButton" class="btn btn-primary" data-dismiss="modal">Apply</button>
 			      	</div>
 			    </div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
