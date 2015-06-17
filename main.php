@@ -181,12 +181,8 @@ include "bd/connection.php";
 
         foreach ($array_levels as $key => $value) {
              $element_level_property = $doc->getElementById($value);
-            // $column_ref = $element_level_property->getAttribute('column_ref');
-            // $column_name = $doc->getElementById($column_ref)->getAttribute('name');
              $level_parent_property = $element_level_property->parentNode;
              $level_id_property_parent = $level_parent_property->getAttribute('id');
-            // $table_level = $level_parent_property->getAttribute('table_ref');
-            // var_dump($table_level);
 
             $arrays_FROM[] = generateArrayFromSectionQuery($level_id_property_parent, $cubeid, $doc);
         }
@@ -200,7 +196,6 @@ include "bd/connection.php";
         }
         $arrays_FROM = array_unique($array_final, SORT_REGULAR);
         $from = generateFromSectionQuery($arrays_FROM);
-        //echo $from;
 
         $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
         // echo $select.$from;
@@ -254,7 +249,6 @@ include "bd/connection.php";
 
         foreach ($array_levels as $key => $value) 
         {
-            //$column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
             $column_ref_property = $doc->getElementById($value)->getAttribute('column_ref');
             $column_name = $doc->getElementById($column_ref_property)->getAttribute('name');
 
@@ -370,15 +364,12 @@ include "bd/connection.php";
         }
         
         $path_to_fact_table = $tmp; 
-        // echo "<br>";
-        // var_dump(json_encode($path_to_fact_table));
+        
         return $path_to_fact_table;
     }
 
 
-    // $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand"},"measures":{}}';
+    // $json2 = '{"levels":{"dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},"measures":{},"slices":{}}';
 
-    $json2 = '{"levels":{"dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},"measures":{},"slices":{}}';
-
-     getResultsByLevel($json2, "cube_sales_1997");
+    //  getResultsByLevel($json2, "cube_sales_1997");
 ?>
