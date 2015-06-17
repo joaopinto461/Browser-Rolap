@@ -132,6 +132,25 @@ include "bd/connection.php";
         return $db;
     }
 
+    function dataToSlice($property_id)
+    {
+        $doc = initializeDOM();
+        $db_data = extractXmlDataBd($doc);
+        $db = db($db_data);
+
+        $property_elem = $doc->getElementById($property_id);
+        $column_ref = $property_elem->getAttribute('column_ref');
+        $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+        $table_ref = $property_elem->parentNode->getAttribute('table_ref');
+        $table_name = $doc->getElementById($table_ref)->getAttribute('name');
+
+        $query = "SELECT DISTINCT(".$column_name.") FROM ".$table_name.";";
+
+        $results = execQuery($query, $db);
+
+        return json_encode($results);
+    }
+
     function generateQuery ($json, $cubeid, $doc) 
     {
 
@@ -325,19 +344,22 @@ include "bd/connection.php";
         return $path_to_fact_table;
     }
 
+    dataToSlice("dimension_time_level_date_property_month");
+
+
     // $doc = initializeDOM();
     // getParent($doc, "dimension_time_level_day_property_day")
-    $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
-"dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
-    "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
-    }
-}';
+//     $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
+// "dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
+//     "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
+//     }
+// }';
 
- $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
-    "measures": {
-        "cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
-    }
-}';
+//  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
+//     "measures": {
+//         "cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
+//     }
+// }';
 
-    getResultsByLevel($json, "cube_sales_1997");
+//     getResultsByLevel($json, "cube_sales_1997");
 ?>
