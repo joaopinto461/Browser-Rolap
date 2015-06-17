@@ -132,7 +132,7 @@
 		  		
 		  		<ul class="measures_list sub">
 		  			<?php foreach ($measure_info as $measure_id => $measure_values) :?>
-			  			<li class="measure" id="<? print $measure_id ?>">
+			  			<li class="measure_name" id="<? print $measure_id ?>">
 			  				<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $measure_values[0] ?></h5>
 			  				<ul>
 		  					<?php foreach (array_slice($measure_values, 1) as $m_id => $m_name):?>

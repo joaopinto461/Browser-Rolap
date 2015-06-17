@@ -3,18 +3,30 @@ $(document).ready(function()
 	$('.center_col').droppable
 	(
 	   {
-	   		accept: '.level',
+	   		accept: '.level, .measure',
 	   		hoverClass: "highlight",
 		    drop: function(event, ui)
 		    {
 		        ui.draggable.data('dropped', true);
 
-		        var nd = ui.draggable.attr('id');
-	        	active_levels[nd] = nd;
-	        	fillActiveLevels();
-
+		        var type = ui.draggable.attr('class');		       		      
+		        
+		        if(type.indexOf('level') > -1)
+		        {
+		        	var nd = ui.draggable.attr('id');
+	        		active_levels[nd] = nd;
+	        		fillActiveLevels();	
+		        }
+		        else
+		        {
+		        	var nm = ui.draggable.attr('id');		      		        			        	
+		        	active_measures[nm] = ui.draggable.closest('.measure_name').attr('id');
+		        	fillActiveMeasures();	
+		        }
+		        
 	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures});
 	        	console.log(active_json);
+
 	        	$.ajax(
 	        	{
 	        		method: "POST",
@@ -101,7 +113,7 @@ function fillActiveMeasures()
 	for(var y in active_measures)
 	{
 		var amid = active_measures[y];
-		var amtext = $('#' + active_measures[y]).text();						
+		var amtext = $('#' + active_measures[y] + ' h5').text();
 		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + amid + '"></i> ' + amtext + '</li>');
 	}
 }
@@ -114,42 +126,4 @@ function addColumns(columns)
 		col = col.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){return str.toUpperCase();})
 		$("#table_head>tr").append('<th id="id1">'+col+'</th>');
 	}
-
-	$("#table_head>tr>th").droppable({
-		accept: ".measure", 
-		hoverClass: "highlight",
-		drop: function(event, ui)
-		    {
-	    		ui.draggable.data('dropped', true);
-	    		var nm = ui.draggable.attr('id');
-		        active_measures[nm] = this.id;
-		        fillActiveMeasures();	
-
-		        active_json = JSON.stringify({levels: active_levels, measures: active_measures});
-
-        		$.ajax(
-        		{
-        		method: "POST",
-        		url: "ajax.php",
-        		data:
-        		{
-        			"measure_id": active_json,
-        			"chosen_attr": event.target.id,
-        			"action": "measure",
-        		},
-        		success: function(data)
-        		{
-        			var data_json = JSON.parse(data);
-        			addColumns(data_json[0]);
-	        		$('#table').dynatable(
-	        		{
-		        		dataset:
-		        		{
-		        			records: data_json
-		        		}
-	        		});			        		        	        			       
-        		}
-	        });
-		}
-	});
 }
