@@ -168,7 +168,7 @@ include "bd/connection.php";
                 if($key == 'levels')
                     $array_levels[] = $value;
                 elseif ($key == 'measures')
-                    $array_measures[$k] = $value; 
+                    $array_measures[$value] = $k; 
             
             }  
         }
@@ -199,10 +199,13 @@ include "bd/connection.php";
         //echo $from;
 
         $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
-        echo $select.$from;
-        echo "<br>";
+        // echo $select.$from;
+        // echo "<br>";
         $group_by = generateGroupBy($array_levels, $doc);
-        echo  $select.$from.$group_by;
+
+        $final_query = $select.$from.$group_by;
+        // echo $final_query;
+        return $final_query;
     }
 
     function generateGroupBy($array_levels, $doc)
@@ -351,15 +354,11 @@ include "bd/connection.php";
     }
 
 
-//     $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
-// "dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
-//     "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
-//     }
-// }';
+    // $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand"},"measures":{}}';
 
 //  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
 //     "measures": {
-//         "cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
+//         "table_sales_fact_1997_column_unit_sales" : "cube_sales_1997_measure_avg"
 //     }
 // }';
 
