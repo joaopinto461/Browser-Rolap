@@ -79,6 +79,7 @@ function deleteElem(clicked_id)
 {
 	delete active_levels[clicked_id];
 	delete active_measures[clicked_id];
+	active_json = JSON.stringify({levels: active_levels, measures: active_measures});
 	fillActiveLevels();
 	fillActiveMeasures();
 }
