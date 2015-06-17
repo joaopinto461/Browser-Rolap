@@ -80,8 +80,6 @@ $(document).ready(function()
 		}
 	});
 
-
-
 	$( ".level" ).dblclick(function()
 	{
 		var property_id = this.id;
@@ -126,15 +124,30 @@ var active_slices = {};
 function applySlice(obj)
 {
 	active_slices[obj.id] = obj.textContent;
+	fillActiveSlices();
 }
 
 function deleteElem(clicked_id)
 {
 	delete active_levels[clicked_id];
 	delete active_measures[clicked_id];
-	active_json = JSON.stringify({levels: active_levels, measures: active_measures});
+	delete active_slices[clicked_id];
+	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
 	fillActiveLevels();
 	fillActiveMeasures();
+	fillActiveSlices();
+}
+
+function fillActiveSlices()
+{
+	$('.active_slices_list').html("");
+
+	for(var s in active_slices)
+	{
+		var sid = s;
+		var stext = active_slices[s]
+		$('.active_slices_list').append('<li class="active_slice" id="' + sid + '">' + '<i onClick="deleteElem(this.id)" class="active_slice glyphicon glyphicon-remove" id="' + sid + '"></i> ' + stext + '</li>');
+	}
 }
 
 function fillActiveLevels()
