@@ -171,10 +171,3 @@ function addColumns(columns)
 		$("#table_head>tr").append('<th data-dynatable-column="'+slug+'">'+col+'</th>');
 	}
 }
-
-//Metodo para limpar a tabela
-function clearTable()
-{
-	$("#table_head>tr").html('');
-	$("#table>tbody").html('');
-}
