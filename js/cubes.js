@@ -25,7 +25,6 @@ $(document).ready(function()
 		        }
 		        
 	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
-	        	console.log(active_json);
 
 	        	$.ajax(
 	        	{
@@ -42,14 +41,13 @@ $(document).ready(function()
 	        		{
 	        			var data_json = JSON.parse(data);
 	        			addColumns(data_json[0]);
-		        		$('#table').dynatable(
-		        		{
-			        		dataset:
-			        		{
-			        			records: data_json
-			        		}
-		        		});
-		        		
+		        		var t = $('#table').dynatable().data('dynatable');
+		        		console.log(t);
+		        		t.records.updateFromJson({records: data_json});
+		        		t.domColumns.init();
+		        		t.sortsHeaders.init();
+		        		t.records.init();
+		        		t.process();
 	        		}
 	        	});
 		    }
@@ -74,7 +72,15 @@ $(document).ready(function()
 	    }
 	});
 	
-	$.dynatableSetup({features: { pushState: false, search: false, perPageSelect: false }});
+	$.dynatableSetup({
+		features: { 
+			pushState: false, 
+			search: false, 
+			perPageSelect: false 
+		}
+	});
+
+
 
 	$( ".level" ).dblclick(function()
 	{
@@ -156,9 +162,12 @@ function fillActiveMeasures()
 function addColumns(columns)
 {
 	$("#table_head>tr").html('');
+	$("#table>tbody").html('');
+	var pos = 0;
 	for(var col in columns) 
 	{
+		slug = col;
 		col = col.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){return str.toUpperCase();})
-		$("#table_head>tr").append('<th id="id1">'+col+'</th>');
+		$("#table_head>tr").append('<th data-dynatable-column="'+slug+'">'+col+'</th>');
 	}
 }

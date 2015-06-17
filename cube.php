@@ -96,14 +96,16 @@
 			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 
-		  	<div class="center_col">
-		  		  	<table id="table" class="table" style="width:100%; text-align:left;">
+		  	<div class="center_col row">
+		  	<div class="col-lg-12" style="overflow:auto">
+		  		  	<table id="table" class="table" style="text-align:left;">
 		              <thead id="table_head">
 		              <tr></tr>
 		              </thead>
 		              <tbody>
 		              </tbody>
             		</table>	
+            		</div>
 		  	</div>
 		  </div>
 

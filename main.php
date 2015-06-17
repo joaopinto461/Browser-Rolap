@@ -160,7 +160,7 @@ include "bd/connection.php";
         $json = json_decode($json);
         $array_levels = array();
         $array_measures = array();
-
+        $array_slices = array();
         foreach ($json as $key =>$bla) 
         {
             foreach ($bla as $k=> $value) 
@@ -169,10 +169,11 @@ include "bd/connection.php";
                     $array_levels[] = $value;
                 elseif ($key == 'measures')
                     $array_measures[$value] = $k; 
-            
-            }  
+                elseif($key == 'slices')
+                    $array_slices[$k] = $value;
+            }    
         }
-        
+        //var_dump(json_encode($array_slices));
         $arrays_FROM = array();
 
         foreach ($array_levels as $key => $value) {
@@ -356,11 +357,7 @@ include "bd/connection.php";
 
     // $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand"},"measures":{}}';
 
-//  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
-//     "measures": {
-//         "table_sales_fact_1997_column_unit_sales" : "cube_sales_1997_measure_avg"
-//     }
-// }';
+  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},"measures":{"table_sales_fact_1997_column_unit_sales":"cube_sales_1997_measure_avg"},"slices":{"dimension_time_level_date_property_month":"January"}}';
 
-    // getResultsByLevel($json, "cube_sales_1997");
+     getResultsByLevel($json2, "cube_sales_1997");
 ?>
