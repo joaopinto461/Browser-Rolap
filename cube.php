@@ -60,6 +60,11 @@
 			  		<hr>
 			  		<ul class="active_measures_list"></ul>
 			  	</div>
+			  	<div class="left_col_elem">
+			  		<h5><i class="glyphicon glyphicon-check"></i> Active Slices</h5>
+			  		<hr>
+			  		<ul class="active_slices_list"></ul>
+			  	</div>
 
 			  </div>
 		  </div>
@@ -86,7 +91,6 @@
 			      	</div>
 			      	<div class="modal-footer">
 			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        	<button type="button" class="btn btn-primary">Apply</button>
 			      	</div>
 			    </div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
