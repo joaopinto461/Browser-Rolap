@@ -130,7 +130,7 @@
 		  		<h5>Measures</h5>
 		  		<hr>
 		  		<ul class="measures_list">
-			  		<?php foreach ($measure_info as $measure_id => $measure_data) :?>
+			  		 <?php foreach ($measure_info as $measure_id => $measure_data) :?>
 			  			<li class="measure" id="<? print $measure_id ?>"><i class="glyphicon glyphicon-tasks"></i> <? print $measure_data ?></li>
 			  		<?php endforeach ?>		  		
 		  		</ul>

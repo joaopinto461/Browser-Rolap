@@ -14,7 +14,7 @@ $(document).ready(function()
 	        	fillActiveLevels();
 
 	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures});
-
+	        	console.log(active_json);
 	        	$.ajax(
 	        	{
 	        		method: "POST",
@@ -22,7 +22,7 @@ $(document).ready(function()
 	        		url: "ajax.php",
 	        		data:
 	        		{
-	        			"level_id": active_json,
+	        			"json": active_json,
 	        			"action": "level",
 	        			"cube_id": $('.cube_title').attr('id')
 	        		},

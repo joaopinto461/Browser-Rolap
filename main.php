@@ -97,19 +97,31 @@ include "bd/connection.php";
             $dim_info[$dom_dim->getAttribute('id')] = ["name_dimension" => $dom_dim->getAttribute('display_name'), "levels" => $levels];
         }
 
+        $facts = $dom_cube->getElementsByTagName('fact');
+        $facts_array = array();
         $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
-        $measure_info = [];
 
-        foreach ($measure_ref_dom as $m)
+        foreach ($facts as $key) 
         {
-            $measure_info[$m->getAttribute('id')] = $m->getAttribute('display_name');
+            $column_ref = $key->getAttribute('column_ref');
+            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+            
+            $measure_info = array();
+            $measure_info[] = $column_name;
+            foreach ($measure_ref_dom as $m)
+            {
+                $measure_info[$m->getAttribute('id')] = $m->getAttribute('display_name');
+            }
+            $facts_array[$column_ref] = $measure_info;
         }
 
+        $measure_info = $facts_array;
         /* Array c dimensions e measures */
         $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
 	}
 
-    function extractXmlDataBd($doc){
+    function extractXmlDataBd($doc)
+    {
         $db_connection = $doc->getElementsByTagName('db_connection')->item(0);
 
         $db_host = $db_connection->getAttribute('host');
@@ -120,44 +132,151 @@ include "bd/connection.php";
         return $db;
     }
 
-    function generateQuery ($level_id, $cubeid, $doc) {
+    function generateQuery ($json, $cubeid, $doc) 
+    {
+
         $dom_cube = $doc->getElementById($cubeid);
         $fact_table_id = $dom_cube->getAttribute('table_ref');
 
-        $element_level = $doc->getElementById($level_id);
+        $json = json_decode($json);
+        $array_levels = array();
+        $array_measures = array();
 
-        $table_level = $element_level->getAttribute('table_ref'); //id da tabela que o level referencia
+        foreach ($json as $key =>$bla) 
+        {
+            foreach ($bla as $k=> $value) 
+            {
+                if($key == 'levels')
+                    $array_levels[] = $value;
+                elseif ($key == 'measures')
+                    $array_measures[$k] = $value; 
+            
+            }  
+        }
+
+        // Limpa duplicados nos atributos a meter no select
+        foreach ($array_levels as $key => $v) {
+            foreach ($array_measures as $k =>$value) 
+            {
+                if($v == $value)
+                    unset($array_levels[$key]);
+            }
+        }
+
+        $arrays_FROM = array();
+
+        foreach ($array_levels as $key => $value) {
+             $element_level_property = $doc->getElementById($value);
+            // $column_ref = $element_level_property->getAttribute('column_ref');
+            // $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+             $level_parent_property = $element_level_property->parentNode;
+             $level_id_property_parent = $level_parent_property->getAttribute('id');
+            // $table_level = $level_parent_property->getAttribute('table_ref');
+            // var_dump($table_level);
+
+            $arrays_FROM[] = generateArrayFromSectionQuery($level_id_property_parent, $cubeid, $doc);
+        }
+
+        foreach ($array_measures as $key => $value) {
+            $element_level_property = $doc->getElementById($value);
+            $level_parent_property = $element_level_property->parentNode;
+            $level_id_property_parent = $level_parent_property->getAttribute('id');
+            $arrays_FROM[] = generateArrayFromSectionQuery($level_id_property_parent, $cubeid, $doc);
+        }
+        
+        $arrays_FROM = array_unique($arrays_FROM, SORT_REGULAR);
+        $array_final = array();
+        foreach ($arrays_FROM as $key) {
+            foreach ($key as $k) {                
+                $array_final[] = $k;
+            }   
+        }
+        $arrays_FROM = array_unique($array_final, SORT_REGULAR);
+        $from = generateFromSectionQuery($arrays_FROM);
+        //echo $from;
+
+        $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
+        // echo $select.$from;
+        // echo "<br>";
+        // var_dump(json_encode($arrays_FROM));
+
+
+        // $element_level = $doc->getElementById($level_id);
+
+        // $table_level = $element_level->getAttribute('table_ref'); //id da tabela que o level referencia
 
         
-        $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
-        $level_group_by = $element_level -> getAttribute('group_by');
-        $level_display = $element_level -> getAttribute('display_by');
+        // $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
+        // $level_group_by = $element_level -> getAttribute('group_by');
+        // $level_display = $element_level -> getAttribute('display_by');
 
-        $group_by_name = $doc->getElementById($level_group_by)->getAttribute('name'); // nome do atributo sql p group by
-        $display_by_name = $doc->getElementById($level_display)->getAttribute('name'); // nome atributo sql para display
+        // $group_by_name = $doc->getElementById($level_group_by)->getAttribute('name'); // nome do atributo sql p group by
+        // $display_by_name = $doc->getElementById($level_display)->getAttribute('name'); // nome atributo sql para display
 
-        $from_section = generateFromSectionQuery($level_id, $cubeid, $doc);
-        $query_result = "SELECT ".$display_by_name.$from_section."  GROUP BY ".$group_by_name.";";
-        return $query_result;
+        // $from_section = generateFromSectionQuery($level_id, $cubeid, $doc);
+        // $query_result = "SELECT ".$display_by_name.$from_section."  GROUP BY ".$group_by_name.";";
+        // return $query_result;
     }
 
-    function getResultsByLevel($levelid, $cubeid) {
+    function generateSelectSectionQuery($array_levels, $array_measures, $doc)
+    {
+        $select = "SELECT ";
+        $num_items = count($array_levels);
+        $i = 0;
+        $num_items_measures = count($array_measures);
+
+        foreach ($array_levels as $key => $value) 
+        {
+            $column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
+            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+
+            $select = $select.$column_name;
+            if(++$i != $num_items)
+                $select = $select.", ";
+            elseif($num_items_measures > 0)
+                $select = $select.", ";
+        }       
+        $i = 0;
+        foreach ($array_measures as $key => $value) 
+        {
+            $op_name = $doc->getElementById($key)->getAttribute('operation');
+            $column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
+            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+            $select = $select.$op_name."(".$column_name.")";
+            if(++$i != $num_items_measures)
+                $select = $select.", ";
+        }
+        return $select;
+    }
+
+    function generateFromSectionQuery($path_to_fact_table)
+    {
+        //  echo "<br>";
+        // var_dump($path_to_fact_table);
+        // echo "<br>";
+        $from_query= " FROM ";
+        $state = 0;
+        foreach ($path_to_fact_table as $section_of_path) 
+        {   
+                if($state == 0)
+                {
+                    $from_query = $from_query.$section_of_path[0]." INNER JOIN ".$section_of_path[2]." ON ".$section_of_path[0].".".$section_of_path[1]." = ".$section_of_path[2].".".$section_of_path[3];
+                    $state = 1;
+                }
+                else if($state == 1)
+                    $from_query = $from_query." INNER JOIN ".$section_of_path[2]." ON ".$section_of_path[0].".".$section_of_path[1]." = ".$section_of_path[2].".".$section_of_path[3];
+        } 
+        return $from_query;    
+    }
+
+    function getResultsByLevel($json, $cubeid) 
+    {
         $doc = initializeDOM();
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
-        $query = generateQuery($levelid, $cubeid, $doc);
-        $results = execQuery($query, $db);
-        return json_encode($results);
-    }
-
-    function getResultsByMeasure($measureid) {
-        $db_data = extractXmlDataBd($doc);
-        $db = db($db_data);
-        $doc = $initializeDOM();
-        //$query = generateQuery($measureid, $doc);
-        $results = execQuery($query);
-
-        return json_encode($results);
+        $query = generateQuery($json, $cubeid, $doc);
+        // $results = execQuery($query, $db);
+        // return json_encode($results);
     }
 
     function initializeDOM()
@@ -193,7 +312,7 @@ include "bd/connection.php";
         }     
         return $fks;    
     }
-    function generateFromSectionQuery($level_id, $cubeid, $doc)
+    function generateArrayFromSectionQuery($level_id, $cubeid, $doc)
     {
         $fact_table_name = $doc->getElementById($cubeid)->getAttribute('table_ref');
         $level_dom_element = $doc->getElementById($level_id);
@@ -220,32 +339,30 @@ include "bd/connection.php";
                 break;
             }
         }
+
         for ($i = sizeof($sections_from) - 1; $i >= 0; $i--) {
             $tmp[] = $sections_from[$i];
         }
-
+        
         $path_to_fact_table = $tmp; 
-        $from_query= " FROM ";
-        $state = 0;
-        foreach ($path_to_fact_table as $section_of_path) 
-        {   if($state == 0)
-            {
-                $from_query = $from_query.$section_of_path[0]." INNER JOIN ".$section_of_path[2]." ON ".$section_of_path[0].".".$section_of_path[1]." = ".$section_of_path[2].".".$section_of_path[3];
-                $state = 1;
-            }
-            else if($state == 1)
-                $from_query = $from_query." INNER JOIN ".$section_of_path[2]." ON ".$section_of_path[0].".".$section_of_path[1]." = ".$section_of_path[2].".".$section_of_path[3];
-        } 
-        return $from_query;    
+        // echo "<br>";
+        // var_dump(json_encode($path_to_fact_table));
+        return $path_to_fact_table;
     }
 
-    function getParent($doc, $id)
-    {
-        $elem = $doc->getElementById($id);
-        $parent = $elem->parentNode;
-        $id_parent = $parent->getAttribute('id');
-        var_dump($id_parent);
+    // $doc = initializeDOM();
+    // getParent($doc, "dimension_time_level_day_property_day")
+    $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
+"dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
+    "measures": {"cube_sales_1997_measure_avg": "dimension_time_level_date_property_date"
     }
-    $doc = initializeDOM();
-    getParent($doc, "dimension_time_level_day_property_day")
+}';
+
+ $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
+    "measures": {
+        "cube_sales_1997_measure_avg": "dimension_time_level_date_property_date"
+    }
+}';
+
+    getResultsByLevel($json, "cube_sales_1997");
 ?>
