@@ -200,17 +200,26 @@ include "bd/connection.php";
 
         $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
         echo $select.$from;
-        
-        // $level_column_ref = $element_level->getElementsByTagName('property')[0]->getAttribute('column_ref');
-        // $level_group_by = $element_level -> getAttribute('group_by');
-        // $level_display = $element_level -> getAttribute('display_by');
+        echo "<br>";
+        $group_by = generateGroupBy($array_levels, $doc);
+        echo  $select.$from.$group_by;
+    }
 
-        // $group_by_name = $doc->getElementById($level_group_by)->getAttribute('name'); // nome do atributo sql p group by
-        // $display_by_name = $doc->getElementById($level_display)->getAttribute('name'); // nome atributo sql para display
+    function generateGroupBy($array_levels, $doc)
+    {
+        $num_items = count($array_levels);
+        $i = 0;
+        $query = " GROUP BY ";
+         foreach ($array_levels as $key => $value) 
+        {
+            $column_ref = $doc->getElementById($value)->parentNode->getAttribute('display_by');
+            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
 
-        // $from_section = generateFromSectionQuery($level_id, $cubeid, $doc);
-        // $query_result = "SELECT ".$display_by_name.$from_section."  GROUP BY ".$group_by_name.";";
-        // return $query_result;
+            $query = $query.$column_name;
+            if(++$i != $num_items)
+                $query = $query.", ";
+        }       
+        return $query;
     }
 
     function generateSelectSectionQuery($array_levels, $array_measures, $doc)
@@ -344,16 +353,12 @@ include "bd/connection.php";
         return $path_to_fact_table;
     }
 
-    dataToSlice("dimension_time_level_date_property_month");
 
-
-    // $doc = initializeDOM();
-    // getParent($doc, "dimension_time_level_day_property_day")
-//     $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
-// "dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
-//     "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
-//     }
-// }';
+    $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
+"dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
+    "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
+    }
+}';
 
 //  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
 //     "measures": {
@@ -361,5 +366,5 @@ include "bd/connection.php";
 //     }
 // }';
 
-//     getResultsByLevel($json, "cube_sales_1997");
+    getResultsByLevel($json, "cube_sales_1997");
 ?>
