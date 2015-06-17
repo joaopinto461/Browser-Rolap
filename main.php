@@ -254,9 +254,6 @@ include "bd/connection.php";
 
     function generateFromSectionQuery($path_to_fact_table)
     {
-        //  echo "<br>";
-        // var_dump($path_to_fact_table);
-        // echo "<br>";
         $from_query= " FROM ";
         $state = 0;
         foreach ($path_to_fact_table as $section_of_path) 
@@ -278,8 +275,8 @@ include "bd/connection.php";
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
         $query = generateQuery($json, $cubeid, $doc);
-        // $results = execQuery($query, $db);
-        // return json_encode($results);
+        $results = execQuery($query, $db);
+        return json_encode($results);
     }
 
     function initializeDOM()
@@ -354,11 +351,11 @@ include "bd/connection.php";
     }
 
 
-    $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
-"dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
-    "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
-    }
-}';
+//     $json = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_product_level_product_property_product_brand":"dimension_product_level_product_property_product_brand",
+// "dimension_product_level_product_department_property_department":"dimension_product_level_product_department_property_department"},
+//     "measures": {"cube_sales_1997_measure_avg": "table_sales_fact_1997_column_unit_sales"
+//     }
+// }';
 
 //  $json2 = '{"levels":{"dimension_time_level_date_property_date":"dimension_time_level_date_property_date","dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},
 //     "measures": {
@@ -366,5 +363,5 @@ include "bd/connection.php";
 //     }
 // }';
 
-    getResultsByLevel($json, "cube_sales_1997");
+    // getResultsByLevel($json, "cube_sales_1997");
 ?>
