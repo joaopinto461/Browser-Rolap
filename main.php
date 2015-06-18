@@ -169,7 +169,7 @@ else if(isset($_POST['cube']))
                     $array_filters[$k] = $value;
             }    
         }
-        if(count($array_slices) > 0)
+        // if(count($array_slices) > 0)
             $array_diff = array_diff_assoc($array_slices, $array_levels);
 
         $arrays_FROM = array();
