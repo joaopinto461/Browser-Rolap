@@ -36,7 +36,7 @@
 	      <ul class="nav navbar-nav">
 	        <li><a href="home.php">Home</a></li>
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
-	         <li><a href="#">Save</a></li>
+	         <li><a href="#" id="save">Save</a></li>
 	      </ul>
 	 
 	    </div>
