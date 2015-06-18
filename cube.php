@@ -112,6 +112,8 @@
 							    <option>=</option>
 							    <option>></option>
 							    <option><</option>
+							    <option>>=</option>
+							    <option><=</option>
 							</select>
 							<input type="text" id="filtervalueinput" class="form-control" placeholder="Insert value" aria-describedby="basic-addon1">
 						</div>
