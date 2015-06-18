@@ -149,6 +149,7 @@ function applyFilter()
 	var mid = measure_id;
 	var pid = parent_id;
 	active_filters[parent_id] = {measure: measure_id, operator: filterOperator, value: filterValue};
+	fillActiveFilters();
 	updateActiveJSON();
 	updateTableData();
 }
@@ -171,6 +172,12 @@ function deleteElem(clicked_id)
 		updateTableData();
 }
 
+function deleteFilter(clicked_id)
+{
+	delete active_filters[clicked_id];
+	fillActiveFilters();
+}
+
 function fillActiveSlices()
 {
 	$('.active_slices_list').html("");
@@ -182,6 +189,19 @@ function fillActiveSlices()
 		$('.active_slices_list').append('<li class="active_slice" id="' + sid + '">' + '<i onClick="deleteElem(this.id)" class="active_slice glyphicon glyphicon-remove" id="' + sid + '"></i> ' + stext + '</li>');
 	}
 }
+
+function fillActiveFilters()
+{
+	$('.active_filters_list').html("");
+
+	for(var f in active_filters)
+	{	
+		var fid = f;
+		var ftext = active_filters[f].operator + " " + active_filters[f].value;
+		$('.active_filters_list').append('<li class="active_filter" id="' + fid + '">' + '<i onClick="deleteFilter(this.id)" class="active_filter glyphicon glyphicon-remove" id="' + fid + '"></i> ' + ftext + '</li>');
+	}
+}
+
 
 function fillActiveLevels()
 {
