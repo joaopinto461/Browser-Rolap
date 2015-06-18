@@ -452,12 +452,6 @@ function generateArrayFromSectionQuery($level_id, $cubeid, $doc)
     return $path_to_fact_table;
 }
 
-
-function save($data) {
-    $file = 'state.json';
-    file_put_contents($file, $data);
-}
-
     // $json2 = '{"levels":{},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_avg"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_cost":{"measure_at":"table_sales_fact_1997_column_store_cost","aggregator":"cube_sales_1997_measure_avg"}},"slices":{},"filters":{}}';
     // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
