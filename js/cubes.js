@@ -1,28 +1,13 @@
 $(document).ready(function()
 {	   
-
-	$("#save").on("click", function()
-	{
-		console.log(active_json);
-		updateActiveJSON();
-		$.ajax(
-		{
-			url: "ajax.php",
-			data:
-			{
-				action: "save", state: active_json
-			},
-			method: "post",
-			success: function($c)
-			{
-				window.location = "download.php?file=state.json";
-			}
-		});
-	});
-
 	$("#load").on("click", function()
 	{
 		$('#loadModal').modal('toggle');
+	});
+
+	$("#save").on("click", function()
+	{
+		$('#saveModal').modal('toggle');
 	});
 
 	$('.selectpicker').selectpicker();
@@ -152,6 +137,12 @@ function loadInfo()
 	fillActiveFilters();
 	updateActiveJSON();
 	updateTableData();
+}
+
+function saveInfo()
+{
+	updateActiveJSON();
+	$('#saveText').val(active_json);
 }
 
 function applySlice()

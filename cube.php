@@ -36,8 +36,8 @@
 	      <ul class="nav navbar-nav">
 	        <li><a href="home.php">Home</a></li>
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
-	         <li><a href="#" id="save">Save</a></li>
-	         <li><a href="#" id="load">Load</a></li>
+	         <li><a href="#" onClick="saveInfo()" id="save">Save session</a></li>
+	         <li><a href="#" id="load">Load data</a></li>
 	      </ul>	      	 
 	    </div>
 	  </div>
@@ -136,7 +136,6 @@
 			      	<div class="modal-body">
 			        	<!-- Filter things -->
 			        	<p>Please write/paste your saved data:</p>
-			        	<form action="action_page.php">
 						<form>
 						  <div class="form-group">
 							<textarea id="loadText" class="form-control" rows="3"></textarea>
@@ -146,6 +145,29 @@
 			      	<div class="modal-footer">			        	
 			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			        	<button type="button" onClick="loadInfo()" id="loadInfoButton" class="btn btn-primary" data-dismiss="modal">Apply</button>
+			      	</div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
+			<div class="modal fade" id="saveModal">
+				<div class="modal-dialog">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			       			<h4 class="modal-title">Save session</h4>
+			      		</div>
+			      	<div class="modal-body">
+			        	<!-- Filter things -->
+			        	<p>If you want to continue this session later, please save the text below.</p>			        	
+						<form>
+						  <div class="form-group">
+							<textarea id="saveText" class="form-control" rows="3"></textarea>
+						  </div>						  						 
+						</form>
+			      	</div>
+			      	<div class="modal-footer">			        	
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      	</div>
 			    </div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
