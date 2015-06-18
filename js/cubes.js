@@ -41,8 +41,8 @@ $(document).ready(function()
 		        }
 		        else
 		        {
-		        	var nm = ui.draggable.attr('id');		      		        			        	
-		        	active_measures[ui.draggable.closest('.measure_name').attr('id')] = nm;
+		        	var nm = ui.draggable.attr('id');	
+		        	active_measures[nm + "_" + ui.draggable.closest('.measure_name').attr('id')] = {measure_attr: ui.draggable.closest('.measure_name').attr('id'), aggregator: nm};
 		        	fillActiveMeasures();	
 		        }
 		        
@@ -226,9 +226,9 @@ function fillActiveMeasures()
 	$('.active_measures_list').html("");		        	
 	for(var y in active_measures)
 	{
-		var amid = y;
-		var amtext = $('#' + active_measures[y]).text();
-		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteMeasure(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + amid + '"></i> ' + amtext + '</li>');
+		var amid = active_measures[y].measure_attr;
+		var amtext = $('#' + active_measures[y].aggregator).text();
+		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteMeasure(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + y + '"></i> ' + amtext + '</li>');
 	}
 }
 
