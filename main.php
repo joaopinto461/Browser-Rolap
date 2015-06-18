@@ -36,18 +36,9 @@ function libxml_display_errors()
     libxml_clear_errors();
 }
 
-libxml_use_internal_errors(true);
-$doc = new DOMDocument;
-$doc->load('xml/metadataDW.xml');
-
-if (!$doc->schemaValidate('xml/metadataDW.xsd'))
-{
-   print '<b>DOMDocument::schemaValidate() ::Generated Errors!</b>';
-   libxml_display_errors();
-}
-
 if(isset($_GET['cubes']))
 {
+    $doc = initializeDOM();
     $xml_cubes = $doc -> getElementsByTagName('cube');
     $cubes = [];
 
@@ -62,12 +53,13 @@ if(isset($_GET['cubes']))
 
 else if(isset($_POST['cube']))
 {
-  $cube_selected_id = $_POST['cube'];
-  $dom_cube = $doc->getElementById($cube_selected_id);
-  $cube_name = $dom_cube->getAttribute('name');
+    $doc = initializeDOM();
+      $cube_selected_id = $_POST['cube'];
+      $dom_cube = $doc->getElementById($cube_selected_id);
+      $cube_name = $dom_cube->getAttribute('name');
 
-  $dimension_ref_dom = $dom_cube->getElementsByTagName('cube_dimension');
-  $dim_info = [];
+      $dimension_ref_dom = $dom_cube->getElementsByTagName('cube_dimension');
+      $dim_info = [];
 
   foreach ($dimension_ref_dom as $dim_ref_dom)
   {
@@ -114,7 +106,7 @@ else if(isset($_POST['cube']))
             }
             $facts_array[$column_ref] = $measure_info;
         }
-
+        // var_dump(json_encode($dim_info));
         $measure_info = $facts_array;
         /* Array c dimensions e measures */
         $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
