@@ -257,16 +257,19 @@ include "bd/connection.php";
         }      
         $j = 0; 
         if(count($array_diff) > 0)
-            $query = $query.", ";
-        foreach ($array_diff as $key => $value) 
         {
-            $property_doc = $doc->getElementById($key);
-            $column_name = $doc->getElementById($property_doc->getAttribute('column_ref'))->getAttribute('name');
-            $parent_ref_table = $property_doc->parentNode->getAttribute('table_ref');
-            $table_name = $doc->getElementById($parent_ref_table)->getAttribute('name');
-            $query = $query.$table_name.".".$column_name;
-            if($j++ == count($array_diff))
-                $query = $query.", ";       
+            $query = $query.", ";
+        
+            foreach ($array_diff as $key => $value) 
+            {
+                $property_doc = $doc->getElementById($key);
+                $column_name = $doc->getElementById($property_doc->getAttribute('column_ref'))->getAttribute('name');
+                $parent_ref_table = $property_doc->parentNode->getAttribute('table_ref');
+                $table_name = $doc->getElementById($parent_ref_table)->getAttribute('name');
+                $query = $query.$table_name.".".$column_name;
+                if($j++ == count($array_diff))
+                    $query = $query.", ";       
+            }
         }
         return $query;
     }
@@ -327,7 +330,7 @@ include "bd/connection.php";
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
         $query = generateQuery($json, $cubeid, $doc);
-        // $results = execQuery($query, $db);
+        $results = execQuery($query, $db);
         // echo json_encode($results);
         return json_encode($results);
     }
