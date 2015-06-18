@@ -167,8 +167,8 @@
 			  				<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $measure_values[0] ?></h5>
 			  				<ul>
 		  					<?php foreach (array_slice($measure_values, 1) as $m_id => $m_name):?>
-  								<li class="measure" id="<? print $m_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $m_name ?></li>
-  							<?php endforeach;?>
+  								<li class="measure" id="<? print $m_id ?>" data-parentid="<? print $measure_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $m_name ?></li>
+  							<?php endforeach ?>
 			  				</ul>
 			  			</li>
 			  		<?php endforeach  ?>	  		

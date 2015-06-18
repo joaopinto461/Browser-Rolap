@@ -26,7 +26,7 @@ $(document).ready(function()
 		        	fillActiveMeasures();	
 		        }
 		        
-	        	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
+				updateActiveJSON();
 
 	        	updateTableData();
 		    }
@@ -61,7 +61,7 @@ $(document).ready(function()
 		}
 	});
 
-	$( ".level" ).dblclick(function()
+	$(".level").dblclick(function()
 	{
 		var property_id = this.id;
 		$.ajax(
@@ -97,43 +97,18 @@ $(document).ready(function()
   		$('#sliceModal').modal('toggle');
 	});
 
-	$( ".measure" ).dblclick(function()
+	$(".measure").dblclick(function()
 	{
-		var measure_id = this.id;
-		$.ajax(
-    	{
-    		method: "POST",
-    		async: false,
-    		url: "ajax.php",
-    		data:
-    		{
-    			"measure": this.id,
-    			"action": "filter",
-    			"cube_id": $('.cube_title').attr('id')
-    		},
-    		success: function(data)
-    		{    			
-    			var slice_json = JSON.parse(data);
-    			$('#slice-dropdown').html("");
-
-    			for(var i=0; i < slice_json.length; i++)
-    			{
-        			var obj = slice_json[i];
-        			
-        			for(var key in obj)
-        			{                  				  			            			
-            			$('#slice-dropdown').append('<option id="' + property_id + '">' + obj[key] +'</option>');
-        			}
-    			} 
-
-    			$('.selectpicker').selectpicker('refresh');   			
-    		}
-    	});
+		measure_id = this.id;
+		parent_id = $(this).data('parentid');
 
 		$('#filterModal').modal('toggle');
 	});
+
 });
 
+var measure_id;
+var parent_id;
 var active_measures = {};
 var active_levels = {};
 var active_slices = {};
@@ -143,16 +118,17 @@ function applySlice()
 {
 	active_slices[$('.selectpicker option').attr('id')] = $('.selectpicker').val();
 	fillActiveSlices();
-	active_json = JSON.stringify({ levels: active_levels, measures: active_measures, slices: active_slices });
+	updateActiveJSON();
 	updateTableData();
 }
 
 function applyFilter()
 {
-	var filterOperator = $('.filterpicker').val());
+	var filterOperator = $('.filterpicker').val();
 	var filterValue = $('#filtervalueinput').val();
-
-	
+	var mid = measure_id;
+	var pid = parent_id;
+	active_filters[parent_id] = {measure: measure_id, operator: filterOperator, value: filterValue};
 }
 
 function deleteElem(clicked_id)
@@ -160,7 +136,7 @@ function deleteElem(clicked_id)
 	delete active_levels[clicked_id];
 	delete active_measures[clicked_id];
 	delete active_slices[clicked_id];
-	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
+	updateActiveJSON();
 	fillActiveLevels();
 	fillActiveMeasures();
 	fillActiveSlices();
@@ -220,10 +196,14 @@ function addColumns(columns)
 	}
 }
 
-function updateTableData()
+function updateActiveJSON()
 {
-	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices});
-	
+	active_json = JSON.stringify({levels: active_levels, measures: active_measures, slices: active_slices, filters: active_filters});
+}
+
+function updateTableData()
+{	
+	updateActiveJSON();
 	console.log("Sent AJAX request for following JSON:");
 	console.log(active_json);
 
