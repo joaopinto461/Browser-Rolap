@@ -154,28 +154,36 @@ function applyFilter()
 	updateTableData();
 }
 
-function deleteElem(clicked_id)
+function deleteMeasure(clicked_id)
 {
-	delete active_levels[clicked_id];
 	delete active_measures[clicked_id];
+	updateActiveJSON();
+	fillActiveMeasures();
+	updateTableData();
+}
+
+function deleteSlice(clicked_id)
+{
 	delete active_slices[clicked_id];
 	updateActiveJSON();
-	fillActiveLevels();
-	fillActiveMeasures();
 	fillActiveSlices();
-	
-	if(Object.keys(active_levels).length == 0 && Object.keys(active_measures).length == 0 && Object.keys(active_slices).length == 0)
-	{
-		alert("Nenhuma opção activada.");
-	}
-	else
-		updateTableData();
+	updateTableData();
+}
+
+function deleteLevel(clicked_id)
+{
+	delete active_levels[clicked_id];
+	updateActiveJSON();
+	fillActiveLevels();
+	updateTableData();
 }
 
 function deleteFilter(clicked_id)
 {
 	delete active_filters[clicked_id];
+	updateActiveJSON();
 	fillActiveFilters();
+	updateTableData();
 }
 
 function fillActiveSlices()
@@ -186,7 +194,7 @@ function fillActiveSlices()
 	{
 		var sid = s;
 		var stext = active_slices[s]
-		$('.active_slices_list').append('<li class="active_slice" id="' + sid + '">' + '<i onClick="deleteElem(this.id)" class="active_slice glyphicon glyphicon-remove" id="' + sid + '"></i> ' + stext + '</li>');
+		$('.active_slices_list').append('<li class="active_slice" id="' + sid + '">' + '<i onClick="deleteSlice(this.id)" class="active_slice glyphicon glyphicon-remove" id="' + sid + '"></i> ' + stext + '</li>');
 	}
 }
 
@@ -202,7 +210,6 @@ function fillActiveFilters()
 	}
 }
 
-
 function fillActiveLevels()
 {
 	$('.active_levels_list').html("");		        	
@@ -210,7 +217,7 @@ function fillActiveLevels()
 	{
 		var adid = active_levels[x];
 		var adtext = $('#' + active_levels[x]).text();
-		$('.active_levels_list').append('<li class="active_level" id="' + adid + '">' + '<i onClick="deleteElem(this.id)" class="active_level glyphicon glyphicon-remove" id="' + adid + '"></i> ' + adtext + '</li>');
+		$('.active_levels_list').append('<li class="active_level" id="' + adid + '">' + '<i onClick="deleteLevel(this.id)" class="active_level glyphicon glyphicon-remove" id="' + adid + '"></i> ' + adtext + '</li>');
 	}
 }
 
@@ -221,7 +228,7 @@ function fillActiveMeasures()
 	{
 		var amid = y;
 		var amtext = $('#' + active_measures[y]).text();
-		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteElem(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + amid + '"></i> ' + amtext + '</li>');
+		$('.active_measures_list').append('<li class="active_measure" id="' + amid + '">' + '<i onClick="deleteMeasure(this.id)" class="active_measure glyphicon glyphicon-remove" id="' + amid + '"></i> ' + amtext + '</li>');
 	}
 }
 
