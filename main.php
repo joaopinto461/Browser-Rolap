@@ -363,7 +363,7 @@ function generateFromSectionQuery($path_to_fact_table)
     return $from_query;    
 }
 
-function getResultsByLevel($json, $cubeid) 
+function getResults($json, $cubeid) 
 {
     $doc = initializeDOM();
     $db_data = extractXmlDataBd($doc);
