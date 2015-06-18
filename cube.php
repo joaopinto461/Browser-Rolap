@@ -46,12 +46,8 @@
 	<div class="container_central">
 	    <h2 class="cube_title text-uppercase" id="<? print $cube_selected_id; ?>"><? print $cube_name;?></h2>
 	    <div class="row">
-
 		  <div class="col-md-3">
-
-			  <div class="left_col">
-
-			  	
+			  <div class="left_col">	  	
 			  	<div class="left_col_elem">
 			  		<h5><i class="glyphicon glyphicon-check"></i> Active Levels</h5>
 			  		<hr>
@@ -67,12 +63,15 @@
 			  		<hr>
 			  		<ul class="active_slices_list"></ul>
 			  	</div>
-
+			  	<div class="left_col_elem">
+			  		<h5><i class="glyphicon glyphicon-check"></i> Active Filters</h5>
+			  		<hr>
+			  		<ul class="active_filters_list"></ul>
+			  	</div>
 			  </div>
 		  </div>
 
 		  <div class="col-md-6">
-
 		 	<div class="modal fade" id="sliceModal">
 				<div class="modal-dialog">
 			    	<div class="modal-content">
