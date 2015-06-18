@@ -161,6 +161,7 @@ else if(isset($_POST['cube']))
         $array_levels = array();
         $array_measures = array();
         $array_slices = array();
+        $array_filters = array();
 
         foreach ($json as $key =>$bla) 
         {
@@ -172,6 +173,8 @@ else if(isset($_POST['cube']))
                     $array_measures[$value] = $k; 
                 elseif($key == 'slices')
                     $array_slices[$k] = $value;
+                elseif($key == 'filters')
+                    $array_filters[] = $value;
             }    
         }
 
@@ -200,7 +203,14 @@ else if(isset($_POST['cube']))
     $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
 
     $group_by = generateGroupBy($array_levels, $doc, $array_diff);
-    $final_query = $select.$from.$group_by;
+    $final_query = $select.$from;
+
+    if(count($array_filters) > 0)
+    {
+        $where_query = getWhereSectionQuery($array_filters, $doc);
+    }
+
+    $final_query = $final_query.$group_by;
 
     $having_query = "";
     if(count($array_slices) > 0)
@@ -214,15 +224,21 @@ else if(isset($_POST['cube']))
     return $final_query;
 }
 
+function getWhereSectionQuery($array_filters, $doc)
+{
+
+}
+
 function getHavingSectionQuery($array_slices, $doc)
 {
-    $num_items = count($array_slices);
+    
     $i = 0;
     $query = " HAVING ";
     $operator = " IN ";
     $values = "";
     foreach ($array_slices as $key => $value) 
     {
+        $num_items = count($value);
         $property_dom = $doc->getElementById($key);
         $parent_table = $property_dom->parentNode->getAttribute('table_ref');
         $parent_table = $doc->getElementById($parent_table)->getAttribute('name');
@@ -412,8 +428,21 @@ function save($data) {
     file_put_contents($file, $data);
 }
 
+//     $json2 = '{
+//     "levels": {
+//         "dimension_time_level_date_property_month": "dimension_time_level_date_property_month"
+//     },
+//     "measures": {
+//         "table_sales_fact_1997_column_store_sales": "cube_sales_1997_measure_sum"
+//     },
+//     "slices": {
+//         "dimension_time_level_date_property_month": [
+//             "January"
+//         ]
+//     },
+//     "filters": {}
+// }';
+    // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
-    // $json2 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{},"slices":{"dimension_time_level_date_property_month":["February"]},"filters":{}}';
-
-     // getResultsByLevel($json2, "cube_sales_1997");
+    //  getResultsByLevel($json2, "cube_sales_1997");
 ?>
