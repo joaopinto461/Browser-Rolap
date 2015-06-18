@@ -37,8 +37,8 @@
 	        <li><a href="home.php">Home</a></li>
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
 	         <li><a href="#" id="save">Save</a></li>
-	      </ul>
-	 
+	         <li><a href="#" id="load">Load</a></li>
+	      </ul>	      	 
 	    </div>
 	  </div>
 	</nav>

@@ -1,13 +1,20 @@
 $(document).ready(function()
 {	   
 
-	$("#save").on("click", function(){
+	$("#save").on("click", function()
+	{
 		console.log(active_json);
-		$.ajax({
+		updateActiveJSON();
+		$.ajax(
+		{
 			url: "ajax.php",
-			data: {action: "save", state:active_json},
+			data:
+			{
+				action: "save", state: active_json
+			},
 			method: "post",
-			success: function($c) {
+			success: function($c)
+			{
 				window.location = "download.php?file=state.json";
 			}
 		});
