@@ -35,8 +35,7 @@ function libxml_display_errors()
     }
     libxml_clear_errors();
 }
-
-if(isset($_GET['cubes']))
+function getCubes()
 {
     $doc = initializeDOM();
     $xml_cubes = $doc -> getElementsByTagName('cube');
@@ -48,10 +47,10 @@ if(isset($_GET['cubes']))
         $data_id = $xc -> getAttribute('id');
         $cubes[$data_id] = $data_name;
     }
-    echo json_encode($cubes);
+    return json_encode($cubes);
 }
 
-else if(isset($_POST['cube']))
+if(isset($_POST['cube']))
 {
     $doc = initializeDOM();
       $cube_selected_id = $_POST['cube'];
@@ -110,6 +109,61 @@ else if(isset($_POST['cube']))
         $measure_info = $facts_array;
         /* Array c dimensions e measures */
         $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
+    }
+
+    function getDimensions($cube_id)
+    {
+        $doc = initializeDOM();
+
+        $cube_dom = $doc->getElementById($cube_id);
+        $cube_dimensions = $cube_dom->getElementsByTagName('cube_dimension');
+        $dimension_array = array();
+
+        foreach ($cube_dimensions as $key => $value) 
+        {
+            $array_tmp = array();
+            $dimension_id = $value->getAttribute('dimension_ref');
+            
+            $hierarchies = $doc->getElementById($dimension_id)->getElementsByTagName('hierarchy');
+            $dimension_name = $doc->getElementById($dimension_id)->getAttribute('display_name');
+            // var_dump($hierarchies);
+            $hierarchies_array = array();
+            
+            foreach ($hierarchies as $key => $value) 
+            {
+                $hierarchies_levels = $value->getElementsByTagName('hierarchy_level');
+                // echo "OLE";
+                $hierarchy_name = $value->getAttribute('display_name');
+                $hierarchy_id = $value->getAttribute('id');
+
+                $levels_array = array();
+                $levels_array[] = $hierarchy_name;
+
+                foreach ($hierarchies_levels as $key => $value) 
+                {
+                    $level_ref = $value->getAttribute('level_ref');
+
+                    $propertys = $doc->getElementById($level_ref)->getElementsByTagName('property');
+                    $property = array();
+                    foreach ($propertys as $key => $value) 
+                    {
+                        $property_name = $value->getAttribute('display_name');
+                        $property_id = $value->getAttribute('id');
+                        $property[$property_id] = $property_name; 
+                        break;
+                    }
+                    $levels_array[] = $property;
+                    // $property;
+                }
+                $hierarchies_array[$hierarchy_id] = $levels_array;
+            }
+            $array_tmp[] = $dimension_name;
+            $array_tmp[] = $hierarchies_array;
+            $dimensions_array[$dimension_id] = $array_tmp;
+            // echo "<br>";
+
+        }
+        var_dump(json_encode($dimensions_array));
     }
 
     function extractXmlDataBd($doc)
@@ -197,19 +251,28 @@ else if(isset($_POST['cube']))
     $group_by = generateGroupBy($array_levels, $doc, $array_diff);
     $final_query = $select.$from;
 
-    if(count($array_filters) > 0)
-    {
-        $where_query = getWhereSectionQuery($array_filters, $doc);
-        $final_query = $final_query.$where_query;
-    }
-
     $final_query = $final_query.$group_by;
 
     $having_query = "";
     if(count($array_slices) > 0)
     {
         $having_query = getHavingSectionQuery($array_slices, $doc);
-        $final_query = $final_query.$having_query;
+        
+        if(count($array_filters) > 0)
+        {
+            $where_query = getHavingwithFiltersSectionQuery($array_filters, $doc, $having_query);
+            $final_query = $final_query.$where_query;
+        }
+        else
+            $final_query = $final_query.$having_query;
+    }
+    else
+    {
+        if(count($array_filters) > 0)
+        {
+            $where_query = getHavingwithFiltersSectionQuery($array_filters, $doc, $having_query);
+            $final_query = $final_query.$where_query;
+        }
     }
 
         // echo "<br><br>";
@@ -217,16 +280,20 @@ else if(isset($_POST['cube']))
     return $final_query;
 }
 
-function getWhereSectionQuery($array_filters, $doc)
+function getHavingwithFiltersSectionQuery($array_filters, $doc, $having_query)
 {
     $where_array = array();
-    $query = " WHERE ";
+    if($having_query != "")
+        $query = $having_query;
+    else
+        $query = "";
     $i = 0;
+
     foreach ($array_filters as $key => $value) 
     {
         $tmp_array = array();
         $name_column = $doc->getElementById($key)->getAttribute('name');
-        // var_dump(json_encode($value));
+
         foreach ($value as $key => $value)
         {
             if($i++ == 1)
@@ -240,35 +307,53 @@ function getWhereSectionQuery($array_filters, $doc)
     foreach ($where_array as $key => $value) 
     {
         $operation = $doc->getElementById($value[0])->getAttribute('operation');
-        $query = $query.$operation."(".$value[1].") ".$value[2]." ".$value[3];
+        if($having_query != "")
+            $query = $query." AND ".$operation."(".$value[1].") ".$value[2]." ".$value[3];
+        elseif($having_query == "")
+            $query = " HAVING ".$query.$operation."(".$value[1].") ".$value[2]." ".$value[3];
         if(++$i != $num_items)
-                $query = $query.", ";
+                $query = $query." AND ";
     }
     return $query;
 }
 
 function getHavingSectionQuery($array_slices, $doc)
 {  
-    $i = 0;
+    
     $query = " HAVING ";
     $operator = " IN ";
     $values = "";
+    $num_items_array = count($array_slices);
+    $t = 0;
     foreach ($array_slices as $key => $value) 
     {
-        $num_items = count($value);
+        $i = 0;
+        // $num_items = count($value);
         $property_dom = $doc->getElementById($key);
         $parent_table = $property_dom->parentNode->getAttribute('table_ref');
         $parent_table = $doc->getElementById($parent_table)->getAttribute('name');
         $table_column_id = $property_dom->getAttribute('column_ref');
         $real_column_name = $doc->getElementById($table_column_id)->getAttribute('name');
-        foreach ($value as $key => $value) 
+
+        $num_items = count($value);
+        $values = "";
+        foreach ($value as $key => $v) 
         {
-            $values = $values." '".$value."'";
+            // echo $v." ";
+            
+            $values = $values." '".$v."'";
+
             if(++$i != $num_items)
                 $values = $values.", ";
         }
+
         $query = $query.$parent_table.".".$real_column_name.$operator." (".$values.")";
+
+        if(++$t != $num_items_array)
+                $query = $query." AND ";
     }
+    // echo "<br><br>";
+    // echo $query;
     return $query;
 }
 
@@ -444,8 +529,9 @@ function generateArrayFromSectionQuery($level_id, $cubeid, $doc)
     return $path_to_fact_table;
 }
 
-    // $json2 = '{"levels":{},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_avg"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_cost":{"measure_at":"table_sales_fact_1997_column_store_cost","aggregator":"cube_sales_1997_measure_avg"}},"slices":{},"filters":{}}';
+    $json2 = '{"levels":{"dimension_product_level_product_property_product_name":"dimension_product_level_product_property_product_name","dimension_product_level_product_category_property_family":"dimension_product_level_product_category_property_family"},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_attr":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"}},"slices":{"dimension_product_level_product_category_property_family":["Food"],"dimension_product_level_product_property_product_name":["Akron City Map","American Beef Bologna","American Corned Beef","American Foot-Long Hot Dogs","American Low Fat Bologna"]},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"400"}}}';
     // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
-     // getResultsByLevel($json2, "cube_sales_1997");
+     // getResults($json2, "cube_sales_1997");
+// getDimensions("cube_sales_1997");
 ?>

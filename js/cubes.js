@@ -294,6 +294,8 @@ function updateTableData()
 		},
 		success: function(data)
 		{
+			console.log("RESPOSTA DO SERVER");
+			console.log(data);
 			var data_json = JSON.parse(data);
 			addColumns(data_json[0]);
     		var t = $('#table').dynatable().data('dynatable');
