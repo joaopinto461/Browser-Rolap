@@ -7,7 +7,7 @@ $(document).ready(function()
 
 	$("#save").on("click", function()
 	{
-		$('#saveModal').modal('toggle');
+		$('#saveModal').modal('toggle');	
 	});
 
 	$('.selectpicker').selectpicker();
@@ -143,6 +143,20 @@ function saveInfo()
 {
 	updateActiveJSON();
 	$('#saveText').val(active_json);
+}
+
+function clearData()
+{
+	active_measures = {};
+	active_levels = {};
+	active_slices = {};
+	active_filters = {};
+	fillActiveMeasures();
+	fillActiveLevels();
+	fillActiveSlices();
+	fillActiveFilters();
+	updateActiveJSON();
+	$('.col-lg-12').html('<table id="table" class="table" style="text-align:left;"><thead id="table_head"><tr></tr></thead><tbody></tbody></table>');		
 }
 
 function applySlice()

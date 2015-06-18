@@ -36,6 +36,7 @@
 	      <ul class="nav navbar-nav">
 	        <li><a href="home.php">Home</a></li>
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
+	         <li><a href="#" onClick="clearData()" id="clear">Clear session data</a></li>
 	         <li><a href="#" onClick="saveInfo()" id="save">Save session</a></li>
 	         <li><a href="#" id="load">Load data</a></li>
 	      </ul>	      	 
@@ -162,7 +163,7 @@
 			        	<p>If you want to continue this session later, please save the text below.</p>			        	
 						<form>
 						  <div class="form-group">
-							<textarea id="saveText" class="form-control" rows="3"></textarea>
+							<textarea id="saveText" class="form-control" rows="3" onclick="this.focus();this.select()" readonly="readonly"></textarea>
 						  </div>						  						 
 						</form>
 			      	</div>
