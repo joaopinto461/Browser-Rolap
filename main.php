@@ -161,6 +161,7 @@ include "bd/connection.php";
         $array_levels = array();
         $array_measures = array();
         $array_slices = array();
+
         foreach ($json as $key =>$bla) 
         {
             foreach ($bla as $k=> $value) 
@@ -173,10 +174,8 @@ include "bd/connection.php";
                     $array_slices[$k] = $value;
             }    
         }
-        // $having_query = "";
-        // if(count($array_slices) > 0)
-        //     $having_query = getHavingSectionQuery($array_slices, $doc);
-
+        $array_diff = array_diff($array_slices, $array_levels);
+        
         $arrays_FROM = array();
 
         foreach ($array_levels as $key => $value) {
@@ -198,45 +197,77 @@ include "bd/connection.php";
         $from = generateFromSectionQuery($arrays_FROM);
 
         $select = generateSelectSectionQuery($array_levels, $array_measures, $doc);
-        // echo $select.$from;
-        // echo "<br>";
-        $group_by = generateGroupBy($array_levels, $doc);
 
+        $group_by = generateGroupBy($array_levels, $doc, $array_diff);
         $final_query = $select.$from.$group_by;
+
+        $having_query = "";
+        if(count($array_slices) > 0)
+        {
+            $having_query = getHavingSectionQuery($array_slices, $doc);
+            $final_query = $final_query.$having_query;
+        }
+
         // echo "<br><br>";
         // echo $final_query;
-        // echo "<br><br>";
         return $final_query;
     }
 
     function getHavingSectionQuery($array_slices, $doc)
     {
-        // $query = "HAVING ";
-        // $operator = " IN "
-
-        // foreach ($array_slices as $key => $value) 
-        // {
-        //     var_dump($key);
-        //     var_dump($value);
-        //     $table_column_id = $doc->getElementById($key)->getAttribute('column_ref');
-        //     $doc->getElementById($table_column_id)->getAttribute('name');
-        // }
+        $num_items = count($array_slices);
+        $i = 0;
+        $query = " HAVING ";
+        $operator = " IN ";
+        $values = "";
+        foreach ($array_slices as $key => $value) 
+        {
+            $property_dom = $doc->getElementById($key);
+            $parent_table = $property_dom->parentNode->getAttribute('table_ref');
+            $parent_table = $doc->getElementById($parent_table)->getAttribute('name');
+            $table_column_id = $property_dom->getAttribute('column_ref');
+            $real_column_name = $doc->getElementById($table_column_id)->getAttribute('name');
+            foreach ($value as $key => $value) 
+            {
+                $values = $values." '".$value."'";
+                if($i++ != $num_items)
+                    $values = $values.", ";
+            }
+            $query = $query.$parent_table.".".$real_column_name.$operator." (".$values.")";
+        }
+        return $query;
     }
 
-    function generateGroupBy($array_levels, $doc)
+    function generateGroupBy($array_levels, $doc, $array_diff)
     {
         $num_items = count($array_levels);
         $i = 0;
         $query = " GROUP BY ";
          foreach ($array_levels as $key => $value) 
         {
-            $column_ref = $doc->getElementById($value)->getAttribute('column_ref');
+            $property_dom = $doc->getElementById($value);
+            $table_name = $property_dom->parentNode->getAttribute('table_ref');
+            $table_name = $doc->getElementById($table_name)->getAttribute('name');
+            $column_ref = $property_dom->getAttribute('column_ref');
             $column_name = $doc->getElementById($column_ref)->getAttribute('name');
 
-            $query = $query.$column_name;
+            $query = $query.$table_name.".".$column_name;
             if(++$i != $num_items)
                 $query = $query.", ";
-        }       
+        }      
+        $j = 0; 
+        if(count($array_diff) > 0)
+            $query = $query.", ";
+        foreach ($array_diff as $key => $value) 
+        {
+            $property_doc = $doc->getElementById($key);
+            $column_name = $doc->getElementById($property_doc->getAttribute('column_ref'))->getAttribute('name');
+            $parent_ref_table = $property_doc->parentNode->getAttribute('table_ref');
+            $table_name = $doc->getElementById($parent_ref_table)->getAttribute('name');
+            $query = $query.$table_name.".".$column_name;
+            if($j++ == count($array_diff))
+                $query = $query.", ";       
+        }
         return $query;
     }
 
@@ -249,10 +280,13 @@ include "bd/connection.php";
 
         foreach ($array_levels as $key => $value) 
         {
-            $column_ref_property = $doc->getElementById($value)->getAttribute('column_ref');
+            $property_dom = $doc->getElementById($value);
+            $table_ref = $property_dom->parentNode->getAttribute('table_ref');
+            $table_name = $doc->getElementById($table_ref)->getAttribute('name');
+            $column_ref_property = $property_dom->getAttribute('column_ref');
             $column_name = $doc->getElementById($column_ref_property)->getAttribute('name');
 
-            $select = $select.$column_name;
+            $select = $select.$table_name.".".$column_name;
             if(++$i != $num_items)
                 $select = $select.", ";
             elseif($num_items_measures > 0)
@@ -293,7 +327,7 @@ include "bd/connection.php";
         $db_data = extractXmlDataBd($doc);
         $db = db($db_data);
         $query = generateQuery($json, $cubeid, $doc);
-        $results = execQuery($query, $db);
+        // $results = execQuery($query, $db);
         // echo json_encode($results);
         return json_encode($results);
     }
@@ -369,7 +403,20 @@ include "bd/connection.php";
     }
 
 
-    // $json2 = '{"levels":{"dimension_time_level_date_property_day":"dimension_time_level_date_property_day"},"measures":{},"slices":{}}';
+//     $json2 = '{
+//     "levels": {
+//         "dimension_time_level_date_property_week_of_year": "dimension_time_level_date_property_week_of_year"
+//     },
+//     "measures": {
+//         "table_sales_fact_1997_column_store_sales": "cube_sales_1997_measure_sum"
+//     },
+//     "slices": {
+//         "dimension_time_level_month_property_quarter": [
+//             "Q1",
+//             "Q2"
+//         ]
+//     }
+// }';
 
-    //  getResultsByLevel($json2, "cube_sales_1997");
+//      getResultsByLevel($json2, "cube_sales_1997");
 ?>
