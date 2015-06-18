@@ -129,6 +129,8 @@ function applyFilter()
 	var mid = measure_id;
 	var pid = parent_id;
 	active_filters[parent_id] = {measure: measure_id, operator: filterOperator, value: filterValue};
+	updateActiveJSON();
+	updateTableData();
 }
 
 function deleteElem(clicked_id)
