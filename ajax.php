@@ -7,5 +7,8 @@ switch ($_POST["action"]) {
 	case 'slice':		
 		print dataToSlice($_POST['property']);
 		break;
+
+	case 'save':
+		save($_POST['state']);
 }
 ?>
