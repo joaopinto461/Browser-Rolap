@@ -126,6 +126,31 @@
 			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 
+			<div class="modal fade" id="loadModal">
+				<div class="modal-dialog">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			       			<h4 class="modal-title">Load data</h4>
+			      		</div>
+			      	<div class="modal-body">
+			        	<!-- Filter things -->
+			        	<p>Please write/paste your saved data:</p>
+			        	<form action="action_page.php">
+						<form>
+						  <div class="form-group">
+							<textarea id="loadText" class="form-control" rows="3"></textarea>
+						  </div>						  						 
+						</form>
+			      	</div>
+			      	<div class="modal-footer">			        	
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        	<button type="button" onClick="loadInfo()" id="loadInfoButton" class="btn btn-primary" data-dismiss="modal">Apply</button>
+			      	</div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
 		  	<div class="center_col row">
 			  	<div class="col-lg-12" style="overflow:auto">		  
 		  		  	<table id="table" class="table" style="text-align:left;">

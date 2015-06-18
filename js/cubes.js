@@ -20,6 +20,11 @@ $(document).ready(function()
 		});
 	});
 
+	$("#load").on("click", function()
+	{
+		$('#loadModal').modal('toggle');
+	});
+
 	$('.selectpicker').selectpicker();
 	$('.filterpicker').selectpicker();
 	$('.center_col').droppable
@@ -133,6 +138,21 @@ var active_measures = {};
 var active_levels = {};
 var active_slices = {};
 var active_filters = {};
+
+function loadInfo()
+{
+	loadedJSON = JSON.parse($('#loadText').val());
+	active_levels = loadedJSON.levels;
+	active_slices = loadedJSON.slices;
+	active_measures = loadedJSON.measures;
+	active_filters = loadedJSON.filters;
+	fillActiveLevels();
+	fillActiveSlices();
+	fillActiveMeasures();
+	fillActiveFilters();
+	updateActiveJSON();
+	updateTableData();
+}
 
 function applySlice()
 {
