@@ -170,11 +170,11 @@ else if(isset($_POST['cube']))
                 if($key == 'levels')
                     $array_levels[] = $value;
                 elseif ($key == 'measures')
-                    $array_measures[$value] = $k; 
+                    $array_measures[$k] = $value; 
                 elseif($key == 'slices')
                     $array_slices[$k] = $value;
                 elseif($key == 'filters')
-                    $array_filters[] = $value;
+                    $array_filters[$k] = $value;
             }    
         }
 
@@ -208,6 +208,7 @@ else if(isset($_POST['cube']))
     if(count($array_filters) > 0)
     {
         $where_query = getWhereSectionQuery($array_filters, $doc);
+        $final_query = $final_query.$where_query;
     }
 
     $final_query = $final_query.$group_by;
@@ -226,12 +227,36 @@ else if(isset($_POST['cube']))
 
 function getWhereSectionQuery($array_filters, $doc)
 {
-
+    $where_array = array();
+    $query = " WHERE ";
+    $i = 0;
+    foreach ($array_filters as $key => $value) 
+    {
+        $tmp_array = array();
+        $name_column = $doc->getElementById($key)->getAttribute('name');
+        // var_dump(json_encode($value));
+        foreach ($value as $key => $value)
+        {
+            if($i++ == 1)
+                $tmp_array[] = $name_column;
+            $tmp_array[] = $value;
+        }
+        $where_array[] = $tmp_array;
+    }
+    $i = 0;
+    $num_items = count($where_array);
+    foreach ($where_array as $key => $value) 
+    {
+        $operation = $doc->getElementById($value[0])->getAttribute('operation');
+        $query = $query.$operation."(".$value[1].") ".$value[2]." ".$value[3];
+        if(++$i != $num_items)
+                $query = $query.", ";
+    }
+    return $query;
 }
 
 function getHavingSectionQuery($array_slices, $doc)
-{
-    
+{  
     $i = 0;
     $query = " HAVING ";
     $operator = " IN ";
@@ -313,11 +338,16 @@ function generateSelectSectionQuery($array_levels, $array_measures, $doc)
             $select = $select.", ";
     }       
     $i = 0;
+    $num_items_measures = count($array_measures);
     foreach ($array_measures as $key => $value) 
     {
-        $op_name = $doc->getElementById($key)->getAttribute('operation');
-        $column_name = $doc->getElementById($value)->getAttribute('name');
-        $select = $select.$op_name."(".$column_name.")";
+        $tmp_array = array();
+        foreach ($value as $key => $v) {
+            $tmp_array[] = $v;
+        }
+        $column_name = $doc->getElementById($tmp_array[0])->getAttribute('name');
+        $operation = $doc->getElementById($tmp_array[1])->getAttribute('operation');
+        $select = $select.$operation."(".$column_name.")";
         if(++$i != $num_items_measures)
             $select = $select.", ";
     }
@@ -428,21 +458,8 @@ function save($data) {
     file_put_contents($file, $data);
 }
 
-//     $json2 = '{
-//     "levels": {
-//         "dimension_time_level_date_property_month": "dimension_time_level_date_property_month"
-//     },
-//     "measures": {
-//         "table_sales_fact_1997_column_store_sales": "cube_sales_1997_measure_sum"
-//     },
-//     "slices": {
-//         "dimension_time_level_date_property_month": [
-//             "January"
-//         ]
-//     },
-//     "filters": {}
-// }';
+    // $json2 = '{"levels":{},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_sales":{"measure_at":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_avg"},"cube_sales_1997_measure_avg_table_sales_fact_1997_column_store_cost":{"measure_at":"table_sales_fact_1997_column_store_cost","aggregator":"cube_sales_1997_measure_avg"}},"slices":{},"filters":{}}';
     // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
-    //  getResultsByLevel($json2, "cube_sales_1997");
+     // getResultsByLevel($json2, "cube_sales_1997");
 ?>
