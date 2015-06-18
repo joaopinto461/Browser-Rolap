@@ -174,8 +174,9 @@ else if(isset($_POST['cube']))
                     $array_slices[$k] = $value;
             }    
         }
-        $array_diff = array_diff($array_slices, $array_levels);
-        
+
+        $array_diff = array_diff_assoc($array_slices, $array_levels);
+
         $arrays_FROM = array();
 
         foreach ($array_levels as $key => $value) {
@@ -230,7 +231,7 @@ function getHavingSectionQuery($array_slices, $doc)
         foreach ($value as $key => $value) 
         {
             $values = $values." '".$value."'";
-            if($i++ != $num_items)
+            if(++$i != $num_items)
                 $values = $values.", ";
         }
         $query = $query.$parent_table.".".$real_column_name.$operator." (".$values.")";
@@ -267,7 +268,7 @@ function generateGroupBy($array_levels, $doc, $array_diff)
             $parent_ref_table = $property_doc->parentNode->getAttribute('table_ref');
             $table_name = $doc->getElementById($parent_ref_table)->getAttribute('name');
             $query = $query.$table_name.".".$column_name;
-            if($j++ == count($array_diff))
+            if(++$j != count($array_diff))
                 $query = $query.", ";       
         }
     }
@@ -412,20 +413,7 @@ function save($data) {
 }
 
 
-//     $json2 = '{
-//     "levels": {
-//         "dimension_time_level_date_property_week_of_year": "dimension_time_level_date_property_week_of_year"
-//     },
-//     "measures": {
-//         "table_sales_fact_1997_column_store_sales": "cube_sales_1997_measure_sum"
-//     },
-//     "slices": {
-//         "dimension_time_level_month_property_quarter": [
-//             "Q1",
-//             "Q2"
-//         ]
-//     }
-// }';
+    // $json2 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{},"slices":{"dimension_time_level_date_property_month":["February"]},"filters":{}}';
 
-//      getResultsByLevel($json2, "cube_sales_1997");
+     // getResultsByLevel($json2, "cube_sales_1997");
 ?>
