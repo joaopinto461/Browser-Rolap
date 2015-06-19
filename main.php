@@ -53,63 +53,30 @@ function getCubes()
 if(isset($_POST['cube']))
 {
     $doc = initializeDOM();
-      $cube_selected_id = $_POST['cube'];
-      $dom_cube = $doc->getElementById($cube_selected_id);
-      $cube_name = $dom_cube->getAttribute('name');
+    $cube_selected_id = $_POST['cube'];
+    $dom_cube = $doc->getElementById($cube_selected_id);
+    $cube_name = $dom_cube->getAttribute('name');
 
-      $dimension_ref_dom = $dom_cube->getElementsByTagName('cube_dimension');
-      $dim_info = [];
+    $facts = $dom_cube->getElementsByTagName('fact');
+    $facts_array = array();
+    $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
 
-  foreach ($dimension_ref_dom as $dim_ref_dom)
-  {
-            $ref_dim = $dim_ref_dom->getAttribute('dimension_ref'); // ID dimension
-            $dom_dim = $doc->getElementById($ref_dim);
-            $dimension_name = $dom_dim->getAttribute('display_name'); // Name dimension
-            $dom_dim_hierarchies = $dom_dim->getElementsByTagName('hierarchy');
-
-            foreach ($dom_dim_hierarchies as $dom_hierarchy)
-            {
-                $dom_hierarchies_levels = $dom_hierarchy->getElementsByTagName('hierarchy_level');
-                $levels = [];
-
-                foreach ($dom_hierarchies_levels as $hierarchy_level)
-                {
-                    $hierarchy_level_ref = $hierarchy_level->getAttribute('level_ref');// ID level
-                    $properties = $doc->getElementById($hierarchy_level_ref)->getElementsByTagName('property');
-                    $prop_names = [];
-                    
-                    foreach ($properties as $p)
-                    {
-                        $prop_names[$p->getAttribute('id')] = $p -> getAttribute('display_name');
-                    }
-                    $levels[$hierarchy_level_ref] = $prop_names;
-                }
-            }
-            $dim_info[$dom_dim->getAttribute('id')] = ["name_dimension" => $dom_dim->getAttribute('display_name'), "levels" => $levels];
-        }
-        // var_dump(json_encode($dim_info));
-        $facts = $dom_cube->getElementsByTagName('fact');
-        $facts_array = array();
-        $measure_ref_dom = $dom_cube->getElementsByTagName('measure');
-
-        foreach ($facts as $key) 
+    foreach ($facts as $key) 
+    {
+        $column_ref = $key->getAttribute('column_ref');
+        $column_name = $doc->getElementById($column_ref)->getAttribute('name');
+        
+        $measure_info = array();
+        $measure_info[] = $column_name;
+        foreach ($measure_ref_dom as $m)
         {
-            $column_ref = $key->getAttribute('column_ref');
-            $column_name = $doc->getElementById($column_ref)->getAttribute('name');
-            
-            $measure_info = array();
-            $measure_info[] = $column_name;
-            foreach ($measure_ref_dom as $m)
-            {
-                $measure_info[$m->getAttribute('id')] = $m->getAttribute('display_name');
-            }
-            $facts_array[$column_ref] = $measure_info;
+            $measure_info[$m->getAttribute('id')] = $m->getAttribute('display_name');
         }
-        // var_dump(json_encode($dim_info));
-        $measure_info = $facts_array;
-        /* Array c dimensions e measures */
-        $dimensions_measures = ["dimensions" => $dim_info, "measures" => $measure_info];
+        $facts_array[$column_ref] = $measure_info;
     }
+    $measure_info = $facts_array;
+    $dims = getDimensions($cube_selected_id);
+}
 
     function getDimensions($cube_id)
     {
@@ -529,10 +496,8 @@ function generateArrayFromSectionQuery($level_id, $cubeid, $doc)
     return $path_to_fact_table;
 }
 
-    $json2 = '{"levels":{"dimension_product_level_product_property_product_name":"dimension_product_level_product_property_product_name","dimension_product_level_product_category_property_family":"dimension_product_level_product_category_property_family"},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_attr":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"}},"slices":{"dimension_product_level_product_category_property_family":["Food"],"dimension_product_level_product_property_product_name":["Akron City Map","American Beef Bologna","American Corned Beef","American Foot-Long Hot Dogs","American Low Fat Bologna"]},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"400"}}}';
+    // $json2 = '{"levels":{"dimension_product_level_product_property_product_name":"dimension_product_level_product_property_product_name","dimension_product_level_product_category_property_family":"dimension_product_level_product_category_property_family"},"measures":{"cube_sales_1997_measure_sum_table_sales_fact_1997_column_store_sales":{"measure_attr":"table_sales_fact_1997_column_store_sales","aggregator":"cube_sales_1997_measure_sum"}},"slices":{"dimension_product_level_product_category_property_family":["Food"],"dimension_product_level_product_property_product_name":["Akron City Map","American Beef Bologna","American Corned Beef","American Foot-Long Hot Dogs","American Low Fat Bologna"]},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"400"}}}';
     // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
      // getResults($json2, "cube_sales_1997");
- $dims = getDimensions("cube_sales_1997");
- // var_dump(json_encode($dims));
 ?>
