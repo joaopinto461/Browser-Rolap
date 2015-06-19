@@ -157,6 +157,7 @@ function clearData()
 	fillActiveFilters();
 	updateActiveJSON();
 	$('.col-lg-12').html('<table id="table" class="table" style="text-align:left;"><thead id="table_head"><tr></tr></thead><tbody></tbody></table>');		
+	$('.sub').accordion({ collapsible: true, active: false, heightStyle: "content" });
 }
 
 function applySlice()
