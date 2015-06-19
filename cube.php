@@ -215,12 +215,9 @@
 		  						</li>
 		  					<?php endforeach ?>	  					
 	  					</ul>
-
-
 	  				</li>
 	  			<?php endforeach ?>
 	  			</ul>
-
 		  	</div>
 		  	
 			<div class="right_col_elem">
