@@ -163,7 +163,7 @@ if(isset($_POST['cube']))
             // echo "<br>";
 
         }
-        var_dump(json_encode($dimensions_array));
+        return $dimensions_array;
     }
 
     function extractXmlDataBd($doc)
@@ -533,5 +533,6 @@ function generateArrayFromSectionQuery($level_id, $cubeid, $doc)
     // $json1 = '{"levels":{"dimension_time_level_date_property_month":"dimension_time_level_date_property_month"},"measures":{"table_sales_fact_1997_column_store_sales":"cube_sales_1997_measure_sum"},"slices":{},"filters":{"table_sales_fact_1997_column_store_sales":{"measure":"cube_sales_1997_measure_sum","operator":">","value":"50000"}}}';
 
      // getResults($json2, "cube_sales_1997");
-// getDimensions("cube_sales_1997");
+ $dims = getDimensions("cube_sales_1997");
+ // var_dump(json_encode($dims));
 ?>

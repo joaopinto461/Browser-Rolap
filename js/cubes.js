@@ -51,7 +51,7 @@ $(document).ready(function()
 		}
 	);
 
-	$('.sub').accordion({ collapsible: true, active: false });
+	$('.sub').accordion({ collapsible: true, active: false, heightStyle: "content" });
 	
 	$( ".sub" ).accordion({
 	    beforeActivate: function( event, ui )

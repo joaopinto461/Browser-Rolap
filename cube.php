@@ -191,20 +191,36 @@
 			<div class="right_col_elem" id="dimensions_square">
 		  		<h5><i class="glyphicon glyphicon-list"></i> Dimensions</h5>
 		  		<hr>		  		  	
-	  			<ul class="dimensions_list sub">		
-	  			<?php foreach ($dim_info as $dim_id => $dim_data) :?>
-	  				<li class="dimension accordion" id="<? print $dim_id ?>">
-	  					<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $dim_data["name_dimension"] ?> </h5>
-	  					<ul class="sub" style="display: none;">	  					
-	  					<?php foreach ($dim_data["levels"] as $level_id=>$level) :?>
-	  						<?php foreach ($level as $p_id => $p_value):?>
-	  							<li class="level" id="<? print $p_id ?>"><i class="glyphicon glyphicon-move"></i> <? print $p_value ?></li>
-	  						<?php endforeach;?>
-	  					<?php endforeach ?>
+	  			<ul class="dimensions_list sub">
+	  			<?php foreach ($dims as $dim_id => $dim_data) :?>
+	  				<li class="dimension" id="<? print $dim_id ?>">
+	  					<!-- Dimension name -->
+	  					<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $dim_data[0] ?> </h5>	  					
+	  					<div>
+	  					<ul class="hierarchy_list sub">	  						  					
+		  					<?php foreach ($dim_data[1] as $hierarchy_id => $hierarchy) :?>
+		  						<li class="hierarchy" id="<? print $hierarchy_id ?>">
+		  							<!-- Hierarchy name -->
+		  							<h5><i class="glyphicon glyphicon-chevron-right"></i> <? print $hierarchy[0] ?></h5>	  						
+		  							<ul>
+		  							<?php foreach (array_slice($hierarchy, 1) as $hierarchy_level => $level) :?>
+		  								<?php foreach ($level as $level_id => $level_name) :?>
+		  								<li class="level" id="<? print $level_id ?>">
+		  									<!-- Level name -->
+		  									<i class="glyphicon glyphicon-move"></i> <? print $level_name ?>
+		  								</li>
+		  								<?php endforeach ?>
+		  							<?php endforeach ?>
+		  							</ul>
+		  						</li>
+		  					<?php endforeach ?>	  					
 	  					</ul>
+
+
 	  				</li>
 	  			<?php endforeach ?>
 	  			</ul>
+
 		  	</div>
 		  	
 			<div class="right_col_elem">

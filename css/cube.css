@@ -29,7 +29,7 @@ li
   margin-bottom: 5px;
 }
 
-li .level, li .measure
+li .level, li .measure, li .hierarchy
 {
   margin-top: 5px;
   margin-left: 10px;
