@@ -34,7 +34,7 @@
 
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li><a href="home.php">Home</a></li>
+	        <li><a href="index.php">Home</a></li>
 	         <li class="active"><a href="#">Cube <span class="sr-only">(current)</span></a></li>
 	         <li><a href="#" onClick="clearData()" id="clear">Clear session data</a></li>
 	         <li><a href="#" onClick="saveInfo()" id="save">Save session</a></li>
