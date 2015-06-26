@@ -115,7 +115,35 @@ $(document).ready(function()
 		$('#filterModal').modal('toggle');
 	});
 
+
 });
+
+function processData(data)
+{
+	var info = clone(data);
+	for(var x in info)
+	{	
+		var counter = 0;
+		var key;
+		for(var y in info[x])
+		{	
+			if(counter == 0)
+			{
+				info[x]['label'] = info[x][y].replace(/\"/g, "");
+				delete info[x][y];
+			}
+			else if(counter == 1)
+			{
+				info[x]['y'] = parseFloat(info[x][y]);
+				delete info[x][y];
+			}
+
+			counter++;
+		}
+	}
+
+	return info;
+}
 
 var measure_id;
 var parent_id;
@@ -123,6 +151,16 @@ var active_measures = {};
 var active_levels = {};
 var active_slices = {};
 var active_filters = {};
+var options = {};
+var showChart = false;
+
+function toggleChart()
+{
+	!showChart;
+	$('#graphics').toggleClass('hidden');
+	$('table').toggleClass('hidden');
+	updateTableData();
+}
 
 function loadInfo()
 {
@@ -291,7 +329,7 @@ function updateTableData()
 		// console.log(active_json);
 
 		$.ajax(
-	{
+		{
 		method: "POST",
 		async: false,
 		url: "ajax.php",
@@ -305,7 +343,27 @@ function updateTableData()
 		{
 			// console.log("Server's answer:");
 			// console.log(data);
+
 			var data_json = JSON.parse(data);
+	
+			options = 			
+			{
+				title:
+				{
+					text: "Results Chart"
+				},
+			    animationEnabled: true,
+				data:
+				[
+					{
+						type: "column", //change it to line, area, bar, pie, etc
+						dataPoints: processData(data_json)
+					}
+				]
+			};
+
+			$("#graphics").CanvasJSChart(options);
+
 			addColumns(data_json[0]);
     		var t = $('#table').dynatable().data('dynatable');
     		t.records.updateFromJson({records: data_json});
@@ -314,6 +372,17 @@ function updateTableData()
     		t.records.init();
     		t.process();
 		}
-	});
+		});
 	}
+}
+
+function clone(obj){
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+
+    var temp = new obj.constructor(); 
+    for(var key in obj)
+        temp[key] = clone(obj[key]);
+
+    return temp;
 }

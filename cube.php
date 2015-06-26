@@ -12,6 +12,8 @@
     <script src="js/cubes.js"></script>
     <script src="js/jquery.dynatable.js"></script>
     <script src="js/bootstrap-select.js"></script>
+    <script src="js/jquery.canvasjs.min.js"></script>
+
     <meta charset='utf-8'>
     <?
 		include 'main.php';
@@ -175,7 +177,7 @@
 			</div><!-- /.modal -->
 
 		  	<div class="center_col row">
-			  	<div class="col-lg-12" style="overflow:auto">		  
+			  	<div class="col-lg-12" style="overflow:auto">		
 		  		  	<table id="table" class="table" style="text-align:left;">
 		              <thead id="table_head">
 		              <tr></tr>
@@ -183,7 +185,11 @@
 		              <tbody>
 		              </tbody>
 	        		</table>	
+	        		<div id="graphics" class="hidden"></div>
 	        	</div>
+		  	</div>
+		  	<div id="chartButton">
+		  		<button class="btn btn-default" onClick="toggleChart()" type="submit">Show chart!</button>
 		  	</div>
 		  </div>
 
