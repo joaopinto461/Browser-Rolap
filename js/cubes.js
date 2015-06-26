@@ -279,10 +279,18 @@ function updateActiveJSON()
 function updateTableData()
 {	
 	updateActiveJSON();
-	console.log("Sent AJAX request for following JSON:");
-	console.log(active_json);
+	
+	if(active_json.length == 52)
+	{
+		// console.log("active_json was empty!");
+		clearData();
+	}
+	else
+	{
+		// console.log("Sent AJAX request for following JSON:");
+		// console.log(active_json);
 
-	$.ajax(
+		$.ajax(
 	{
 		method: "POST",
 		async: false,
@@ -295,8 +303,8 @@ function updateTableData()
 		},
 		success: function(data)
 		{
-			console.log("RESPOSTA DO SERVER");
-			console.log(data);
+			// console.log("Server's answer:");
+			// console.log(data);
 			var data_json = JSON.parse(data);
 			addColumns(data_json[0]);
     		var t = $('#table').dynatable().data('dynatable');
@@ -307,4 +315,5 @@ function updateTableData()
     		t.process();
 		}
 	});
+	}
 }
