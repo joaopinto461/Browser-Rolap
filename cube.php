@@ -188,8 +188,8 @@
 	        		<div id="graphics" class="hidden"></div>
 	        	</div>
 		  	</div>
-		  	<div id="chartButton">
-		  		<button class="btn btn-default" onClick="toggleChart()" type="submit">Show chart!</button>
+		  	<div id="chartButtonDiv">
+		  		<button class="btn btn-default" onClick="toggleChart()" id="chartButton" type="submit">See chart</button>
 		  	</div>
 		  </div>
 

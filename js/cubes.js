@@ -152,14 +152,17 @@ var active_levels = {};
 var active_slices = {};
 var active_filters = {};
 var options = {};
-var showChart = false;
 
 function toggleChart()
 {
-	!showChart;
 	$('#graphics').toggleClass('hidden');
 	$('table').toggleClass('hidden');
 	updateTableData();
+
+	if($('#chartButton').text() == 'See chart')
+		$('#chartButton').text('See table');
+	else
+		$('#chartButton').text('See chart');
 }
 
 function loadInfo()
@@ -194,7 +197,7 @@ function clearData()
 	fillActiveSlices();
 	fillActiveFilters();
 	updateActiveJSON();
-	$('.col-lg-12').html('<table id="table" class="table" style="text-align:left;"><thead id="table_head"><tr></tr></thead><tbody></tbody></table>');		
+	$('.col-lg-12').html('<table id="table" class="table" style="text-align:left;"><thead id="table_head"><tr></tr></thead><tbody></tbody></table><div id="graphics" class="hidden"></div>');		
 	$('.sub').accordion({ collapsible: true, active: false, heightStyle: "content" });
 }
 
