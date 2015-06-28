@@ -191,6 +191,14 @@
 		  	<div id="chartButtonDiv">
 		  		<button class="btn btn-default" onClick="toggleChart()" id="chartButton" type="submit">See chart</button>
 		  	</div>
+		  	<div id="chartTypeDiv">						   						   
+				<select id="chart-dropdown" class="chartpicker">	
+					<option name="column">Column</option>
+    				<option name="line">Line</option>
+    				<option name="bar">Bar</option>
+    				<option name="pie">Pie</option>						 						 
+				</select>					    
+			</div>
 		  </div>
 
 		  <div class="col-md-3">

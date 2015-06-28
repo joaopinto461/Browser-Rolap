@@ -80,7 +80,7 @@ h5
   height: 400px;
 }
 
-#chartButtonDiv
+#chartButtonDiv, #chartTypeDiv
 {
   width: 100%;
   margin-top: 10px;

@@ -11,6 +11,7 @@ $(document).ready(function()
 	});
 
 	$('.selectpicker').selectpicker();
+	$('.chartpicker').selectpicker();
 	$('.filterpicker').selectpicker();
 	$('.center_col').droppable
 	(
@@ -152,11 +153,16 @@ var active_levels = {};
 var active_slices = {};
 var active_filters = {};
 var options = {};
+var chart_type = 'column';
 
 function toggleChart()
 {
 	$('#graphics').toggleClass('hidden');
 	$('table').toggleClass('hidden');
+	$('#chartTypeDiv').toggleClass('hidden');
+
+	chart_type = $('.chartpicker option:selected').attr('name');
+
 	updateTableData();
 
 	if($('#chartButton').text() == 'See chart')
@@ -359,7 +365,7 @@ function updateTableData()
 				data:
 				[
 					{
-						type: "column", //change it to line, area, bar, pie, etc
+						type: chart_type, //change it to line, area, bar, pie, etc
 						dataPoints: processData(data_json)
 					}
 				]
