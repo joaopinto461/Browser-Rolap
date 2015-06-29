@@ -353,33 +353,41 @@ function updateTableData()
 			// console.log("Server's answer:");
 			// console.log(data);
 
-			var data_json = JSON.parse(data);
-	
-			options = 			
+			if(data.length == 2)
 			{
-				title:
+				$('.col-lg-12').html('<table id="table" class="table" style="text-align:left;"><thead id="table_head"><tr></tr></thead><tbody></tbody></table><div id="graphics" class="hidden"></div>');		
+				alert("No data responds to active constraints.");
+			}
+			else
+			{				
+				var data_json = JSON.parse(data);
+	
+				options = 			
 				{
-					text: "Results Chart"
-				},
-			    animationEnabled: true,
-				data:
-				[
+					title:
 					{
-						type: chart_type, //change it to line, area, bar, pie, etc
-						dataPoints: processData(data_json)
-					}
-				]
-			};
+						text: "Results Chart"
+					},
+				    animationEnabled: true,
+					data:
+					[
+						{
+							type: chart_type, //change it to line, area, bar, pie, etc
+							dataPoints: processData(data_json)
+						}
+					]
+				};
 
-			$("#graphics").CanvasJSChart(options);
+				$("#graphics").CanvasJSChart(options);
 
-			addColumns(data_json[0]);
-    		var t = $('#table').dynatable().data('dynatable');
-    		t.records.updateFromJson({records: data_json});
-    		t.domColumns.init();
-    		t.sortsHeaders.init();
-    		t.records.init();
-    		t.process();
+				addColumns(data_json[0]);
+	    		var t = $('#table').dynatable().data('dynatable');
+	    		t.records.updateFromJson({records: data_json});
+	    		t.domColumns.init();
+	    		t.sortsHeaders.init();
+	    		t.records.init();
+	    		t.process();
+			}
 		}
 		});
 	}
