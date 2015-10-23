@@ -21,3 +21,4 @@ The multidimensional model used for this project was defined as follows:
 
 <img src="https://dl.dropboxusercontent.com/u/2937374/GitHub%20Images/dw1.png">
 <img src="https://dl.dropboxusercontent.com/u/2937374/GitHub%20Images/dw2.png">
+<img src="https://dl.dropboxusercontent.com/u/2937374/GitHub%20Images/dw4.png">
